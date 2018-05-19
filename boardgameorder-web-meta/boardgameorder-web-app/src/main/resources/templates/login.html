@@ -1,0 +1,23 @@
+{{#layout}}
+
+<h1>Вход</h1>
+
+{{>inc/error_msg}}
+
+<div class=login>
+	<form method=post>
+		<table>
+		<tr>
+			<td>Имя
+			<td><input type=text name=username>
+		<tr>
+			<td>Пароль
+			<td><input type=password name=password value=''>
+		<tr>
+			<td><input type=submit name=login_submit value='  Войти  '>
+			<td><a href='/registration'>Регистрация</a>
+		</table>
+	</form>
+</div>
+
+{{/layout}}

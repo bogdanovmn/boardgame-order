@@ -1,0 +1,24 @@
+a,body,table,tr,td,li,p,input,textarea,pre {font-family: verdana, arial, serif;color:#101610;padding:0;margin:0}
+table{width:auto;table-layout:fixed;border-collapse:collapse;text-align:left}
+
+div.main { width: 1000px; margin: 0 auto; text-align: center; }
+
+#top_menu { position: static; font-size: 100%; }
+	.links     { float: left;  width: 70%; background: #ddd; padding: 5px; text-align: left;}
+	#user_info { padding: 5px; width: 30%; background: #ddd; margin-left: 70%; text-align: right;}
+
+#mid_area { width: 100%; }
+	#left_menu { float: left; width: 20%; }
+	#data_area { width: 90%; margin: auto; padding: 0 10px; }
+
+#top_menu a { text-decoration: none; }
+
+#admin_menu a { text-decoration: none; font-size: 85% }
+
+form table    { margin: 0 auto; }
+form table td { padding: 10px; }
+
+a.logout { text-decoration: none; font-weight: bold; color: #a11e0d; }
+a.button { text-decoration: none }
+
+div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc; text-align: center; color: #4c260b; padding: 10px 30px; }

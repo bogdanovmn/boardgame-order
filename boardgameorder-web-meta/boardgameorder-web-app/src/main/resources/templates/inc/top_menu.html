@@ -1,0 +1,24 @@
+
+<div id=top_menu>
+	<div class=links>
+		.::{{#menu}}
+			{{#isSelected}}
+				<b>{{title}}</b>
+			{{/isSelected}}
+			{{^isSelected}}
+				<a href='{{url}}?{{currentFilter}}'>{{title}}</a>
+			{{/isSelected}}
+
+			{{#-first}}
+				<span class=progress>{{rememberedPercent}}%</span>
+			{{/-first}}
+		::{{/menu}}.
+	</div>
+	<div id=user_info>
+		.::
+		<a href="/user/settings">{{userName}}</a>
+		::
+		<a class=logout href='/logout'>X</a>
+		::.
+	</div>
+</div>

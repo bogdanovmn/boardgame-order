@@ -1,0 +1,38 @@
+{{#layout}}
+
+<h1>Изменение профиля "{{userName}}"</h1>
+
+{{>inc/error_msg}}
+
+<div class=form>
+	<form method=post>
+		<table>
+		<tr>
+			<td>Текущий пароль
+			<td><input type=password name=currentPassword value='{{userSettingsForm.currentPassword}}'>
+            <td>{{formError.currentPassword}}
+        <tr>
+			<td>Новый пароль
+			<td><input type=password name=newPassword value='{{userSettingsForm.newPassword}}'>
+            <td>{{formError.newPassword}}
+		<tr>
+			<td>Новый пароль (еще разок)
+			<td><input type=password name=newPasswordConfirm value='{{userSettingsForm.newPasswordConfirm}}'>
+			<td>{{formError.newPasswordConfirm}}
+		<tr>
+			<td>Email
+			<td>{{userEmail}}
+			<td>
+		<tr>
+			<td>Дата регистрации
+			<td>{{userRegistrationDate}}
+			<td>
+		<tr>
+			<td colspan=3><input type=submit value='  Сохранить  '>
+			&nbsp;&nbsp;&nbsp;&nbsp;<a href="{{referer}}">Отмена</a>
+		</table>
+	</form>
+</div>
+
+{{/layout}}
+
