@@ -15,13 +15,17 @@
     <packaging>pom</packaging>
 
     <modules>
-		<module>boardgameorder-cli-something</module>
+		<module>boardgameorder-cli-parser</module>
 	</modules>
 
 	<dependencies>
 		<dependency>
 			<groupId>com.github.bogdanovmn.cmdline</groupId>
 			<artifactId>cmdline-app</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.bogdanovmn.boardgameorder</groupId>
+			<artifactId>boardgameorder-core</artifactId>
 		</dependency>
 	</dependencies>
 

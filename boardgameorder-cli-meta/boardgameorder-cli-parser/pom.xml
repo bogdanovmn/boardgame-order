@@ -10,7 +10,7 @@
         <version>1.0-SNAPSHOT</version>
     </parent>
 
-    <artifactId>boardgameorder-cli-something</artifactId>
+    <artifactId>boardgameorder-cli-parser</artifactId>
     <version>1.0-SNAPSHOT</version>
 
     <build>
@@ -19,10 +19,10 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
 					<skipAssembly>false</skipAssembly>
-					<finalName>something</finalName>
+					<finalName>parser</finalName>
                     <archive>
                         <manifest>
-                            <mainClass>com.github.bogdanovmn.boardgameorder.cli.something.App</mainClass>
+                            <mainClass>com.github.bogdanovmn.boardgameorder.cli.parser.App</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
