@@ -15,16 +15,14 @@ public class App {
 			.withArg("source", "data source file")
 			.withEntryPoint(
 				cmdLine -> {
-					PriceListContent price =
-						new PriceListContent(
-							new PriceListExcelFile(
-								new FileInputStream(
-									cmdLine.getOptionValue("s")
-								)
-							)
-						);
-
-					price.printTotal();
+					try (
+						PriceListExcelFile file = new PriceListExcelFile(
+							new FileInputStream(cmdLine.getOptionValue("s"))
+						)
+					) {
+						PriceListContent price = new PriceListContent(file);
+						price.printTotal();
+					}
 
 				}
 			).build().run();
