@@ -13,7 +13,7 @@ public class PriceListContent {
 
 	}
 	public void printTotal() throws IOException {
-		file.fetch();
+		file.print();
 	}
 
 

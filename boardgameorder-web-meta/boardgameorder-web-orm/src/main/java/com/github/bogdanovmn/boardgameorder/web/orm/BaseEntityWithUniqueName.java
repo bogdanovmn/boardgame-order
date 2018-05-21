@@ -2,7 +2,6 @@ package com.github.bogdanovmn.boardgameorder.web.orm;
 
 import javax.persistence.Column;
 import javax.persistence.MappedSuperclass;
-import javax.xml.bind.annotation.XmlAttribute;
 
 @MappedSuperclass
 public abstract class BaseEntityWithUniqueName extends BaseEntity {

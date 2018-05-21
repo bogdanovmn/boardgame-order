@@ -8,22 +8,71 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class PriceListExcelFile implements Closeable {
-	private final InputStream source;
+	private final static String IH_NAME    = "Номенклатура";
+	private final static String IH_COUNT   = "Кол-во";
+	private final static String IH_PRICE   = "базовая цена";
+	private final static String IH_BARCODE = "Штрих";
+	private final static String IH_FOTO    = "ФОТО";
 
-	public PriceListExcelFile(InputStream source) {
-		this.source = source;
+	private final HSSFWorkbook excelBook;
 
+	private int itemsRowBegin;
+	private int itemsRowEnd;
+
+	private Map<String, Integer> columnMap = new HashMap<>();
+
+	public PriceListExcelFile(HSSFWorkbook excelBook) {
+		this.excelBook = excelBook;
 	}
 
-	public void fetch() throws IOException {
-		HSSFWorkbook myExcelBook = new HSSFWorkbook(source);
-		HSSFSheet myExcelSheet = myExcelBook.getSheetAt(0);
+	public PriceListExcelFile(InputStream source) throws IOException {
+		this(
+			new HSSFWorkbook(source)
+		);
+	}
+
+	private void findMeta() {
+		boolean itemsRangeNext = false;
+		for (Row row : excelBook.getSheetAt(0)) {
+			boolean itemsHeaderRow = false;
+
+			for (Cell cell : row) {
+				ExcelCell ec = new ExcelCell(cell);
+
+				if (ec.isFormula() && itemsRangeNext) {
+					List<Integer> range = ec.getSumRange();
+					itemsRowBegin = range.get(0);
+					itemsRowEnd   = range.get(1);
+					itemsRangeNext = false;
+				}
+
+				if (itemsHeaderRow) {
+					columnMap.put(cell.getStringCellValue(), cell.getColumnIndex());
+				}
+
+				if (ec.isContainString("Сумма заказа по базовым ценам")) {
+					itemsRangeNext = true;
+				}
+				if (ec.isContainString(IH_NAME)) {
+					itemsHeaderRow = true;
+					columnMap.put(IH_NAME, cell.getColumnIndex());
+				}
+			}
+		}
+	}
+
+	public void print() {
+		findMeta();
+		HSSFSheet sheet = excelBook.getSheetAt(0);
 
 
 		int r = 0;
-		for (Row row : myExcelSheet) {
+		for (Row row : sheet) {
 			System.out.println(
 				String.format("----- %d -----", r++)
 			);
@@ -39,13 +88,12 @@ public class PriceListExcelFile implements Closeable {
 					)
 				);
 			}
-			if (r > 500) break;
+			if (r > 200) break;
 		}
-		myExcelBook.close();
 	}
 
 	@Override
 	public void close() throws IOException {
-		source.close();
+		excelBook.close();
 	}
 }

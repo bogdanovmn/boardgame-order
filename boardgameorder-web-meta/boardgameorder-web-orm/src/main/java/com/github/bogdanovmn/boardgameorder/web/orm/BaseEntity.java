@@ -1,9 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
 import javax.persistence.*;
-import javax.xml.bind.annotation.XmlAttribute;
-import javax.xml.bind.annotation.XmlID;
-import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 @MappedSuperclass
 public abstract class BaseEntity {
