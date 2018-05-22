@@ -9,6 +9,7 @@ import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -46,7 +47,7 @@ public class PriceListExcelFile implements Closeable {
 
 				if (ec.isFormula() && itemsRangeNext) {
 					List<Integer> range = ec.getSumRange();
-					itemsRowBegin = range.get(0);
+					itemsRowBegin = range.get(0) - 1;
 					itemsRowEnd   = range.get(1);
 					itemsRangeNext = false;
 				}
@@ -66,29 +67,69 @@ public class PriceListExcelFile implements Closeable {
 		}
 	}
 
-	public void print() {
+	List<ItemRow> itemRows() {
+		List<ItemRow> result = new LinkedList<>();
+
 		findMeta();
+
 		HSSFSheet sheet = excelBook.getSheetAt(0);
+		String currentGroup = null;
+		for (int i = itemsRowBegin; i <= itemsRowEnd; i++) {
+			Row rawRow = sheet.getRow(i);
+			if (rawRow == null) {
+				continue;
+			}
+			ExcelRow row = new ExcelRow(rawRow);
 
+//			printRow(rawRow);
 
-		int r = 0;
-		for (Row row : sheet) {
-			System.out.println(
-				String.format("----- %d -----", r++)
-			);
-			for (Cell cell : row) {
-				System.out.println(
-					String.format(
-						"[%d %7s] %s",
-							cell.getColumnIndex(),
-							cell.getCellTypeEnum(),
-							(cell.toString().equals("Фото")
-								? cell.getHyperlink().getAddress()
-								: cell)
+			if (new ExcelCell(row.cell(1)).isNumber()) {
+				if (currentGroup == null) {
+					throw new IllegalStateException("Row like price but without group");
+				}
+				result.add(
+					new ItemRow(
+						currentGroup,
+						row.cellStringValue(columnMap.get(IH_NAME)),
+						row.cellNumberValue(columnMap.get(IH_PRICE)),
+						row.cellNumberValue(columnMap.get(IH_COUNT)),
+						row.cellStringValue(columnMap.get(IH_BARCODE)),
+						row.cellUrlValue(columnMap.get(IH_FOTO))
 					)
 				);
 			}
-			if (r > 200) break;
+			else {
+				currentGroup = row.cellStringValue(0);
+			}
+		}
+		return result;
+	}
+
+	private void printRow(Row row) {
+		System.out.println(
+			String.format("----- %d -----", row.getRowNum())
+		);
+		for (Cell cell : row) {
+			System.out.println(
+				String.format(
+					"[%d %7s] %s",
+					cell.getColumnIndex(),
+					cell.getCellTypeEnum(),
+					(cell.toString().equals("Фото")
+						? cell.getHyperlink().getAddress()
+						: cell)
+				)
+			);
+		}
+	}
+
+	public void printAll() {
+		HSSFSheet sheet = excelBook.getSheetAt(0);
+
+		int r = 0;
+		for (Row row : sheet) {
+			printRow(row);
+			if (r++ > 500) break;
 		}
 	}
 

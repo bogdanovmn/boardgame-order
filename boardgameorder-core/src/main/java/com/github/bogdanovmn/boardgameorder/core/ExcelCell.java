@@ -38,4 +38,25 @@ class ExcelCell {
 			)
 		);
 	}
+
+	boolean isNumber() {
+		return cell.getCellTypeEnum().equals(CellType.NUMERIC);
+	}
+
+	boolean isBlank() {
+		return cell.getCellTypeEnum().equals(CellType.BLANK);
+
+	}
+
+	String stringValue() {
+		return cell.getStringCellValue();
+	}
+
+	double numberValue() {
+		return cell.getNumericCellValue();
+	}
+
+	String urlValue() {
+		return cell.getHyperlink().getAddress();
+	}
 }
