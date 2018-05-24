@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
-class ItemRow {
+class PriceItem {
 	private final String group;
 	private final String title;
 	private final Double price;
@@ -8,7 +8,7 @@ class ItemRow {
 	private final String barcode;
 	private final String url;
 
-	public ItemRow(
+	public PriceItem(
 		String group,
 		String title,
 		Double price,

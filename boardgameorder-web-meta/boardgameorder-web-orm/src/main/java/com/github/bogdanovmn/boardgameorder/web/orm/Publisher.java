@@ -1,4 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
-class Publisher {
+import javax.persistence.Entity;
+
+@Entity
+public class Publisher extends BaseEntityWithUniqueName {
 }

@@ -1,9 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.persistence.UniqueConstraint;
+import javax.persistence.*;
 
 @Entity
 @Table(
@@ -13,11 +10,11 @@ import javax.persistence.UniqueConstraint;
 		)
 	}
 )
-public class ItemChange extends BaseEntity {
+public class ItemSourceStatus extends BaseEntity {
 	@ManyToOne
 	private Source source;
 	@ManyToOne
 	private Item item;
-	private Double price;
-	private Integer count;
+	@Enumerated(EnumType.STRING)
+	private ItemStatus status;
 }

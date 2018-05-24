@@ -23,6 +23,14 @@ public class User extends BaseEntityWithUniqueName {
 	)
 	private Set<UserRole> roles;
 
+	@ManyToMany(cascade = CascadeType.MERGE)
+	@JoinTable(
+		name = "item2user",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id")
+	)
+	Set<Item> items;
+
 	public User() {}
 
 	public User(String name) {

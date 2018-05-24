@@ -67,8 +67,8 @@ public class PriceListExcelFile implements Closeable {
 		}
 	}
 
-	List<ItemRow> itemRows() {
-		List<ItemRow> result = new LinkedList<>();
+	List<PriceItem> priceItems() {
+		List<PriceItem> result = new LinkedList<>();
 
 		findMeta();
 
@@ -88,7 +88,7 @@ public class PriceListExcelFile implements Closeable {
 					throw new IllegalStateException("Row like price but without group");
 				}
 				result.add(
-					new ItemRow(
+					new PriceItem(
 						currentGroup,
 						row.cellStringValue(columnMap.get(IH_NAME)),
 						row.cellNumberValue(columnMap.get(IH_PRICE)),
