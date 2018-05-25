@@ -5,6 +5,7 @@ import java.util.List;
 
 public class HeadMenu {
 	public enum ITEM {
+		PRICE_LIST,
 		SETTINGS,
 		ADMIN
 	}
@@ -39,9 +40,9 @@ public class HeadMenu {
 	private void prepare() {
 		if (!this.isPrepared) {
 			items = new ArrayList<>();
-			items.add(new MenuItem(ITEM.SETTINGS.name(), "/user/settings", "user settings"));
+			items.add(new MenuItem(ITEM.PRICE_LIST.name(), "/price-list", "Прайс лист"));
 			if (this.isAdmin) {
-//				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/something", "Админка"));
+				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/upload-price", "Админка"));
 			}
 			this.isPrepared = true;
 		}

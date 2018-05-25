@@ -10,7 +10,7 @@ import javax.persistence.*;
 		)
 	}
 )
-class Item extends BaseEntity {
+public class Item extends BaseEntity {
 	@Column(nullable = false)
 	private String title;
 	@Column(nullable = false)
@@ -27,4 +27,59 @@ class Item extends BaseEntity {
 
 //	@ManyToMany(mappedBy = "items")
 //	private Set<User> users;
+
+
+	String getTitle() {
+		return title;
+	}
+
+	Item setTitle(String title) {
+		this.title = title;
+		return this;
+	}
+
+	Double getPrice() {
+		return price;
+	}
+
+	Item setPrice(Double price) {
+		this.price = price;
+		return this;
+	}
+
+	Integer getCount() {
+		return count;
+	}
+
+	Item setCount(Integer count) {
+		this.count = count;
+		return this;
+	}
+
+	String getBarcode() {
+		return barcode;
+	}
+
+	Item setBarcode(String barcode) {
+		this.barcode = barcode;
+		return this;
+	}
+
+	String getUrl() {
+		return url;
+	}
+
+	Item setUrl(String url) {
+		this.url = url;
+		return this;
+	}
+
+	public Publisher getPublisher() {
+		return publisher;
+	}
+
+	Item setPublisher(Publisher publisher) {
+		this.publisher = publisher;
+		return this;
+	}
 }

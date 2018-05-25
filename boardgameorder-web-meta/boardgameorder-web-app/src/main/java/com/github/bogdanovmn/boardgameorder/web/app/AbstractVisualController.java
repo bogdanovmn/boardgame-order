@@ -19,6 +19,8 @@ public abstract class AbstractVisualController extends AbstractController {
 
 	@ModelAttribute
 	public void addCommonAttributes(Model model) {
+		model.addAttribute("menu", new HeadMenu(currentMenuItem(), isAdmin()).getItems());
+		model.addAttribute("adminMenu", new AdminMenu(currentAdminMenuItem()).getItems());
 		model.addAttribute("userName", getUser().getName());
 	}
 

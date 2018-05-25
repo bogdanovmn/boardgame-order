@@ -16,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/registration")
-public class RegistrationController extends AbstractMinVisualController {
+class RegistrationController extends AbstractMinVisualController {
 	private final RegistrationService registrationService;
 	private final ProjectSecurityService securityService;
 
@@ -27,14 +27,14 @@ public class RegistrationController extends AbstractMinVisualController {
 	}
 
 	@GetMapping
-	public ModelAndView registration(Model model) {
+	ModelAndView registration(Model model) {
 		model.addAttribute("userForm", new UserRegistrationForm());
 
 		return new ModelAndView("registration");
 	}
 
 	@PostMapping
-	public ModelAndView registration1(
+	ModelAndView registration1(
 		UserRegistrationForm userForm,
 		BindingResult bindingResult,
 		Model model
