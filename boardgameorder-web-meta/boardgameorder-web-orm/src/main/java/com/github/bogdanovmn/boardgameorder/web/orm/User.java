@@ -29,7 +29,7 @@ public class User extends BaseEntityWithUniqueName {
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id")
 	)
-	Set<Item> items;
+	private Set<Item> items;
 
 	public User() {}
 

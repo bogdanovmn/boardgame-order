@@ -24,7 +24,7 @@ class UserRegistrationForm {
 		return name;
 	}
 
-	UserRegistrationForm setName(String name) {
+	public UserRegistrationForm setName(String name) {
 		this.name = name;
 		return this;
 	}
@@ -33,7 +33,7 @@ class UserRegistrationForm {
 		return password;
 	}
 
-	UserRegistrationForm setPassword(String password) {
+	public UserRegistrationForm setPassword(String password) {
 		this.password = password;
 		return this;
 	}
@@ -42,7 +42,7 @@ class UserRegistrationForm {
 		return passwordConfirm;
 	}
 
-	UserRegistrationForm setPasswordConfirm(String passwordConfirm) {
+	public UserRegistrationForm setPasswordConfirm(String passwordConfirm) {
 		this.passwordConfirm = passwordConfirm;
 		return this;
 	}
@@ -51,7 +51,7 @@ class UserRegistrationForm {
 		return email;
 	}
 
-	UserRegistrationForm setEmail(String email) {
+	public UserRegistrationForm setEmail(String email) {
 		this.email = email;
 		return this;
 	}

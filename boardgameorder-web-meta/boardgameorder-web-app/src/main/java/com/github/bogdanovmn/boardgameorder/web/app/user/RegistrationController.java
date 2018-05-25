@@ -13,11 +13,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.validation.Valid;
 
 @Controller
 @RequestMapping("/registration")
-class RegistrationController extends AbstractMinVisualController {
+public class RegistrationController extends AbstractMinVisualController {
 	private final RegistrationService registrationService;
 	private final ProjectSecurityService securityService;
 
@@ -28,15 +27,15 @@ class RegistrationController extends AbstractMinVisualController {
 	}
 
 	@GetMapping
-	ModelAndView registration(Model model) {
+	public ModelAndView registration(Model model) {
 		model.addAttribute("userForm", new UserRegistrationForm());
 
 		return new ModelAndView("registration");
 	}
 
 	@PostMapping
-	ModelAndView registration(
-		@Valid UserRegistrationForm userForm,
+	public ModelAndView registration1(
+		UserRegistrationForm userForm,
 		BindingResult bindingResult,
 		Model model
 	) {

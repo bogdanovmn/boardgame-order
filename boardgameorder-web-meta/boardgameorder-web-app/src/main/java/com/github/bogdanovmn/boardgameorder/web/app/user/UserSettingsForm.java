@@ -16,7 +16,7 @@ class UserSettingsForm {
 		return newPassword;
 	}
 
-	UserSettingsForm setNewPassword(String newPassword) {
+	public UserSettingsForm setNewPassword(String newPassword) {
 		this.newPassword = newPassword;
 		return this;
 	}
@@ -25,7 +25,7 @@ class UserSettingsForm {
 		return newPasswordConfirm;
 	}
 
-	UserSettingsForm setNewPasswordConfirm(String newPasswordConfirm) {
+	public UserSettingsForm setNewPasswordConfirm(String newPasswordConfirm) {
 		this.newPasswordConfirm = newPasswordConfirm;
 		return this;
 	}
@@ -34,7 +34,7 @@ class UserSettingsForm {
 		return currentPassword;
 	}
 
-	UserSettingsForm setCurrentPassword(String currentPassword) {
+	public UserSettingsForm setCurrentPassword(String currentPassword) {
 		this.currentPassword = currentPassword;
 		return this;
 	}

@@ -1,5 +1,5 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
-enum ItemStatus {
+public enum ItemStatus {
 	ADD, DELETE
 }
