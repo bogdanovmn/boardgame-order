@@ -15,9 +15,8 @@ public class EntityFactory {
 
 	public EntityFactory() {}
 
-
-	public BaseEntityWithUniqueName getPersistBaseEntityWithUniqueName(BaseEntityWithUniqueName entity) {
-		BaseEntityWithUniqueName result;
+	public <T extends BaseEntityWithUniqueName> T getPersistBaseEntityWithUniqueName(T entity) {
+		T result;
 
 		Class<? extends BaseEntityWithUniqueName> entityClass = entity.getClass();
 		String name = entity.getName();
@@ -35,7 +34,7 @@ public class EntityFactory {
 				);
 			}
 
-			result = repository.findFirstByName(name);
+			result = (T) repository.findFirstByName(name);
 
 			if (result != null) {
 				this.singleEntityCache.get(entityClass).put(name, result);
@@ -46,7 +45,7 @@ public class EntityFactory {
 			}
 		}
 		else {
-			result = this.singleEntityCache.get(entityClass).get(name);
+			result = (T) this.singleEntityCache.get(entityClass).get(name);
 		}
 
 		return result;

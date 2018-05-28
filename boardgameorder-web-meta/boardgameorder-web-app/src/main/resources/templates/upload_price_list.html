@@ -1,0 +1,34 @@
+{{#layout}}
+
+{{> inc/admin_menu }}
+
+{{#source}}
+	<h1>Прайс загуржена</h1>
+
+	<table class="import-info">
+		<tr><td>Дата создания</td> <td>{{fileCreatedDate}}</td></tr>
+		<tr><td>Дата изменения</td><td>{{fileModifiedDate}}</td></tr>
+		<tr><td>Кол-во позиций</td><td>{{itemsCount}}</td></tr>
+	</table>
+	<a href="">Загрузить еще</a>
+{{/source}}
+
+{{^source}}
+	<h1>Загрузка файла (MS Excel)</h1>
+
+	{{>inc/error_msg}}
+
+	<div class=form>
+		<form method=post enctype="multipart/form-data">
+			<table>
+			<tr>
+				<td><input type=file name=file value=''>
+				<td>{{formError.file}}
+			<tr>
+				<td colspan=2><input type=submit value='  Загрузить  '>
+			</table>
+		</form>
+	</div>
+{{/source}}
+
+{{/layout}}

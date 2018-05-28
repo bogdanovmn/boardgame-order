@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.core;
 
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.Hyperlink;
 
 import java.util.Arrays;
 import java.util.List;
@@ -57,6 +58,9 @@ class ExcelCell {
 	}
 
 	String urlValue() {
-		return cell.getHyperlink().getAddress();
+		Hyperlink hyperlink = cell.getHyperlink();
+		return hyperlink == null
+			? null
+			: hyperlink.getAddress();
 	}
 }

@@ -8,17 +8,15 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class PriceListExcelFile implements Closeable {
-	private final static String IH_NAME    = "Номенклатура";
-	private final static String IH_COUNT   = "Кол-во";
-	private final static String IH_PRICE   = "базовая цена";
-	private final static String IH_BARCODE = "Штрих";
-	private final static String IH_FOTO    = "ФОТО";
+	private final static String IH_NAME      = "Номенклатура";
+	private final static String IH_COUNT     = "Кол-во";
+	private final static String IH_PRICE_OLD = "базовая цена";
+	private final static String IH_PRICE     = "Оптовая цена";
+	private final static String IH_BARCODE   = "Штрих";
+	private final static String IH_FOTO      = "ФОТО";
 
 	private final HSSFWorkbook excelBook;
 
@@ -35,6 +33,14 @@ public class PriceListExcelFile implements Closeable {
 		this(
 			new HSSFWorkbook(source)
 		);
+	}
+
+	public Date createdDate() {
+		return excelBook.getSummaryInformation().getCreateDateTime();
+	}
+
+	public Date modifiedDate() {
+		return excelBook.getSummaryInformation().getLastSaveDateTime();
 	}
 
 	private void findMeta() {
@@ -56,7 +62,7 @@ public class PriceListExcelFile implements Closeable {
 					columnMap.put(cell.getStringCellValue(), cell.getColumnIndex());
 				}
 
-				if (ec.isContainString("Сумма заказа по базовым ценам")) {
+				if (ec.isContainString("Сумма заказа по ")) {
 					itemsRangeNext = true;
 				}
 				if (ec.isContainString(IH_NAME)) {

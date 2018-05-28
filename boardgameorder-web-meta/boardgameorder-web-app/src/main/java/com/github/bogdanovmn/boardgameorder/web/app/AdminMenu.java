@@ -5,6 +5,7 @@ import java.util.List;
 
 public class AdminMenu {
 	public enum ITEM {
+		UPLOAD_PRICE_LIST,
 		NONE
 	}
 
@@ -31,7 +32,7 @@ public class AdminMenu {
 	private void prepare() {
 		if (!isPrepared) {
 			items = new ArrayList<>();
-//			items.add(new MenuItem(ITEM.IMPORT.name(), "/admin/some", "..."));
+			items.add(new MenuItem(ITEM.UPLOAD_PRICE_LIST.name(), "/admin/upload-price-list", "Загрузить прайс"));
 		}
 		isPrepared = true;
 	}

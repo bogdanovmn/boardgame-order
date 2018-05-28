@@ -12,8 +12,6 @@ public class PriceListContent {
 
 	private final PriceListExcelFile file;
 
-	private final Map<String, PriceItem> items = new HashMap<>();
-
 	public PriceListContent(PriceListExcelFile file) {
 		this.file = file;
 	}
@@ -21,8 +19,10 @@ public class PriceListContent {
 	public List<PriceItem> boardGames() {
 		return file.priceItems().stream()
 			.filter(x ->
-				BOARD_GAME.matcher(x.getTitle()).find() ||
+				(BOARD_GAME.matcher(x.getTitle()).find() ||
 					BOARD_GAME.matcher(x.getGroup()).find())
+						&& !x.getGroup().contains("УЦЕНКА")
+			)
 			.collect(Collectors.toList());
 	}
 

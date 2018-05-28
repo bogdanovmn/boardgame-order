@@ -10,6 +10,8 @@ public class EntityRepositoryMapFactory {
 
 	@Autowired
 	private UserRoleRepository userRoleRepository;
+	@Autowired
+	private PublisherRepository publisherRepository;
 
 	public EntityRepositoryMapFactory() {
 	}
@@ -17,7 +19,8 @@ public class EntityRepositoryMapFactory {
 	private void init() {
 		this.map = new HashMap<Class<? extends BaseEntityWithUniqueName>, BaseEntityWithUniqueNameRepository>()
 		{{
-			put(UserRole.class,          userRoleRepository);
+			put(UserRole.class,  userRoleRepository);
+			put(Publisher.class, publisherRepository);
 		}};
 	}
 

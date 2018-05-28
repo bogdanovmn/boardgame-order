@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
-class PriceItem {
+public class PriceItem {
 	private final String group;
 	private final String title;
 	private final Double price;
@@ -25,27 +25,35 @@ class PriceItem {
 		this.url = url;
 	}
 
-	String getGroup() {
+	public String getGroup() {
 		return group;
 	}
 
-	String getTitle() {
+	public String getTitle() {
 		return title;
 	}
 
-	Double getPrice() {
+	public Double getPrice() {
 		return price;
 	}
 
-	Integer getCount() {
+	public Integer getCount() {
 		return count;
 	}
 
-	String getBarcode() {
+	public String getBarcode() {
 		return barcode;
 	}
 
-	String getUrl() {
+	public String getUrl() {
 		return url;
+	}
+
+	@Override
+	public String toString() {
+		return "PriceItem{" +
+			"group='" + group + '\'' +
+			", title='" + title + '\'' +
+			'}';
 	}
 }

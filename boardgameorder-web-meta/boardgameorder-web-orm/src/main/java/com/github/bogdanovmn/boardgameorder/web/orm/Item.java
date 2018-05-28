@@ -13,10 +13,6 @@ import javax.persistence.*;
 public class Item extends BaseEntity {
 	@Column(nullable = false)
 	private String title;
-	@Column(nullable = false)
-	private Double price;
-	@Column(nullable = false)
-	private Integer count;
 	@Column(length = 20)
 	private String barcode;
 	private String url;
@@ -29,47 +25,29 @@ public class Item extends BaseEntity {
 //	private Set<User> users;
 
 
-	String getTitle() {
+	public String getTitle() {
 		return title;
 	}
 
-	Item setTitle(String title) {
+	public Item setTitle(String title) {
 		this.title = title;
 		return this;
 	}
 
-	Double getPrice() {
-		return price;
-	}
-
-	Item setPrice(Double price) {
-		this.price = price;
-		return this;
-	}
-
-	Integer getCount() {
-		return count;
-	}
-
-	Item setCount(Integer count) {
-		this.count = count;
-		return this;
-	}
-
-	String getBarcode() {
+	public String getBarcode() {
 		return barcode;
 	}
 
-	Item setBarcode(String barcode) {
+	public Item setBarcode(String barcode) {
 		this.barcode = barcode;
 		return this;
 	}
 
-	String getUrl() {
+	public String getUrl() {
 		return url;
 	}
 
-	Item setUrl(String url) {
+	public Item setUrl(String url) {
 		this.url = url;
 		return this;
 	}
@@ -78,7 +56,7 @@ public class Item extends BaseEntity {
 		return publisher;
 	}
 
-	Item setPublisher(Publisher publisher) {
+	public Item setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 		return this;
 	}

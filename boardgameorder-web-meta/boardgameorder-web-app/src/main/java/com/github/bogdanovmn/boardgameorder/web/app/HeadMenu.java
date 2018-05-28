@@ -42,7 +42,7 @@ public class HeadMenu {
 			items = new ArrayList<>();
 			items.add(new MenuItem(ITEM.PRICE_LIST.name(), "/price-list", "Прайс лист"));
 			if (this.isAdmin) {
-				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/upload-price", "Админка"));
+				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/upload-price-list", "Админка"));
 			}
 			this.isPrepared = true;
 		}
