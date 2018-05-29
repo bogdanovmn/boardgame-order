@@ -2,13 +2,21 @@
 
 {{#publishers.0}}
 	<h1>Все цены</h1>
+	{{#publishers}}
+		<div id="publisher-{{publisher.id}}" class="publisher-block">
+			<b>{{publisher.name}}</b>
+			<table>
+			{{#prices}}
+				<tr id="item-{{item.id}}" class="price-item">
+					<td class="count">{{count}}<i>шт.</i></td>
+					<td class="price">{{price}}<i>р.</i></td>
+					<td class="item" >{{item.title}}</td>
+				</tr>
+			{{/prices}}
+			</table>
+		</div>
+	{{/publishers}}
 {{/publishers.0}}
-
-{{#publishers}}
-	<div>
-	
-	</div>
-{{/publishers}}
 
 {{^publishers.0}}
 	<h1>Пусто</h1>

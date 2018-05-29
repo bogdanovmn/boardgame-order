@@ -18,7 +18,7 @@ class PriceListController extends AbstractVisualController {
 
 	@GetMapping
 	ModelAndView allPrices() {
-		return new ModelAndView("price_list", priceListService.getAllItems());
+		return new ModelAndView("price_list", priceListService.actualPriceList());
 	}
 
 	@Override

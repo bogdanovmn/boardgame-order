@@ -21,10 +21,6 @@ public class Item extends BaseEntity {
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
 
-//	@ManyToMany(mappedBy = "items")
-//	private Set<User> users;
-
-
 	public String getTitle() {
 		return title;
 	}
