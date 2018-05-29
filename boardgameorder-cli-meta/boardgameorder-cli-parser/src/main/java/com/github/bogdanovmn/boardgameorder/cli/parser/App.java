@@ -22,8 +22,8 @@ public class App {
 					) {
 						PriceListContent price = new PriceListContent(file);
 						price.printTotal();
-						System.out.println(file.createdDate());
-						System.out.println(file.modifiedDate());
+//						System.out.println(file.createdDate());
+//						System.out.println(file.modifiedDate());
 					}
 
 				}

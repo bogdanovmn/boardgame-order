@@ -1,16 +1,16 @@
 {{#layout}}
 
 {{#publishers.0}}
-	<h1>Все цены</h1>
+	<h1>Все цены {{publishers.0.prices.0.source.fileModifyDate}}</h1>
 	{{#publishers}}
 		<div id="publisher-{{publisher.id}}" class="publisher-block">
-			<b>{{publisher.name}}</b>
+			<b>{{publisher.normalizedName}}</b> ({{prices.size}})
 			<table>
 			{{#prices}}
 				<tr id="item-{{item.id}}" class="price-item">
-					<td class="count">{{count}}<i>шт.</i></td>
-					<td class="price">{{price}}<i>р.</i></td>
-					<td class="item" >{{item.title}}</td>
+					<td class="count">{{count}}<i>шт</i></td>
+					<td class="price">{{roundedPrice}}<i>р</i></td>
+					<td class="item" >{{{item.htmlTitle}}}</td>
 				</tr>
 			{{/prices}}
 			</table>
@@ -22,4 +22,11 @@
 	<h1>Пусто</h1>
 {{/publishers.0}}
 
+<!--<script>-->
+	<!--$('div.publisher-block b').click(-->
+		<!--function() {-->
+			<!--$(this).parent().toggleClass("visible");-->
+		<!--}-->
+	<!--);-->
+<!--// </script>-->
 {{/layout}}

@@ -20,6 +20,9 @@ public class ItemPrice extends BaseEntity {
 	@Column(nullable = false)
 	private Integer count;
 
+	public int getRoundedPrice() {
+		return (int)Math.round(price);
+	}
 	public Source getSource() {
 		return source;
 	}

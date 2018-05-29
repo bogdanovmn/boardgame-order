@@ -45,9 +45,11 @@ public class PriceListExcelFile implements Closeable {
 
 	private void findMeta() {
 		boolean itemsRangeNext = false;
+		boolean itemsHeaderRow = false;
 		for (Row row : excelBook.getSheetAt(0)) {
-			boolean itemsHeaderRow = false;
+			if (itemsHeaderRow) break;
 
+//			printRow(row);
 			for (Cell cell : row) {
 				ExcelCell ec = new ExcelCell(cell);
 

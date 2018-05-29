@@ -21,6 +21,9 @@ public class Item extends BaseEntity {
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
 
+	public String getHtmlTitle() {
+		return title.replaceFirst("(\".*\")", "<b>$1</b>");
+	}
 	public String getTitle() {
 		return title;
 	}

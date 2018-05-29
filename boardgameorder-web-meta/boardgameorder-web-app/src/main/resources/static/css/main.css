@@ -1,6 +1,7 @@
 a,body,table,tr,td,li,p,input,textarea,pre {font-family: verdana, arial, serif;color:#101610;padding:0;margin:0}
 table{width:auto;table-layout:fixed;border-collapse:collapse;text-align:left}
 
+h1 { color: #575651}
 div.main { width: 1000px; margin: 0 auto; text-align: center; }
 
 #top_menu { position: static; font-size: 100%; }
@@ -29,6 +30,6 @@ div.publisher-block table { text-align: left; margin-left: 20px; }
 div.publisher-block table td.count { color: #a2bca3;}
 div.publisher-block table td.price { color: #778d78;}
 div.publisher-block table td.item  { color: #575651;}
-div.publisher-block table td       { padding: 2px 4px; }
+div.publisher-block table td       { padding: 2px 8px; }
 div.publisher-block table td i     { color: #c3c2bb;}
 
