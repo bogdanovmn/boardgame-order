@@ -1,6 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -11,6 +12,9 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+	@Value("${contextPath:}")
+	private String contextPath;
+
 	private final ProjectUserDetailsService userDetailsService;
 
 	@Autowired
@@ -26,6 +30,9 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
+		if (!contextPath.isEmpty()) {
+			contextPath = "/" + contextPath;
+		}
 		http.authorizeRequests()
 				.antMatchers("/registration").anonymous()
 				.antMatchers("/css/**").permitAll()
@@ -33,15 +40,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 
 		.and().formLogin()
-			.loginPage("/login")
+			.loginPage(contextPath + "/login")
 			.defaultSuccessUrl("/price-list", true)
 			.permitAll()
 
 		.and().logout()
 			.logoutRequestMatcher(
-				new AntPathRequestMatcher("/logout")
+				new AntPathRequestMatcher(contextPath + "/logout")
 			)
-			.logoutSuccessUrl("/login")
+			.logoutSuccessUrl(contextPath + "/login")
 			.permitAll()
 
 		.and().csrf()
