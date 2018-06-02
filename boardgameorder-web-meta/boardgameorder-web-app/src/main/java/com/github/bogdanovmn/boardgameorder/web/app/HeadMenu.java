@@ -40,9 +40,9 @@ public class HeadMenu {
 	private void prepare() {
 		if (!this.isPrepared) {
 			items = new ArrayList<>();
-			items.add(new MenuItem(ITEM.PRICE_LIST.name(), "/price-list", "Прайс лист"));
+			items.add(new MenuItem(ITEM.PRICE_LIST.name(), "price-list", "Прайс лист"));
 			if (this.isAdmin) {
-				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/upload-price-list", "Админка"));
+				items.add(new MenuItem(ITEM.ADMIN.name(), "admin/upload-price-list", "Админка"));
 			}
 			this.isPrepared = true;
 		}
