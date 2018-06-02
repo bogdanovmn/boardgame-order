@@ -12,9 +12,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	@Value("${contextPath:}")
-	private String contextPath;
-
 	private final ProjectUserDetailsService userDetailsService;
 
 	@Autowired
@@ -30,9 +27,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		if (!contextPath.isEmpty()) {
-			contextPath = "/" + contextPath;
-		}
 		http.authorizeRequests()
 				.antMatchers("/registration").anonymous()
 				.antMatchers("/css/**").permitAll()
@@ -40,15 +34,15 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 				.anyRequest().authenticated()
 
 		.and().formLogin()
-			.loginPage(contextPath + "/login")
+			.loginPage("/login")
 			.defaultSuccessUrl("/price-list", true)
 			.permitAll()
 
 		.and().logout()
 			.logoutRequestMatcher(
-				new AntPathRequestMatcher(contextPath + "/logout")
+				new AntPathRequestMatcher("/logout")
 			)
-			.logoutSuccessUrl(contextPath + "/login")
+			.logoutSuccessUrl("/login")
 			.permitAll()
 
 		.and().csrf()
