@@ -6,15 +6,15 @@
 				<b>{{title}}</b>
 			{{/isSelected}}
 			{{^isSelected}}
-				<a href='{{url}}?{{currentFilter}}'>{{title}}</a>
+				<a href='{{layout.contextPath}}/{{url}}'>{{title}}</a>
 			{{/isSelected}}
 		::{{/menu}}.
 	</div>
 	<div id=user_info>
 		.::
-		<a href="/user/settings">{{userName}}</a>
+		<a href="{{layout.contextPath}}/user/settings">{{userName}}</a>
 		::
-		<a class=logout href='/logout'>X</a>
+		<a class=logout href='{{layout.contextPath}}/logout'>X</a>
 		::.
 	</div>
 </div>

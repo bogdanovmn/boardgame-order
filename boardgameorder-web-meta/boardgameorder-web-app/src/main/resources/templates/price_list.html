@@ -1,32 +1,85 @@
 {{#layout}}
 
 {{#publishers.0}}
-	<h1>Все цены {{publishers.0.prices.0.source.fileModifyDate}}</h1>
-	{{#publishers}}
-		<div id="publisher-{{publisher.id}}" class="publisher-block">
-			<b>{{publisher.normalizedName}}</b> ({{prices.size}})
-			<table>
-			{{#prices}}
-				<tr id="item-{{item.id}}" class="price-item">
-					<td class="count">{{count}}<i>шт</i></td>
-					<td class="price">{{roundedPrice}}<i>р</i></td>
-					<td class="item" >{{{item.htmlTitle}}}</td>
-				</tr>
-			{{/prices}}
-			</table>
-		</div>
-	{{/publishers}}
+	<div id="order">
+		<div class="title">Order</div>
+		<div class="items"></div>
+		<div class="total"></div>
+	</div>
+
+	<div id="price-list">
+		<h1>Все цены {{publishers.0.prices.0.source.fileModifyDate}}</h1>
+		{{#publishers}}
+			<div id="publisher-{{publisher.id}}" class="publisher-block">
+				<b>{{publisher.normalizedName}}</b> ({{prices.size}})
+				<table>
+				{{#prices}}
+					<tr id="item-{{item.id}}" class="price-item">
+						<td class="count">{{count}}<i>шт</i></td>
+						<td class="price">{{roundedPrice}}<i>р</i></td>
+						<td class="action">
+							<div
+								class="button button-add-item"
+								data-href="/user/order/item/{{item.id}}"
+								data-type="add"
+								data-id="{{item.id}}">+</div>
+						</td>
+						<td class="title" >
+							{{{item.htmlTitle}}}
+							<a target="_blank" href="{{item.url}}">фото</a>
+						</td>
+					</tr>
+				{{/prices}}
+				</table>
+			</div>
+		{{/publishers}}
+	</div>
 {{/publishers.0}}
 
 {{^publishers.0}}
 	<h1>Пусто</h1>
 {{/publishers.0}}
 
-<!--<script>-->
-	<!--$('div.publisher-block b').click(-->
-		<!--function() {-->
-			<!--$(this).parent().toggleClass("visible");-->
-		<!--}-->
-	<!--);-->
-<!--// </script>-->
+<script>
+	var blockInAction = {};
+
+	$('div.button').click(
+		function() {
+			var button = $(this);
+			var actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
+			var itemId = button.attr("data-id");
+
+			if (blockInAction[itemId]) {
+				return
+			}
+			blockInAction[itemId] = true;
+
+			var itemBlock = $("#item-" + itemId);
+			itemBlock.toggleClass("in-action");
+
+			switch (button.attr("data-type")) {
+				case "add":
+					addItem(itemId, actionUrl, "PUT");
+					break;
+			}
+
+			itemBlock.toggleClass("in-action");
+			blockInAction[itemId] = false;
+		}
+	);
+	function addItem(itemId, url, method) {
+		console.log("[action] " + method + " " + url);
+
+		$.ajax({ url: url, method: method})
+			.done(function(resp) {
+				console.log('[OK] ' + url);
+				$("#order div.items").append(
+					$("#item-" + itemId + " td.title").html()
+				)
+			})
+			.fail(function (jqXHR, excpetion) {
+				console.log("[ERROR] " + url + "\n" + excpetion)
+			})
+	}
+</script>
 {{/layout}}
