@@ -16,6 +16,17 @@ div.main { width: 1000px; margin: 0 auto; text-align: center; }
 
 #admin_menu a { text-decoration: none; font-size: 85% }
 
+#order {
+	font-size: 80%; text-align: left; padding: 5px; color: #575651; border: 1px solid #778d78; background: #a2bca3; border-radius: 7px;
+	position: fixed;  margin-top: 20px;
+}
+#order p { margin-bottom: 7px; }
+#order div { padding: 3px 5px; }
+#order div.title { border-bottom: 1px solid #778d78; }
+#order div.menu { border-top: 1px solid #778d78; }
+
+#price-list { float: right; width: 88%; }
+
 form table    { margin: 0 auto; }
 form table td { padding: 10px; }
 
@@ -30,10 +41,11 @@ div.publisher-block table { text-align: left; margin-left: 20px; }
 div.publisher-block table td.count { color: #a2bca3;}
 div.publisher-block table td.price { color: #778d78;}
 div.publisher-block table td.title  { color: #575651;}
+div.publisher-block table td.title a { text-decoration: none; color: #1299b4; }
 div.publisher-block table td       { padding: 2px 8px; }
 div.publisher-block table td i     { color: #c3c2bb;}
 
-div.button {
-	border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
+div.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
 div.button:hover { border: 1px dotted; }
 div.button-add-item { border-color: seagreen; color: seagreen; }
+

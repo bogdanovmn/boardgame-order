@@ -2,9 +2,11 @@
 
 {{#publishers.0}}
 	<div id="order">
-		<div class="title">Order</div>
-		<div class="items"></div>
-		<div class="total"></div>
+		<div class="title">Корзина</div>
+		<div class="details"></div>
+		<div class="menu">
+			<a href="{{layout.contextPath}}/user/order/items">Подробнее...</a>
+		</div>
 	</div>
 
 	<div id="price-list">
@@ -20,7 +22,7 @@
 						<td class="action">
 							<div
 								class="button button-add-item"
-								data-href="/user/order/item/{{item.id}}"
+								data-href="/user/order/items/{{item.id}}"
 								data-type="add"
 								data-id="{{item.id}}">+</div>
 						</td>
@@ -41,7 +43,45 @@
 {{/publishers.0}}
 
 <script>
+	OrderBlock = function() {
+		this.itemsCount = parseInt("{{order.itemsCount}}") || 0;
+		this.total = parseInt("{{order.total}}") || 0;
+		this.totalWithDiscount = function() {
+			var x = this.total * 0.92;
+			// round to 50 RUB
+			y = x % 50;
+			if (y > 0) {
+				x = x + 50 - y;
+			}
+			return x;
+		};
+
+		this.addItem = function(id) {
+			var item = new Item(id);
+			this.total += item.getPrice();
+			this.itemsCount++;
+		};
+
+		this.render = function() {
+			$("#order div.details").html(
+				"<p>Выбрано:<b>" + this.itemsCount + "</b><p>Сумма:<br>" + this.total + " руб.<p>Со скидкой:<br><b>" + this.totalWithDiscount() + "</b> руб."
+			)
+		}
+	};
+
+	Item = function(id) {
+		this.id = id;
+		this.getPrice = function() {
+			return parseInt(
+				$("#item-" + this.id + " td.price").text(),
+				10
+			);
+		}
+	};
+
 	var blockInAction = {};
+	var order = new OrderBlock();
+	order.render();
 
 	$('div.button').click(
 		function() {
@@ -73,9 +113,8 @@
 		$.ajax({ url: url, method: method})
 			.done(function(resp) {
 				console.log('[OK] ' + url);
-				$("#order div.items").append(
-					$("#item-" + itemId + " td.title").html()
-				)
+				order.addItem(itemId);
+				order.render();
 			})
 			.fail(function (jqXHR, excpetion) {
 				console.log("[ERROR] " + url + "\n" + excpetion)

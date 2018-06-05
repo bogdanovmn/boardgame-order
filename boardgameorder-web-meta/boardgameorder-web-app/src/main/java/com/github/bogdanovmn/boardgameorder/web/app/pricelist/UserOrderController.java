@@ -1,28 +1,38 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.app.AbstractController;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import com.github.bogdanovmn.boardgameorder.web.app.AbstractVisualController;
+import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
+import com.github.bogdanovmn.boardgameorder.web.orm.UserOrderItem;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
+
+import java.util.HashMap;
+import java.util.List;
 
 @RestController
 @RequestMapping("/user/order")
-class UserOrderController extends AbstractController {
+class UserOrderController extends AbstractVisualController {
 	private final UserOrderService userOrderService;
 
 	UserOrderController(final UserOrderService userOrderService) {
 		this.userOrderService = userOrderService;
 	}
 
-	@PutMapping("/item/{id}")
-	ResponseEntity addItem(@PathVariable Integer id) {
-		userOrderService.addItem(getUser(), id);
-		return ResponseEntity.ok().build();
-
+	@GetMapping("/items")
+	ModelAndView getItems(Integer id) {
+		List<UserOrderItem> items = userOrderService.getAllItems(getUser());
+		return new ModelAndView(
+			"user_order_items",
+			new HashMap<String, Object>() {{
+				put("items", items);
+			}}
+		);
 	}
 
-	@DeleteMapping("/item{id}")
-	ResponseEntity deleteItem(Integer id) {
-		userOrderService.deleteItem(getUser(), id);
-		return ResponseEntity.ok().build();
+	@Override
+	protected HeadMenu.ITEM currentMenuItem() {
+		return HeadMenu.ITEM.ORDER;
 	}
 }

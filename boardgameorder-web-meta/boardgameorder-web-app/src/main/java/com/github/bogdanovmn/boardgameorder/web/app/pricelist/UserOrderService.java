@@ -3,6 +3,9 @@ package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
+import java.util.List;
+
 @Service
 class UserOrderService {
 	private final UserOrderItemRepository userOrderItemRepository;
@@ -29,7 +32,9 @@ class UserOrderService {
 			);
 		}
 		else {
-			orderItem.incCount(1);
+			userOrderItemRepository.save(
+				orderItem.incCount(1)
+			);
 		}
 	}
 
@@ -48,6 +53,13 @@ class UserOrderService {
 			if (orderItem.getCount() == 0) {
 				userOrderItemRepository.delete(orderItem);
 			}
+			else {
+				userOrderItemRepository.save(orderItem.setUpdated(new Date()));
+			}
 		}
+	}
+
+	List<UserOrderItem> getAllItems(final User user) {
+		return userOrderItemRepository.getAllByUser(user);
 	}
 }

@@ -83,7 +83,8 @@ public class UserOrderItem extends BaseEntity {
 		return Objects.hash(user, item, count, updated);
 	}
 
-	public void incCount(final int increment) {
+	public UserOrderItem incCount(final int increment) {
 		count += increment;
+		return this;
 	}
 }

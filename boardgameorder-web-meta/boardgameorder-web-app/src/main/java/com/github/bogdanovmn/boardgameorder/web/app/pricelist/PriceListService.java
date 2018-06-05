@@ -1,9 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPriceRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.Source;
-import com.github.bogdanovmn.boardgameorder.web.orm.SourceRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -16,15 +13,18 @@ import java.util.stream.Collectors;
 class PriceListService {
 	private final SourceRepository sourceRepository;
 	private final ItemPriceRepository itemPriceRepository;
+	private final UserOrderItemRepository userOrderItemRepository;
 
-	PriceListService(final SourceRepository sourceRepository, final ItemPriceRepository itemPriceRepository) {
+	PriceListService(final SourceRepository sourceRepository, final ItemPriceRepository itemPriceRepository, final UserOrderItemRepository userOrderItemRepository) {
 		this.sourceRepository = sourceRepository;
 		this.itemPriceRepository = itemPriceRepository;
+		this.userOrderItemRepository = userOrderItemRepository;
 	}
 
-	Map<String, Object> actualPriceList() {
+	Map<String, Object> actualPriceList(User user) {
 		Source source = sourceRepository.findTopByOrderByFileModifyDateDesc();
 		List<ItemPrice> itemPrices = itemPriceRepository.findBySource(source);
+		List<UserOrderItem> userOrderItems = userOrderItemRepository.getAllByUser(user);
 
 		Map<String, Object> result = new HashMap<>();
 
@@ -46,6 +46,8 @@ class PriceListService {
 					)
 					.collect(Collectors.toList())
 		);
+
+		result.put("order", new UserOrderView(itemPrices, userOrderItems));
 
 		return result;
 	}
