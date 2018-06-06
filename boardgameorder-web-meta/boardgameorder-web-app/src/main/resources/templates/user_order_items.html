@@ -1,5 +1,157 @@
 {{#layout}}
 
-<h1>В разработке</h1>
+{{#order.items.0}}
+	<h1>Ваша текущий заказ</h1>
+	<table class="price-and-item">
+	{{#order.items}}
+		<tr id="item-{{item.id}}" data-item-price="{{itemPrice}}">
+			<td class="count"><span>{{count}}</span><i>шт</i></td>
+			<td class="price"><span>{{total}}</span><i>р</i></td>
+			<td class="action">
+				<div
+					class="button button-add-item"
+					data-href="/user/order/items/{{item.id}}"
+					data-action="add"
+					data-id="{{item.id}}">+</div>
+				<div
+					class="button button-del-item"
+					data-href="/user/order/items/{{item.id}}"
+					data-action="del"
+					data-id="{{item.id}}">&ndash;</div>
+			</td>
+			<td class="title" >
+				{{{item.htmlTitle}}}
+				<a target="_blank" href="{{item.url}}">фото</a>
+			</td>
+		</tr>
+	{{/order.items}}
+	</table>
+
+	<div id="orderSummary"></div>
+{{/order.items.0}}
+
+
+{{^order.items.0}}
+	<h1>Корзина пуста, выбрать настолки можно <a href="{{layout.contextPrefix}}/price-list">тут</a></h1>
+{{/order.items.0}}
+
+<script>
+	Order = function() {
+		this.itemsCount = parseInt("{{order.itemsCount}}") || 0;
+		this.total = parseInt("{{order.total}}") || 0;
+
+		this.totalWithDiscount = function() {
+			var x = this.total * 0.92;
+			// round to 50 RUB
+			y = x % 50;
+			if (y > 0) {
+				x = x + 50 - y;
+			}
+			return x;
+		};
+
+		this.addItem = function(id) {
+			var item = new Item(id);
+			this.total += item.getPrice();
+			this.itemsCount++;
+			item.render(1, item.getPrice())
+		};
+
+		this.delItem = function(id) {
+			var item = new Item(id);
+			this.total -= item.getPrice();
+			this.itemsCount--;
+			item.render(-1, -1*item.getPrice())
+		};
+
+		this.render = function() {
+			$("#orderSummary").html(
+				"<p>Итого: " + this.total + " руб." +
+				"<p>Со скидкой: <b>" + this.totalWithDiscount() + "</b> руб."
+			)
+		}
+	};
+
+	Item = function(id) {
+		this.id = id;
+		this.element = $("#item-" + this.id);
+
+		this.getPrice = function() {
+			return parseInt(
+				this.element.attr("data-item-price")
+			);
+		};
+		this.render = function(countInc, priceInc) {
+			var itemCountElement = this.element.find("td.count span");
+			var itemTotalElement = this.element.find("td.price span");
+
+			itemCountElement.text(
+				parseInt(itemCountElement.text()) + countInc
+			);
+
+			itemTotalElement.text(
+				parseInt(itemTotalElement.text()) + priceInc
+			);
+		}
+	};
+
+	var blockInAction = {};
+	var order = new Order();
+	order.render();
+
+	$('div.button').click(
+		function() {
+			var button = $(this);
+			var actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
+			var itemId = button.attr("data-id");
+
+			if (blockInAction[itemId]) {
+				return
+			}
+			blockInAction[itemId] = true;
+
+			var itemBlock = $("#item-" + itemId);
+			itemBlock.toggleClass("in-action");
+
+			switch (button.attr("data-action")) {
+				case "add":
+					addItem(itemId, actionUrl);
+					break;
+				case "del":
+					delItem(itemId, actionUrl);
+					break;
+			}
+
+			itemBlock.toggleClass("in-action");
+			blockInAction[itemId] = false;
+		}
+	);
+	function addItem(itemId, url) {
+		console.log("[action] PUT " + url);
+
+		$.ajax({ url: url, method: "PUT"})
+			.done(function(resp) {
+				console.log('[OK] ' + url);
+				order.addItem(itemId);
+				order.render();
+			})
+			.fail(function (jqXHR, excpetion) {
+				console.log("[ERROR] " + url + "\n" + excpetion)
+			})
+	}
+	function delItem(itemId, url) {
+		console.log("[action] DELETE " + url);
+
+		$.ajax({ url: url, method: "DELETE"})
+			.done(function(resp) {
+				console.log('[OK] ' + url);
+				order.delItem(itemId);
+				order.render();
+			})
+			.fail(function (jqXHR, excpetion) {
+				console.log("[ERROR] " + url + "\n" + excpetion)
+			})
+	}
+</script>
 
 {{/layout}}

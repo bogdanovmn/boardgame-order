@@ -18,12 +18,14 @@ div.main { width: 1000px; margin: 0 auto; text-align: center; }
 
 #order {
 	font-size: 80%; text-align: left; padding: 5px; color: #575651; border: 1px solid #778d78; background: #a2bca3; border-radius: 7px;
-	position: fixed;  margin-top: 20px;
+	position: fixed;  margin: 20px 0 0 -30px;
 }
 #order p { margin-bottom: 7px; }
 #order div { padding: 3px 5px; }
 #order div.title { border-bottom: 1px solid #778d78; }
 #order div.menu { border-top: 1px solid #778d78; }
+
+#orderSummary { text-align: left; margin-top: 25px; padding: 10px; border-top: 1px solid #778d78; }
 
 #price-list { float: right; width: 88%; }
 
@@ -37,15 +39,18 @@ div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc;
 
 div.publisher-block { text-align: left; padding: 5px 2px 3px 2px ;}
 
-div.publisher-block table { text-align: left; margin-left: 20px; }
-div.publisher-block table td.count { color: #a2bca3;}
-div.publisher-block table td.price { color: #778d78;}
-div.publisher-block table td.title  { color: #575651;}
-div.publisher-block table td.title a { text-decoration: none; color: #1299b4; }
-div.publisher-block table td       { padding: 2px 8px; }
-div.publisher-block table td i     { color: #c3c2bb;}
+table.price-and-item { text-align: left; margin-left: 20px; }
+table.price-and-item td.count { color: #a2bca3;}
+table.price-and-item td.price { color: #778d78;}
+table.price-and-item td.title  { color: #575651;}
+table.price-and-item td.title a { text-decoration: none; color: #1299b4; }
+table.price-and-item td       { padding: 2px 8px; }
+table.price-and-item td i     { color: #c3c2bb;}
 
 div.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
 div.button:hover { border: 1px dotted; }
 div.button-add-item { border-color: seagreen; color: seagreen; }
+div.button-del-item { border-color: #b43f39; color: #b43f39; }
+
+div.in-action div.button { border: 1px dotted gray; color: gray; }
 

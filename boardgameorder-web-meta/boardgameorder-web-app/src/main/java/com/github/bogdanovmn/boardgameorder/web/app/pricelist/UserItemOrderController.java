@@ -5,7 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user/order")
+@RequestMapping("/user/order/items/{id}")
 class UserItemOrderController extends AbstractController {
 	private final UserOrderService userOrderService;
 
@@ -13,15 +13,15 @@ class UserItemOrderController extends AbstractController {
 		this.userOrderService = userOrderService;
 	}
 
-	@PutMapping("/items/{id}")
+	@PutMapping
 	ResponseEntity addItem(@PathVariable Integer id) {
 		userOrderService.addItem(getUser(), id);
 		return ResponseEntity.ok().build();
 
 	}
 
-	@DeleteMapping("/items/{id}")
-	ResponseEntity deleteItem(Integer id) {
+	@DeleteMapping
+	ResponseEntity deleteItem(@PathVariable Integer id) {
 		userOrderService.deleteItem(getUser(), id);
 		return ResponseEntity.ok().build();
 	}

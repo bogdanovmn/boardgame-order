@@ -1,6 +1,6 @@
 {{#layout}}
 
-{{#publishers.0}}
+{{#actualPriceList.publisherPrices.0}}
 	<div id="order">
 		<div class="title">Корзина</div>
 		<div class="details"></div>
@@ -10,11 +10,11 @@
 	</div>
 
 	<div id="price-list">
-		<h1>Все цены {{publishers.0.prices.0.source.fileModifyDate}}</h1>
-		{{#publishers}}
+		<h1>Все цены {{actualPriceList.publisherPrices.0.prices.0.source.fileModifyDate}}</h1>
+		{{#actualPriceList.publisherPrices}}
 			<div id="publisher-{{publisher.id}}" class="publisher-block">
 				<b>{{publisher.normalizedName}}</b> ({{prices.size}})
-				<table>
+				<table class="price-and-item">
 				{{#prices}}
 					<tr id="item-{{item.id}}" class="price-item">
 						<td class="count">{{count}}<i>шт</i></td>
@@ -34,18 +34,18 @@
 				{{/prices}}
 				</table>
 			</div>
-		{{/publishers}}
+		{{/actualPriceList.publisherPrices}}
 	</div>
-{{/publishers.0}}
+{{/actualPriceList.publisherPrices.0}}
 
-{{^publishers.0}}
+{{^actualPriceList.publisherPrices.0}}
 	<h1>Пусто</h1>
-{{/publishers.0}}
+{{/actualPriceList.publisherPrices.0}}
 
 <script>
 	OrderBlock = function() {
-		this.itemsCount = parseInt("{{order.itemsCount}}") || 0;
-		this.total = parseInt("{{order.total}}") || 0;
+		this.itemsCount = parseInt("{{actualPriceList.userOrder.itemsCount}}") || 0;
+		this.total = parseInt("{{actualPriceList.userOrder.total}}") || 0;
 		this.totalWithDiscount = function() {
 			var x = this.total * 0.92;
 			// round to 50 RUB
