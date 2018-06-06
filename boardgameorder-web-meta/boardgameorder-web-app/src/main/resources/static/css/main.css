@@ -25,7 +25,8 @@ div.main { width: 1000px; margin: 0 auto; text-align: center; }
 #order div.title { border-bottom: 1px solid #778d78; }
 #order div.menu { border-top: 1px solid #778d78; }
 
-#orderSummary { text-align: left; margin-top: 25px; padding: 10px; border-top: 1px solid #778d78; }
+#orderSummary { text-align: center; margin-top: 25px; padding: 10px; border-top: 1px solid #778d78; }
+#orderSummary div.data { float: left; width: 35%; text-align: left; padding: 15px 20px; }
 
 #price-list { float: right; width: 88%; }
 
@@ -51,6 +52,6 @@ div.button { border-radius: 25px; border: 1px solid; text-align: center; padding
 div.button:hover { border: 1px dotted; }
 div.button-add-item { border-color: seagreen; color: seagreen; }
 div.button-del-item { border-color: #b43f39; color: #b43f39; }
+div.button-copy { float: right; display: block; border-color: #778d78; background: #a2bca3; font-size: 100%; padding: 15px 20px; }
 
 div.in-action div.button { border: 1px dotted gray; color: gray; }
-

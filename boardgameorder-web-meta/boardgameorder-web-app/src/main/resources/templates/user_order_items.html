@@ -20,14 +20,19 @@
 					data-id="{{item.id}}">&ndash;</div>
 			</td>
 			<td class="title" >
-				{{{item.htmlTitle}}}
+				<span>{{{item.htmlTitle}}}</span>
 				<a target="_blank" href="{{item.url}}">фото</a>
 			</td>
 		</tr>
 	{{/order.items}}
 	</table>
 
-	<div id="orderSummary"></div>
+	<div id="orderSummary">
+		<div class="data"></div>
+		<div class="button button-copy" onclick="copyOrderText()">
+			Копировать текст заказа в буфер обмена
+		</div>
+	</div>
 {{/order.items.0}}
 
 
@@ -65,10 +70,24 @@
 		};
 
 		this.render = function() {
-			$("#orderSummary").html(
+			$("#orderSummary div.data").html(
 				"<p>Итого: " + this.total + " руб." +
 				"<p>Со скидкой: <b>" + this.totalWithDiscount() + "</b> руб."
 			)
+		};
+
+		this.getText = function() {
+			var text = "";
+			$("table.price-and-item tr").each(function(i) {
+				var count = parseInt($(this).find("td.count span").text());
+				if (count !== 0) {
+					if (count > 1) {
+						text += "[КОЛ-ВО: " + count + "] ";
+					}
+					text += $(this).find("td.title span").text() + "\r\n";
+				}
+			});
+			return text;
 		}
 	};
 
@@ -151,6 +170,15 @@
 			.fail(function (jqXHR, excpetion) {
 				console.log("[ERROR] " + url + "\n" + excpetion)
 			})
+	}
+
+	function copyOrderText() {
+		var temp = $("<textarea>");
+		$("body").append(temp);
+		temp.val(order.getText()).select();
+		document.execCommand("copy");
+		temp.remove();
+		alert("Скопировано, теперь идите вконтактик =)")
 	}
 </script>
 
