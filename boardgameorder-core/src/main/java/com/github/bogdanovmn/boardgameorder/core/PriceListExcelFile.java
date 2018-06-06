@@ -12,9 +12,11 @@ import java.util.*;
 
 public class PriceListExcelFile implements Closeable {
 	private final static String IH_NAME      = "Номенклатура";
-	private final static String IH_COUNT     = "Кол-во";
+	private final static String IH_COUNT     = "Наличие";
+	private final static String IH_COUNT_OLD = "Кол-во";
 	private final static String IH_PRICE_OLD = "базовая цена";
-	private final static String IH_PRICE     = "Оптовая цена";
+	private final static String IH_PRICE_OLD2= "Оптовая цена";
+	private final static String IH_PRICE     = "Опт. Базовая цена";
 	private final static String IH_BARCODE   = "Штрих";
 	private final static String IH_FOTO      = "ФОТО";
 
