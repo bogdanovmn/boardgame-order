@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.orm;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Entity
@@ -27,6 +28,10 @@ public class Source extends BaseEntity {
 
 	public Date getFileModifyDate() {
 		return fileModifyDate;
+	}
+
+	public String getFileModifyDateFormatted() {
+		return new SimpleDateFormat("YYYY-mm-dd").format(fileModifyDate);
 	}
 
 	public Source setFileModifyDate(Date fileModifyDate) {

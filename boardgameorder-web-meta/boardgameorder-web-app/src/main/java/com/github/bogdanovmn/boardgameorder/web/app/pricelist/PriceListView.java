@@ -12,7 +12,6 @@ class PriceListView {
 	private final List<UserOrderItem> userOrderItems;
 
 	PriceListView(final List<ItemPrice> itemPrices, final List<UserOrderItem> userOrderItems) {
-
 		this.itemPrices = itemPrices;
 		this.userOrderItems = userOrderItems;
 	}
