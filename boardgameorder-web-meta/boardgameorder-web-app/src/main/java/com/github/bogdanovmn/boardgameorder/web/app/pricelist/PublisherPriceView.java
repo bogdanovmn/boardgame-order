@@ -23,7 +23,10 @@ class PublisherPriceView {
 	List<ItemPrice> getPrices() {
 		return prices.stream()
 			.sorted(
-				Comparator.comparing(ItemPrice::getPrice).reversed()
+				Comparator.comparing(
+					(ItemPrice x) ->
+						x.getItem().getEffectiveTitle()
+				)
 			)
 			.collect(Collectors.toList());
 	}

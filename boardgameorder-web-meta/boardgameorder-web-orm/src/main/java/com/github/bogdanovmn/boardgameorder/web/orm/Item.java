@@ -1,6 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
 import javax.persistence.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Entity
 @Table(
@@ -11,6 +13,9 @@ import javax.persistence.*;
 	}
 )
 public class Item extends BaseEntity {
+	private final static String EFFECTIVE_TITLE_REGEXP = "\"(.*)\"";
+	private final static Pattern EFFECTIVE_TITLE_PATTERN = Pattern.compile(EFFECTIVE_TITLE_REGEXP);
+
 	@Column(nullable = false)
 	private String title;
 	@Column(length = 20)
@@ -22,8 +27,16 @@ public class Item extends BaseEntity {
 	private Publisher publisher;
 
 	public String getHtmlTitle() {
-		return title.replaceFirst("(\".*\")", "<b>$1</b>");
+		return title.replaceFirst(EFFECTIVE_TITLE_REGEXP, "\"<b>$1</b>\"");
 	}
+
+	public String getEffectiveTitle() {
+		Matcher m = EFFECTIVE_TITLE_PATTERN.matcher(title);
+		return m.find()
+			? m.group(1).replaceAll("\"", "")
+			: title;
+	}
+
 	public String getTitle() {
 		return title;
 	}
