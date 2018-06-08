@@ -1,0 +1,19 @@
+{{#layout}}
+
+{{#changes.0}}
+	{{#changes}}
+		<div>
+			<p>{{source.fileModifyDateFormatted}} -- {{source.itemsCount}}
+			<p>New: {{newItems.size}}
+			<p>Removed: {{deletedItems.size}}
+			<p>Modified: {{modifiedItems.size}}
+		</div>
+	{{/changes}}
+{{/changes.0}}
+
+{{^changes.0}}
+	<h1>Пусто</h1>
+{{/changes.0}}
+
+
+{{/layout}}

@@ -31,7 +31,7 @@ public class PriceListAdminService {
 		SourceRepository sourceRepository,
 		ItemRepository itemRepository,
 		ItemPriceRepository itemPriceRepository,
-		EntityFactory entityFactory
+		final ItemPriceChangeRepository itemPriceChangeRepository, EntityFactory entityFactory
 	) {
 		this.sourceRepository = sourceRepository;
 		this.itemRepository = itemRepository;

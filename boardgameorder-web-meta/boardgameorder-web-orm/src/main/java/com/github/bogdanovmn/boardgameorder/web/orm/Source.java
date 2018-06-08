@@ -4,6 +4,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Objects;
 
 @Entity
 public class Source extends BaseEntity {
@@ -72,5 +73,20 @@ public class Source extends BaseEntity {
 			"Source [ lastModified: %s; itemsCount: %d ]",
 				fileModifyDate.toString(), itemsCount
 		);
+	}
+
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Source source = (Source) o;
+		return Objects.equals(contentHash, source.contentHash) &&
+			Objects.equals(itemsCount, source.itemsCount);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(contentHash, itemsCount);
 	}
 }

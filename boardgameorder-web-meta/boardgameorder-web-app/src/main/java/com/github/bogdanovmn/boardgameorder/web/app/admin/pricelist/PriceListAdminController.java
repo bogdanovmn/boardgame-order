@@ -20,10 +20,12 @@ import java.util.HashMap;
 @Controller
 class PriceListAdminController extends AbstractVisualAdminController {
 	private final PriceListAdminService priceListAdminService;
+	private final PriceListChangesService priceListChangesService;
 
 	@Autowired
-	PriceListAdminController(PriceListAdminService priceListAdminService) {
+	PriceListAdminController(PriceListAdminService priceListAdminService, PriceListChangesService priceListChangesService) {
 		this.priceListAdminService = priceListAdminService;
+		this.priceListChangesService = priceListChangesService;
 	}
 
 	@Override
@@ -32,12 +34,10 @@ class PriceListAdminController extends AbstractVisualAdminController {
 	}
 
 	@PostMapping("/upload-price-list")
-	String upload(
-		@RequestParam("file") MultipartFile file,
-   		RedirectAttributes redirectAttributes
-	) {
+	String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		try {
 			Source source = priceListAdminService.upload(file);
+			priceListChangesService.updateAllChanges();
 			redirectAttributes.addFlashAttribute("msg", "OK!");
 			redirectAttributes.addFlashAttribute("source", source);
 		}
