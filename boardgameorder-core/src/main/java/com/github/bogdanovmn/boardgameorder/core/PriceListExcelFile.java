@@ -1,9 +1,9 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
-import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.Closeable;
 import java.io.IOException;
@@ -13,29 +13,41 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class PriceListExcelFile implements Closeable {
-	private final HSSFWorkbook excelBook;
+	private final Workbook excelBook;
 
 	private int itemsRowBegin;
 	private int itemsRowEnd;
 
 	private PriceListColumnMap columnMap = new PriceListColumnMap();
 
-	public PriceListExcelFile(HSSFWorkbook excelBook) {
+	private PriceListExcelFile(Workbook excelBook) {
 		this.excelBook = excelBook;
 	}
 
-	public PriceListExcelFile(InputStream source) throws IOException {
+	public PriceListExcelFile(InputStream source) throws IOException, InvalidFormatException {
 		this(
-			new HSSFWorkbook(source)
+			WorkbookFactory.create(source)
 		);
 	}
 
 	public Date createdDate() {
-		return excelBook.getSummaryInformation().getCreateDateTime();
+		if (excelBook instanceof XSSFWorkbook) {
+			return ((XSSFWorkbook) excelBook).getProperties().getCoreProperties().getCreated();
+		}
+		if (excelBook instanceof HSSFWorkbook) {
+			return ((HSSFWorkbook)excelBook).getSummaryInformation().getCreateDateTime();
+		}
+		throw new RuntimeException("Unknown Excel format");
 	}
 
 	public Date modifiedDate() {
-		return excelBook.getSummaryInformation().getLastSaveDateTime();
+		if (excelBook instanceof XSSFWorkbook) {
+			return ((XSSFWorkbook) excelBook).getProperties().getCoreProperties().getModified();
+		}
+		if (excelBook instanceof HSSFWorkbook) {
+			return ((HSSFWorkbook)excelBook).getSummaryInformation().getLastSaveDateTime();
+		}
+		throw new RuntimeException("Unknown Excel format");
 	}
 
 	private void findMeta() {
@@ -77,7 +89,7 @@ public class PriceListExcelFile implements Closeable {
 
 		findMeta();
 
-		HSSFSheet sheet = excelBook.getSheetAt(0);
+		Sheet sheet = excelBook.getSheetAt(0);
 		String currentGroup = null;
 		for (int i = itemsRowBegin; i <= itemsRowEnd; i++) {
 			Row rawRow = sheet.getRow(i);
@@ -129,7 +141,7 @@ public class PriceListExcelFile implements Closeable {
 	}
 
 	public void printAll() {
-		HSSFSheet sheet = excelBook.getSheetAt(0);
+		Sheet sheet = excelBook.getSheetAt(0);
 
 		int r = 0;
 		for (Row row : sheet) {
