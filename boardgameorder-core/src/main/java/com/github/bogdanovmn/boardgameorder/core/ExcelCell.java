@@ -25,6 +25,13 @@ class ExcelCell {
 			&& cell.getStringCellValue().contains(value);
 	}
 
+	boolean isLike(Pattern pattern) {
+		return cell.getCellTypeEnum().equals(CellType.STRING)
+			&& pattern.matcher(
+				cell.getStringCellValue()
+			).find();
+	}
+
 	List<Integer> getSumRange() {
 		Matcher m = Pattern.compile("^SUM\\(\\w(\\d+):\\w(\\d+)\\)$").matcher(cell.toString());
 		if (m.find()) {
@@ -43,14 +50,20 @@ class ExcelCell {
 	boolean isNumber() {
 		return cell.getCellTypeEnum().equals(CellType.NUMERIC);
 	}
+	boolean isString() {
+		return cell.getCellTypeEnum().equals(CellType.STRING);
+	}
 
 	boolean isBlank() {
 		return cell.getCellTypeEnum().equals(CellType.BLANK);
 
 	}
 
-	String stringValue() {
-		return cell.getStringCellValue();
+	String
+	stringValue() {
+		return isString()
+			? cell.getStringCellValue()
+			: "";
 	}
 
 	double numberValue() {

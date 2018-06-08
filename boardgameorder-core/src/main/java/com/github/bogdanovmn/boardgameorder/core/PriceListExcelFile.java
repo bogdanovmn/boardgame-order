@@ -8,24 +8,17 @@ import org.apache.poi.ss.usermodel.Row;
 import java.io.Closeable;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.*;
+import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class PriceListExcelFile implements Closeable {
-	private final static String IH_NAME      = "Номенклатура";
-	private final static String IH_COUNT     = "Наличие";
-	private final static String IH_COUNT_OLD = "Кол-во";
-	private final static String IH_PRICE_OLD = "базовая цена";
-	private final static String IH_PRICE_OLD2= "Оптовая цена";
-	private final static String IH_PRICE     = "Опт. Базовая цена";
-	private final static String IH_BARCODE   = "Штрих";
-	private final static String IH_FOTO      = "ФОТО";
-
 	private final HSSFWorkbook excelBook;
 
 	private int itemsRowBegin;
 	private int itemsRowEnd;
 
-	private Map<String, Integer> columnMap = new HashMap<>();
+	private PriceListColumnMap columnMap = new PriceListColumnMap();
 
 	public PriceListExcelFile(HSSFWorkbook excelBook) {
 		this.excelBook = excelBook;
@@ -52,6 +45,7 @@ public class PriceListExcelFile implements Closeable {
 			if (itemsHeaderRow) break;
 
 //			printRow(row);
+
 			for (Cell cell : row) {
 				ExcelCell ec = new ExcelCell(cell);
 
@@ -63,15 +57,16 @@ public class PriceListExcelFile implements Closeable {
 				}
 
 				if (itemsHeaderRow) {
-					columnMap.put(cell.getStringCellValue(), cell.getColumnIndex());
+					columnMap.put(ec.stringValue(), cell.getColumnIndex());
 				}
 
 				if (ec.isContainString("Сумма заказа по ")) {
 					itemsRangeNext = true;
 				}
-				if (ec.isContainString(IH_NAME)) {
+
+				if (columnMap.isLooksLikeNameColumn(ec.stringValue())) {
 					itemsHeaderRow = true;
-					columnMap.put(IH_NAME, cell.getColumnIndex());
+					columnMap.put(ec.stringValue(), cell.getColumnIndex());
 				}
 			}
 		}
@@ -100,11 +95,11 @@ public class PriceListExcelFile implements Closeable {
 				result.add(
 					new PriceItem(
 						currentGroup,
-						row.cellStringValue(columnMap.get(IH_NAME)),
-						row.cellNumberValue(columnMap.get(IH_PRICE)),
-						row.cellNumberValue(columnMap.get(IH_COUNT)),
-						row.cellStringValue(columnMap.get(IH_BARCODE)),
-						row.cellUrlValue(columnMap.get(IH_FOTO))
+						row.cellStringValue(columnMap.getNameIndex()),
+						row.cellNumberValue(columnMap.getPriceIndex()),
+						row.cellNumberValue(columnMap.getCountIndex()),
+						row.cellStringValue(columnMap.getBarcodeIndex()),
+						row.cellUrlValue(columnMap.getPhotoIndex())
 					)
 				);
 			}
