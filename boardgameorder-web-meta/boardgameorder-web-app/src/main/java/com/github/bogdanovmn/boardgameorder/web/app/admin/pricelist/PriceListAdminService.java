@@ -4,6 +4,7 @@ import com.github.bogdanovmn.boardgameorder.core.PriceItem;
 import com.github.bogdanovmn.boardgameorder.core.PriceListContent;
 import com.github.bogdanovmn.boardgameorder.core.PriceListExcelFile;
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
+import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -77,6 +78,9 @@ public class PriceListAdminService {
 					.setFileModifyDate(fileModifyDate)
 					.setImportDate(new Date())
 			);
+		}
+		catch (InvalidFormatException e) {
+			throw new IOException(e);
 		}
 
 		LOG.info("Load exists items");
