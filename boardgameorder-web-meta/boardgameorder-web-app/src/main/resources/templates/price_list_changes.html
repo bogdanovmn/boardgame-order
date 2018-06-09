@@ -1,0 +1,102 @@
+{{#layout}}
+<h1>Изменения в прайсах</h1>
+{{#sources.0}}
+	{{#sources}}
+		<div>
+			<h1>{{source.fileModifyDateFormatted}}</h1>
+			<h3>New</h3>
+			{{#newItems}}
+				<div class="publisher-block">
+					<b>{{publisher.normalizedName}}</b> ({{changes.size}})
+					<table class="price-and-item">
+						{{#changes}}
+						<tr class="price-item">
+							<td class="count">{{countCurrent}}<i>шт</i></td>
+							<td class="price">{{priceCurrentRounded}}<i>р</i></td>
+							<td class="action">
+								<div
+									class="button button-add-item"
+									data-href="/user/order/items/{{item.id}}"
+									data-type="add"
+									data-id="{{item.id}}">+</div>
+							</td>
+							<td class="title" >
+								{{{item.htmlTitle}}}
+								<a target="_blank" href="{{item.url}}">фото</a>
+							</td>
+						</tr>
+						{{/changes}}
+					</table>
+				</div>
+			{{/newItems}}
+
+			<h3>Modified</h3>
+			{{#modifiedItems}}
+			<div class="publisher-block">
+				<b>{{publisher.normalizedName}}</b> ({{changes.size}})
+				<table class="price-and-item">
+					{{#changes}}
+					<tr class="price-item">
+						<td class="count">
+							{{#countChange}}
+								<span class="change">
+									<i class="{{#countChangeSign}}plus{{/countChangeSign}}{{^countChangeSign}}minus{{/countChangeSign}}">
+										{{countChangeSign}}{{countChange}}
+									</i>
+								</span>
+							{{/countChange}}
+							{{countCurrent}}<i>шт</i>
+						</td>
+						<td class="price">
+							{{#priceChange}}
+								<span class="change">
+									<i class="{{#priceChangeSign}}minus{{/priceChangeSign}}{{^priceChangeSign}}plus{{/priceChangeSign}}">
+										{{priceChangeSign}}{{priceChangeRounded}}
+									</i>
+								</span>
+							{{/priceChange}}
+							{{priceCurrentRounded}}<i>р</i>
+						</td>
+						<td class="action">
+							<div
+								class="button button-add-item"
+								data-href="/user/order/items/{{item.id}}"
+								data-type="add"
+								data-id="{{item.id}}">+</div>
+						</td>
+						<td class="title" >
+							{{{item.htmlTitle}}}
+							<a target="_blank" href="{{item.url}}">фото</a>
+						</td>
+					</tr>
+					{{/changes}}
+				</table>
+			</div>
+			{{/modifiedItems}}
+
+			<h3>Deleted</h3>
+			{{#deletedItems}}
+			<div class="publisher-block">
+				<b>{{publisher.normalizedName}}</b> ({{changes.size}})
+				<table class="price-and-item">
+					{{#changes}}
+					<tr id="item-{{item.id}}" class="price-item">
+						<td class="title" >
+							{{{item.htmlTitle}}}
+							<a target="_blank" href="{{item.url}}">фото</a>
+						</td>
+					</tr>
+					{{/changes}}
+				</table>
+			</div>
+			{{/deletedItems}}
+		</div>
+	{{/sources}}
+{{/sources.0}}
+
+{{^sources.0}}
+	<h1>Пусто</h1>
+{{/sources.0}}
+
+
+{{/layout}}

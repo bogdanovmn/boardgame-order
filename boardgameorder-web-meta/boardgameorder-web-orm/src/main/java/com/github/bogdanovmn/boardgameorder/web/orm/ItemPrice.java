@@ -1,6 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
 import javax.persistence.*;
+import java.util.Objects;
 
 @Entity
 @Table(
@@ -57,5 +58,19 @@ public class ItemPrice extends BaseEntity {
 	public ItemPrice setCount(Integer count) {
 		this.count = count;
 		return this;
+	}
+
+	@Override
+	public boolean equals(final Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ItemPrice itemPrice = (ItemPrice) o;
+		return Objects.equals(source, itemPrice.source) &&
+			Objects.equals(item, itemPrice.item);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(source, item);
 	}
 }

@@ -10,7 +10,7 @@ class PriceListColumnMap {
 	private final static Pattern COUNT_PATTERN   = Pattern.compile("(кол-во|наличие)", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern PRICE_PATTERN   = Pattern.compile("цена", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern BARCODE_PATTERN = Pattern.compile("штрих", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-	private final static Pattern PHOTO_PATTERN = Pattern.compile("фото", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+	private final static Pattern PHOTO_PATTERN   = Pattern.compile("фото", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern NAME_PATTERN    = Pattern.compile("номенклатура", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
 	private Map<String, Integer> columnMap = new HashMap<>();
