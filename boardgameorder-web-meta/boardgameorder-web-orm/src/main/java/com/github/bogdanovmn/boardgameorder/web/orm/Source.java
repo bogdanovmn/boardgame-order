@@ -32,7 +32,7 @@ public class Source extends BaseEntity {
 	}
 
 	public String getFileModifyDateFormatted() {
-		return new SimpleDateFormat("YYYY-mm-dd").format(fileModifyDate);
+		return new SimpleDateFormat("yyyy-MM-dd").format(fileModifyDate);
 	}
 
 	public Source setFileModifyDate(Date fileModifyDate) {

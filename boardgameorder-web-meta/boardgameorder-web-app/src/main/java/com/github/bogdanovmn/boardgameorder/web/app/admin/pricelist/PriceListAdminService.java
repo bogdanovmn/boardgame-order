@@ -67,6 +67,7 @@ public class PriceListAdminService {
 			items = price.boardGames();
 			Date fileCreateDate = excelFile.createdDate();
 			Date fileModifyDate = excelFile.modifiedDate();
+			Date currentDate = new Date();
 			if (fileCreateDate == null) {
 				fileCreateDate = fileModifyDate;
 			}
@@ -74,9 +75,9 @@ public class PriceListAdminService {
 				source
 					.setContentHash(fileMd5)
 					.setItemsCount(items.size())
-					.setFileCreateDate(fileCreateDate)
-					.setFileModifyDate(fileModifyDate)
-					.setImportDate(new Date())
+					.setFileCreateDate(fileCreateDate == null ? currentDate : fileCreateDate)
+					.setFileModifyDate(fileModifyDate == null ? currentDate : fileModifyDate)
+					.setImportDate(currentDate)
 			);
 		}
 		catch (InvalidFormatException e) {
@@ -154,7 +155,7 @@ public class PriceListAdminService {
 		}
 
 		if (updated) {
-			LOG.info("Item '{}' updated: \n%s", item.getTitle(), updateDetails);
+			LOG.info("Item '{}' updated: \n{}", item.getTitle(), updateDetails);
 		}
 
 		return updated;

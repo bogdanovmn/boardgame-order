@@ -17,10 +17,10 @@ public class ItemPriceChange extends BaseEntity {
 	private Source previousSource;
 	@ManyToOne
 	private Item item;
-	@Column(nullable = false)
 	private Double priceChange;
-	@Column(nullable = false)
+	private Double priceCurrent;
 	private Integer countChange;
+	private Integer countCurrent;
 	@Enumerated(EnumType.STRING)
 	private ItemPriceChangeType type;
 
@@ -55,6 +55,10 @@ public class ItemPriceChange extends BaseEntity {
 		return priceChange;
 	}
 
+	public int getPriceChangeRounded() {
+		return (int)Math.round(priceChange);
+	}
+
 	public ItemPriceChange setPriceChange(final Double priceChange) {
 		this.priceChange = priceChange;
 		return this;
@@ -78,10 +82,40 @@ public class ItemPriceChange extends BaseEntity {
 		return this;
 	}
 
+	public Double getPriceCurrent() {
+		return priceCurrent;
+	}
+
+	public int getPriceCurrentRounded() {
+		return (int)Math.round(priceCurrent);
+	}
+
+	public ItemPriceChange setPriceCurrent(final Double priceCurrent) {
+		this.priceCurrent = priceCurrent;
+		return this;
+	}
+
+	public Integer getCountCurrent() {
+		return countCurrent;
+	}
+
+	public ItemPriceChange setCountCurrent(final Integer countCurrent) {
+		this.countCurrent = countCurrent;
+		return this;
+	}
+
 	public ItemPriceChange copy() {
 		return new ItemPriceChange()
 			.setSource(source)
 			.setPreviousSource(previousSource)
 			.setType(type);
+	}
+
+	public String getPriceChangeSign() {
+		return (priceChange != null && priceChange > 0) ? "+" : null;
+	}
+
+	public String getCountChangeSign() {
+		return (countChange != null && countChange > 0) ? "+" : null;
 	}
 }

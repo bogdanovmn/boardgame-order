@@ -41,12 +41,15 @@ div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc;
 div.publisher-block { text-align: left; padding: 5px 2px 3px 2px ;}
 
 table.price-and-item { text-align: left; margin-left: 20px; }
-table.price-and-item td.count { color: #a2bca3;}
-table.price-and-item td.price { color: #778d78;}
-table.price-and-item td.title  { color: #575651;}
+table.price-and-item td.count { color: #a2bca3; white-space: nowrap;}
+table.price-and-item td.price { color: #778d78; white-space: nowrap;}
+table.price-and-item td.title  { color: #575651; white-space: nowrap;}
 table.price-and-item td.title a { text-decoration: none; color: #1299b4; }
 table.price-and-item td       { padding: 2px 8px; }
 table.price-and-item td i     { color: #c3c2bb;}
+table.price-and-item td span.change { font-size: 80%; }
+table.price-and-item td span.change i.plus { color: #09b24d;  }
+table.price-and-item td span.change i.minus { color: #b21e00;  }
 
 div.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
 div.button:hover { border: 1px dotted; }

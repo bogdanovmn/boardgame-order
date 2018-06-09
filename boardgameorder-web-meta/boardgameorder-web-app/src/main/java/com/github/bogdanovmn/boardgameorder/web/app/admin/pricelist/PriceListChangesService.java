@@ -14,14 +14,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Service
-public class PriceListChangesService {
+class PriceListChangesService {
 	private static final Logger LOG = LoggerFactory.getLogger(PriceListChangesService.class);
 
 	private final SourceRepository sourceRepository;
 	private final ItemPriceRepository itemPriceRepository;
 	private final ItemPriceChangeRepository itemPriceChangeRepository;
 
-	public PriceListChangesService(
+	PriceListChangesService(
 		SourceRepository sourceRepository,
 		ItemPriceRepository itemPriceRepository,
 		ItemPriceChangeRepository itemPriceChangeRepository
@@ -33,11 +33,12 @@ public class PriceListChangesService {
 
 
 	@Transactional(rollbackFor = Exception.class)
-	void updateAllChanges() {
+	public void updateAllChanges() {
 		List<Source> sources = sourceRepository.findAllByOrderByFileModifyDateDesc();
 
 		if (sources.size() > 1) {
 			itemPriceChangeRepository.deleteAll();
+			itemPriceChangeRepository.flush();
 			for (int i = 1; i < sources.size(); i++) {
 				LOG.info("Update changes between {} and {}", sources.get(i - 1), sources.get(i));
 				updateChanges(sources.get(i - 1), sources.get(i));
@@ -51,21 +52,23 @@ public class PriceListChangesService {
 	private void updateChanges(final Source previousSource, final Source source) {
 		Map<Integer, ItemPrice> sourcePrices = itemPriceRepository.findBySource(source).stream()
 			.collect(Collectors.toMap(
-				ItemPrice::getId, x -> x
+				x -> x.getItem().getId(), x -> x
 			));
 		Map<Integer, ItemPrice> prevSourcePrices = itemPriceRepository.findBySource(previousSource).stream()
 			.collect(Collectors.toMap(
-				ItemPrice::getId, x -> x
+				x -> x.getItem().getId(), x -> x
 			));
+
+		ItemPriceChange priceChangeTemplate = new ItemPriceChange()
+			.setSource(source)
+			.setPreviousSource(previousSource);
 
 		Set<ItemPriceChange> deletedPrices = Sets.difference(
 			prevSourcePrices.keySet(),
 			sourcePrices.keySet()
 		).stream()
-			.map(x -> new ItemPriceChange()
+			.map(x -> priceChangeTemplate.copy()
 				.setType(ItemPriceChangeType.DELETE)
-				.setPreviousSource(previousSource)
-				.setSource(source)
 				.setItem(prevSourcePrices.get(x).getItem())
 			)
 			.collect(Collectors.toSet());
@@ -74,11 +77,14 @@ public class PriceListChangesService {
 			sourcePrices.keySet(),
 			prevSourcePrices.keySet()
 		).stream()
-			.map(x -> new ItemPriceChange()
-				.setType(ItemPriceChangeType.NEW)
-				.setPreviousSource(previousSource)
-				.setSource(source)
-				.setItem(sourcePrices.get(x).getItem())
+			.map(x -> {
+				ItemPrice itemPrice = sourcePrices.get(x);
+				return priceChangeTemplate.copy()
+					.setType(ItemPriceChangeType.NEW)
+					.setItem(itemPrice.getItem())
+					.setCountCurrent(itemPrice.getCount())
+					.setPriceCurrent(itemPrice.getPrice());
+				}
 			)
 			.collect(Collectors.toSet());
 
@@ -90,7 +96,7 @@ public class PriceListChangesService {
 				ItemPrice curr = sourcePrices.get(itemId);
 
 				boolean hasChanges = false;
-				ItemPriceChange change = new ItemPriceChange();
+				ItemPriceChange change = priceChangeTemplate.copy();
 
 				if (!prev.getPrice().equals(curr.getPrice())) {
 					change.setPriceChange(
@@ -109,10 +115,10 @@ public class PriceListChangesService {
 				if (hasChanges) {
 					modifiedPrices.add(
 						change
-							.setSource(source)
-							.setPreviousSource(previousSource)
-							.setItem(curr.getItem())
 							.setType(ItemPriceChangeType.MODIFY)
+							.setItem(curr.getItem())
+							.setCountCurrent(curr.getCount())
+							.setPriceCurrent(curr.getPrice())
 					);
 				}
 			});

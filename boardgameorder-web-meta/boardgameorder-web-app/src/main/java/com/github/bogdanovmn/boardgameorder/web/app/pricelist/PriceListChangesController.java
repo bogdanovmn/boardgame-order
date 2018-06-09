@@ -23,6 +23,6 @@ class PriceListChangesController extends AbstractVisualController {
 
 	@GetMapping
 	ModelAndView full() {
-		return new ModelAndView("price_list_changes", "changes", priceListService.priceListChangesView());
+		return new ModelAndView("price_list_changes", "sources", priceListService.priceListChangesView().getAllChanges());
 	}
 }

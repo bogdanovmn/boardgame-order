@@ -66,4 +66,10 @@ class PriceListAdminController extends AbstractVisualAdminController {
 			}}
 		);
 	}
+
+	@GetMapping("/price-list-changes-update")
+	String changesUpdate() {
+		priceListChangesService.updateAllChanges();
+		return "redirect:/price-list/changes";
+	}
 }
