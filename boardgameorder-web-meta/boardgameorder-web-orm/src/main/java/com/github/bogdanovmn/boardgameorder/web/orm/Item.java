@@ -1,5 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
+import org.springframework.data.annotation.Transient;
+
 import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,6 +15,8 @@ import java.util.regex.Pattern;
 	}
 )
 public class Item extends BaseEntity {
+	private final static Pattern BOARD_GAME_PATTERN = Pattern.compile("^.*(наст.*игр|игр.*наст|протекторы).*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+
 	private final static String EFFECTIVE_TITLE_REGEXP = "\"(.*)\"";
 	private final static Pattern EFFECTIVE_TITLE_PATTERN = Pattern.compile(EFFECTIVE_TITLE_REGEXP);
 
@@ -25,6 +29,9 @@ public class Item extends BaseEntity {
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
+
+	@Transient
+	private boolean likeBoardGameTitle = false;
 
 	public String getHtmlTitle() {
 		return title.replaceFirst(EFFECTIVE_TITLE_REGEXP, "\"<b>$1</b>\"");
@@ -43,6 +50,7 @@ public class Item extends BaseEntity {
 
 	public Item setTitle(String title) {
 		this.title = title;
+		likeBoardGameTitle = BOARD_GAME_PATTERN.matcher(title).find();
 		return this;
 	}
 
@@ -71,5 +79,9 @@ public class Item extends BaseEntity {
 	public Item setPublisher(Publisher publisher) {
 		this.publisher = publisher;
 		return this;
+	}
+
+	public boolean isLikeBoardGameTitle() {
+		return likeBoardGameTitle;
 	}
 }

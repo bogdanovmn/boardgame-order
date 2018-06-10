@@ -13,7 +13,7 @@
 		<h1>Все цены на {{actualPriceList.publisherPrices.0.prices.0.source.fileModifyDateFormatted}}</h1>
 		{{#actualPriceList.publisherPrices}}
 			<div class="publisher-block">
-				<b>{{publisher.normalizedName}}</b> ({{prices.size}})
+				<h2>{{publisher.normalizedName}} <i>({{prices.size}})</i></h2>
 				<table class="price-and-item">
 				{{#prices}}
 					<tr id="item-{{item.id}}" class="price-item">

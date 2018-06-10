@@ -39,6 +39,8 @@ a.button { text-decoration: none }
 div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc; text-align: center; color: #4c260b; padding: 10px 30px; }
 
 div.publisher-block { text-align: left; padding: 5px 2px 3px 2px ;}
+div.publisher-block h2 i { color: #a2bca3; font-size: 80%; }
+div.publisher-block h3 i { color: #a2bca3; font-size: 80%; }
 
 table.price-and-item { text-align: left; margin-left: 20px; }
 table.price-and-item td.count { color: #a2bca3; white-space: nowrap;}

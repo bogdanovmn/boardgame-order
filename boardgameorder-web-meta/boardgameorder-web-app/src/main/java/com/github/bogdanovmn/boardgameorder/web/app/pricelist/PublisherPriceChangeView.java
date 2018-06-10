@@ -25,8 +25,13 @@ class PublisherPriceChangeView {
 			.sorted(
 				Comparator.comparing(
 					(ItemPriceChange x) ->
-						x.getItem().getEffectiveTitle()
+						x.getItem().isLikeBoardGameTitle()
 				)
+					.reversed()
+					.thenComparing(
+						(ItemPriceChange x) ->
+							x.getItem().getEffectiveTitle()
+					)
 			)
 			.collect(Collectors.toList());
 	}

@@ -8,7 +8,17 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class PriceListContent {
-	private final static Pattern BOARD_GAME = Pattern.compile("^.*(наст.*игр|игр.*наст).*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+	private final static Pattern BOARD_GAME = Pattern.compile("^.*(наст.*игр|игр.*наст|протекторы).*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+	private final static Pattern ZVEZDA_TANK_MODELS = Pattern.compile("^.*танк.*[тt]-\\d.*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+	private final static Pattern ZVEZDA_MODELS =
+		Pattern.compile(
+			"^Зв\\.\\d+[a-zа-я]*\\s*(" +
+				"(БТР|Бомбардировщик|Мотоцикл|Грузовик|Галеон|Пассажирский|Подводная|Танк|Пехота|Самол.т|Эсминец|Самоходка|Авианосец|Авиалайнер|Корабль|Линкор|Вертол.т)|" +
+				"((Фр|Росс|Амер|Нем|Немец|Сов|Брит)\\.)|" +
+				"((Польск|Английск|Русск|Испанск|Французс?к|Американск|Советск|Немецк|Британск|Росс?ийск)(ие|ая|ий|ое))" +
+			").*$",
+			Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE
+	);
 
 	private final PriceListExcelFile file;
 
@@ -22,6 +32,9 @@ public class PriceListContent {
 				(BOARD_GAME.matcher(x.getTitle()).find() ||
 					BOARD_GAME.matcher(x.getGroup()).find())
 						&& !x.getGroup().contains("УЦЕНКА")
+						&& !x.getTitle().contains("склейка")
+						&& !ZVEZDA_MODELS.matcher(x.getTitle()).find()
+						&& !ZVEZDA_TANK_MODELS.matcher(x.getTitle()).find()
 			)
 			.collect(Collectors.toList());
 	}

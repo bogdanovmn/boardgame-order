@@ -7,7 +7,7 @@
 			<h3>New</h3>
 			{{#newItems}}
 				<div class="publisher-block">
-					<b>{{publisher.normalizedName}}</b> ({{changes.size}})
+					<h3>{{publisher.normalizedName}} <i>({{changes.size}})</i></h3>
 					<table class="price-and-item">
 						{{#changes}}
 						<tr class="price-item">
@@ -33,7 +33,7 @@
 			<h3>Modified</h3>
 			{{#modifiedItems}}
 			<div class="publisher-block">
-				<b>{{publisher.normalizedName}}</b> ({{changes.size}})
+				<h2>{{publisher.normalizedName}} <i>({{changes.size}})</i></h2>
 				<table class="price-and-item">
 					{{#changes}}
 					<tr class="price-item">
@@ -77,7 +77,7 @@
 			<h3>Deleted</h3>
 			{{#deletedItems}}
 			<div class="publisher-block">
-				<b>{{publisher.normalizedName}}</b> ({{changes.size}})
+				<h2>{{publisher.normalizedName}} <i>({{changes.size}})</i></h2>
 				<table class="price-and-item">
 					{{#changes}}
 					<tr id="item-{{item.id}}" class="price-item">

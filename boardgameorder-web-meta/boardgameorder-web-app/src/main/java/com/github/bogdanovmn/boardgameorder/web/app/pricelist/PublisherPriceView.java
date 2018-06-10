@@ -25,8 +25,13 @@ class PublisherPriceView {
 			.sorted(
 				Comparator.comparing(
 					(ItemPrice x) ->
-						x.getItem().getEffectiveTitle()
+						x.getItem().isLikeBoardGameTitle()
 				)
+					.reversed()
+					.thenComparing(
+						(ItemPrice x) ->
+							x.getItem().getEffectiveTitle()
+					)
 			)
 			.collect(Collectors.toList());
 	}
