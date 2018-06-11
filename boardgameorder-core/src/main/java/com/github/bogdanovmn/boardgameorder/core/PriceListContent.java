@@ -26,7 +26,7 @@ public class PriceListContent {
 		this.file = file;
 	}
 
-	public List<PriceItem> boardGames() {
+	public List<ExcelPriceItem> boardGames() {
 		return file.priceItems().stream()
 			.filter(x ->
 				(BOARD_GAME.matcher(x.getTitle()).find() ||

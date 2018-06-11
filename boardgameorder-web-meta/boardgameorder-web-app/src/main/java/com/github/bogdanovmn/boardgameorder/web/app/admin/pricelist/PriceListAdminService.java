@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.core.PriceItem;
+import com.github.bogdanovmn.boardgameorder.core.ExcelPriceItem;
 import com.github.bogdanovmn.boardgameorder.core.PriceListContent;
 import com.github.bogdanovmn.boardgameorder.core.PriceListExcelFile;
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
@@ -59,7 +59,7 @@ public class PriceListAdminService {
 		}
 
 		LOG.info("Parse Excel file");
-		List<PriceItem> items;
+		List<ExcelPriceItem> items;
 		final Source source = new Source();
 		try (PriceListExcelFile excelFile = new PriceListExcelFile(file.getInputStream()))
 		{
@@ -93,24 +93,24 @@ public class PriceListAdminService {
 		LOG.info("Import items: {}", items.size());
 		int newItems = 0;
 		int updatedItems = 0;
-		for (PriceItem priceItem : items) {
-			Item item = itemsMap.get(priceItem.getTitle());
+		for (ExcelPriceItem excelPriceItem : items) {
+			Item item = itemsMap.get(excelPriceItem.getTitle());
 			if (item != null) {
-				if (updateItem(item, priceItem, source)) {
+				if (updateItem(item, excelPriceItem, source)) {
 					updatedItems++;
 				}
 			}
 			else {
-				LOG.info("New item: {}", priceItem);
-				item = addItem(priceItem);
+				LOG.info("New item: {}", excelPriceItem);
+				item = addItem(excelPriceItem);
 				newItems++;
 			}
 			itemPriceRepository.save(
 				new ItemPrice()
 					.setItem(item)
 					.setSource(source)
-					.setCount(priceItem.getCount())
-					.setPrice(priceItem.getPrice())
+					.setCount(excelPriceItem.getCount())
+					.setPrice(excelPriceItem.getPrice())
 			);
 		}
 		LOG.info("Import items done. New: {}, updated: {}", newItems, updatedItems);
@@ -118,38 +118,38 @@ public class PriceListAdminService {
 		return source;
 	}
 
-	private Item addItem(PriceItem priceItem) {
+	private Item addItem(ExcelPriceItem excelPriceItem) {
 		Item newItem = new Item()
-			.setTitle(priceItem.getTitle())
-			.setBarcode(priceItem.getBarcode())
-			.setUrl(priceItem.getUrl())
+			.setTitle(excelPriceItem.getTitle())
+			.setBarcode(excelPriceItem.getBarcode())
+			.setUrl(excelPriceItem.getUrl())
 			.setPublisher(
-				getPersistentPublisher(priceItem.getGroup())
+				getPersistentPublisher(excelPriceItem.getGroup())
 			);
 		itemRepository.save(newItem);
 		return newItem;
 	}
 
-	private boolean updateItem(Item item, PriceItem priceItem, Source source) {
+	private boolean updateItem(Item item, ExcelPriceItem excelPriceItem, Source source) {
 		boolean updated = false;
 		FormattedStringBuilder updateDetails = new FormattedStringBuilder();
 
-		if (!Objects.equals(item.getUrl(), priceItem.getUrl())) {
-			updateDetails.append("Item URL change: %s --> %s\n", item.getUrl(), priceItem.getUrl());
-			item.setUrl(priceItem.getUrl());
+		if (!Objects.equals(item.getUrl(), excelPriceItem.getUrl())) {
+			updateDetails.append("Item URL change: %s --> %s\n", item.getUrl(), excelPriceItem.getUrl());
+			item.setUrl(excelPriceItem.getUrl());
 			updated = true;
 		}
 
-		if (!Objects.equals(item.getBarcode(), priceItem.getBarcode())) {
-			updateDetails.append("Item barcode change: %s --> %s\n", item.getBarcode(), priceItem.getBarcode());
-			item.setBarcode(priceItem.getBarcode());
+		if (!Objects.equals(item.getBarcode(), excelPriceItem.getBarcode())) {
+			updateDetails.append("Item barcode change: %s --> %s\n", item.getBarcode(), excelPriceItem.getBarcode());
+			item.setBarcode(excelPriceItem.getBarcode());
 			updated = true;
 		}
 
-		if (!Objects.equals(item.getPublisher().getName(), priceItem.getGroup())) {
-			updateDetails.append("Item publisher change: %s --> %s\n", item.getPublisher().getName(), priceItem.getGroup());
+		if (!Objects.equals(item.getPublisher().getName(), excelPriceItem.getGroup())) {
+			updateDetails.append("Item publisher change: %s --> %s\n", item.getPublisher().getName(), excelPriceItem.getGroup());
 			item.setPublisher(
-				getPersistentPublisher(priceItem.getGroup())
+				getPersistentPublisher(excelPriceItem.getGroup())
 			);
 			updated = true;
 		}

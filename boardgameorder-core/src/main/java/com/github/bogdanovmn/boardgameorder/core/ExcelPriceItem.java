@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
-public class PriceItem {
+public class ExcelPriceItem {
 	private final String group;
 	private final String title;
 	private final Double price;
@@ -8,7 +8,7 @@ public class PriceItem {
 	private final String barcode;
 	private final String url;
 
-	public PriceItem(
+	public ExcelPriceItem(
 		String group,
 		String title,
 		Double price,
@@ -51,7 +51,7 @@ public class PriceItem {
 
 	@Override
 	public String toString() {
-		return "PriceItem{" +
+		return "ExcelPriceItem{" +
 			"group='" + group + '\'' +
 			", title='" + title + '\'' +
 			'}';

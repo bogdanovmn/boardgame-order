@@ -1,7 +1,5 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
-import org.springframework.data.annotation.Transient;
-
 import javax.persistence.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -15,8 +13,10 @@ import java.util.regex.Pattern;
 	}
 )
 public class Item extends BaseEntity {
-	private final static Pattern BOARD_GAME_PATTERN = Pattern.compile("^.*(наст.*игр|игр.*наст|протекторы).*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
-
+	private final static Pattern BOARD_GAME_PATTERN = Pattern.compile(
+		"^.*(наст.*игр|игр.*наст|протекторы).*$",
+		Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE
+	);
 	private final static String EFFECTIVE_TITLE_REGEXP = "\"(.*)\"";
 	private final static Pattern EFFECTIVE_TITLE_PATTERN = Pattern.compile(EFFECTIVE_TITLE_REGEXP);
 
@@ -30,18 +30,15 @@ public class Item extends BaseEntity {
 	@JoinColumn(name = "publisher_id")
 	private Publisher publisher;
 
-	@Transient
 	private boolean likeBoardGameTitle = false;
+	private String effectiveTitle;
 
 	public String getHtmlTitle() {
 		return title.replaceFirst(EFFECTIVE_TITLE_REGEXP, "\"<b>$1</b>\"");
 	}
 
 	public String getEffectiveTitle() {
-		Matcher m = EFFECTIVE_TITLE_PATTERN.matcher(title);
-		return m.find()
-			? m.group(1).replaceAll("\"", "")
-			: title;
+		return effectiveTitle;
 	}
 
 	public String getTitle() {
@@ -51,6 +48,12 @@ public class Item extends BaseEntity {
 	public Item setTitle(String title) {
 		this.title = title;
 		likeBoardGameTitle = BOARD_GAME_PATTERN.matcher(title).find();
+
+		Matcher m = EFFECTIVE_TITLE_PATTERN.matcher(title);
+		effectiveTitle = m.find()
+			? m.group(1).replaceAll("\"", "")
+			: title;
+
 		return this;
 	}
 
