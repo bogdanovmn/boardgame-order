@@ -25,7 +25,7 @@ class PriceListView {
 				)
 			).entrySet().stream()
 			.map(
-				x -> new PublisherPriceView(x.getKey(), x.getValue())
+				x -> new PublisherPriceView(x.getKey(), x.getValue(), userOrderItems)
 			)
 			.sorted(
 				Comparator.comparing(

@@ -43,6 +43,7 @@ div.publisher-block h2 i { color: #a2bca3; font-size: 80%; }
 div.publisher-block h3 i { color: #a2bca3; font-size: 80%; }
 
 table.price-and-item { text-align: left; margin-left: 20px; }
+table.price-and-item tr.ordered td.title span { background: #a2bca3 }
 table.price-and-item td.count { color: #a2bca3; white-space: nowrap;}
 table.price-and-item td.price { color: #778d78; white-space: nowrap;}
 table.price-and-item td.title  { color: #575651; white-space: nowrap;}

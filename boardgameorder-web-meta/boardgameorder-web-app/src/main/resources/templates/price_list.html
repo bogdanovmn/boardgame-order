@@ -16,21 +16,21 @@
 				<h2>{{publisher.normalizedName}} <i>({{prices.size}})</i></h2>
 				<table class="price-and-item">
 				{{#prices}}
-					<tr id="item-{{item.id}}" class="price-item">
-						<td class="count">{{count}}<i>шт</i></td>
-						<td class="price">{{roundedPrice}}<i>р</i></td>
+					<tr id="item-{{price.item.id}}" class="price-item {{#ordered}}ordered{{/ordered}}">
+						<td class="count">{{price.count}}<i>шт</i></td>
+						<td class="price">{{price.roundedPrice}}<i>р</i></td>
 						<td class="action">
 							<div
 								class="button button-add-item"
-								data-href="/user/order/items/{{item.id}}"
+								data-href="/user/order/items/{{price.item.id}}"
 								data-type="add"
-								data-id="{{item.id}}">+</div>
+								data-id="{{price.item.id}}">+</div>
 						</td>
 						<td class="title" >
-							{{{item.htmlTitle}}}
-							{{#item.url}}
-								<a target="_blank" href="{{item.url}}">фото</a>
-							{{/item.url}}
+							<span>{{{price.item.htmlTitle}}}</span>
+							{{#price.item.url}}
+								<a target="_blank" href="{{price.item.url}}">фото</a>
+							{{/price.item.url}}
 						</td>
 					</tr>
 				{{/prices}}
@@ -51,7 +51,7 @@
 		this.totalWithDiscount = function() {
 			var x = this.total * 0.92;
 			// round to 50 RUB
-			y = x % 50;
+			var y = x % 50;
 			if (y > 0) {
 				x = x + 50 - y;
 			}
@@ -62,6 +62,8 @@
 			var item = new Item(id);
 			this.total += item.getPrice();
 			this.itemsCount++;
+			item.renderOrder();
+			orderedItems[id] = 1;
 		};
 
 		this.render = function() {
@@ -73,17 +75,29 @@
 
 	Item = function(id) {
 		this.id = id;
+		this.element = $("#item-" + this.id);
+
 		this.getPrice = function() {
 			return parseInt(
-				$("#item-" + this.id + " td.price").text(),
-				10
+				this.element.find("td.price").text()
 			);
+		};
+
+		this.renderOrder =function() {
+			if (orderedItems[this.id] !== 1) {
+				this.element.toggleClass("ordered");
+			}
 		}
 	};
 
 	var blockInAction = {};
 	var order = new OrderBlock();
 	order.render();
+
+	var orderedItems = {};
+	$("tr.ordered div.button-add-item").each(function(i) {
+		orderedItems[$(this).attr("data-id")] = 1;
+	});
 
 	$('div.button').click(
 		function() {
