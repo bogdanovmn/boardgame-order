@@ -28,7 +28,9 @@
 						</td>
 						<td class="title" >
 							{{{item.htmlTitle}}}
-							<a target="_blank" href="{{item.url}}">фото</a>
+							{{#item.url}}
+								<a target="_blank" href="{{item.url}}">фото</a>
+							{{/item.url}}
 						</td>
 					</tr>
 				{{/prices}}
