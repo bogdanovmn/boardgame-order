@@ -15,9 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.IOException;
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Service
 public class PriceListAdminService {
@@ -32,7 +30,7 @@ public class PriceListAdminService {
 		SourceRepository sourceRepository,
 		ItemRepository itemRepository,
 		ItemPriceRepository itemPriceRepository,
-		final ItemPriceChangeRepository itemPriceChangeRepository, EntityFactory entityFactory
+		EntityFactory entityFactory
 	) {
 		this.sourceRepository = sourceRepository;
 		this.itemRepository = itemRepository;
@@ -85,16 +83,13 @@ public class PriceListAdminService {
 		}
 
 		LOG.info("Load exists items");
-		Map<String, Item> itemsMap = itemRepository.findAll().stream()
-			.collect(Collectors.toMap(
-				Item::getTitle, x -> x
-			));
+		ItemsMap itemsMap = new ItemsMap(itemRepository.findAll());
 
 		LOG.info("Import items: {}", items.size());
 		int newItems = 0;
 		int updatedItems = 0;
 		for (ExcelPriceItem excelPriceItem : items) {
-			Item item = itemsMap.get(excelPriceItem.getTitle());
+			Item item = itemsMap.get(excelPriceItem);
 			if (item != null) {
 				if (updateItem(item, excelPriceItem, source)) {
 					updatedItems++;
@@ -155,7 +150,7 @@ public class PriceListAdminService {
 		}
 
 		if (updated) {
-			LOG.info("Item '{}' updated: \n{}", item.getTitle(), updateDetails);
+			LOG.info("Change item {}: \n{}", item, updateDetails);
 		}
 
 		return updated;

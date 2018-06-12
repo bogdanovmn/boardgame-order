@@ -87,4 +87,9 @@ public class Item extends BaseEntity {
 	public boolean isLikeBoardGameTitle() {
 		return likeBoardGameTitle;
 	}
+
+	@Override
+	public String toString() {
+		return String.format("Item{title='%s', barcode='%s', publisher=%s}", title, barcode, publisher);
+	}
 }
