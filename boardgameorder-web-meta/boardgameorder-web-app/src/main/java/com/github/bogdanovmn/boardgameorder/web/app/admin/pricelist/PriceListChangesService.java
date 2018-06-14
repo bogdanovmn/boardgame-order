@@ -41,7 +41,7 @@ class PriceListChangesService {
 			itemPriceChangeRepository.flush();
 			for (int i = 1; i < sources.size(); i++) {
 				LOG.info("Update changes between {} and {}", sources.get(i - 1), sources.get(i));
-				updateChanges(sources.get(i - 1), sources.get(i));
+				updateChanges(sources.get(i), sources.get(i - 1));
 			}
 		}
 		else {

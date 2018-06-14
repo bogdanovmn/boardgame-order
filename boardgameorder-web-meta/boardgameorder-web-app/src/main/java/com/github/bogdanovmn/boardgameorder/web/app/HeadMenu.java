@@ -43,7 +43,7 @@ public class HeadMenu {
 		if (!this.isPrepared) {
 			items = new ArrayList<>();
 			items.add(new MenuItem(ITEM.PRICE_LIST.name(), "/price-list", "Прайс лист"));
-			items.add(new MenuItem(ITEM.PRICE_LIST_CHANGES.name(), "/price-list/changes", "Что новенького?"));
+			items.add(new MenuItem(ITEM.PRICE_LIST_CHANGES.name(), "/price-list/changes/last", "Что новенького?"));
 			items.add(new MenuItem(ITEM.ORDER.name(), "/user/order/items", "Корзина"));
 			if (this.isAdmin) {
 				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/upload-price-list", "Админка"));

@@ -1,16 +1,12 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 class PriceListService {
-	private static final Logger LOG = LoggerFactory.getLogger(PriceListService.class);
-
 	private final SourceRepository sourceRepository;
 	private final ItemPriceRepository itemPriceRepository;
 	private final UserOrderItemRepository userOrderItemRepository;
@@ -40,9 +36,10 @@ class PriceListService {
 		return itemPriceRepository.findBySource(source);
 	}
 
-	PriceListChangesView priceListChangesView() {
+	PriceListChangesView priceListLastChangesView() {
+		Source source = sourceRepository.findTopByOrderByFileModifyDateDesc();
 		return PriceListChangesView.fromFullList(
-			itemPriceChangeRepository.findAll()
+			itemPriceChangeRepository.findAllBySource(source)
 		);
 	}
 }

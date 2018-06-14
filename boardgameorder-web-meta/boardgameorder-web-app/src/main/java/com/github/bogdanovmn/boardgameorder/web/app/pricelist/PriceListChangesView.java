@@ -27,7 +27,7 @@ class PriceListChangesView {
 		);
 	}
 
-	List<PreviousPriceListChangesView> getAllChanges() {
+	List<PreviousPriceListChangesView> getLastChanges() {
 		return changesBySource.keySet().stream()
 			.sorted(Comparator.comparing(
 				Source::getFileModifyDate)
@@ -35,7 +35,8 @@ class PriceListChangesView {
 			.map(
 				x -> new PreviousPriceListChangesView(
 					changesBySource.get(x)
-			))
+				)
+			)
 			.collect(Collectors.toList());
 	}
 }

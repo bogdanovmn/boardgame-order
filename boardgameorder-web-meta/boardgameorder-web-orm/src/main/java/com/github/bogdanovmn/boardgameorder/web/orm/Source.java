@@ -69,12 +69,8 @@ public class Source extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return String.format(
-			"Source [ lastModified: %s; itemsCount: %d ]",
-				fileModifyDate.toString(), itemsCount
-		);
+		return String.format("Source{fileModifyDate=%s, itemsCount=%d, id=%d}", fileModifyDate, itemsCount, id);
 	}
-
 
 	@Override
 	public boolean equals(final Object o) {
