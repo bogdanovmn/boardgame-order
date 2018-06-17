@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @EnableJpaRepositories(basePackages = "com.github.bogdanovmn.boardgameorder.web.orm")
 @EntityScan(basePackages = "com.github.bogdanovmn.boardgameorder.web.orm")
 @EnableTransactionManagement
-@EnableScheduling
+//@EnableScheduling
 public class App {
 	public static void main(String[] args) {
 		SpringApplication.run(App.class, args);
