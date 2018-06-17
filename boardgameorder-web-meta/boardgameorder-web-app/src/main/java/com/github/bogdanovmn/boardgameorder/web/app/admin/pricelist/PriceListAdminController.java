@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AdminMenu;
 import com.github.bogdanovmn.boardgameorder.web.app.admin.AbstractVisualAdminController;
+import com.github.bogdanovmn.boardgameorder.web.orm.ImportType;
 import com.github.bogdanovmn.boardgameorder.web.orm.Source;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,12 @@ import java.util.HashMap;
 
 @Controller
 class PriceListAdminController extends AbstractVisualAdminController {
-	private final PriceListAdminService priceListAdminService;
+	private final PriceListImportService priceListImportService;
 	private final PriceListChangesService priceListChangesService;
 
 	@Autowired
-	PriceListAdminController(PriceListAdminService priceListAdminService, PriceListChangesService priceListChangesService) {
-		this.priceListAdminService = priceListAdminService;
+	PriceListAdminController(PriceListImportService priceListImportService, PriceListChangesService priceListChangesService) {
+		this.priceListImportService = priceListImportService;
 		this.priceListChangesService = priceListChangesService;
 	}
 
@@ -33,10 +34,10 @@ class PriceListAdminController extends AbstractVisualAdminController {
 		return AdminMenu.ITEM.UPLOAD_PRICE_LIST;
 	}
 
-	@PostMapping("/upload-price-list")
+	@PostMapping("/price-list")
 	String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		try {
-			Source source = priceListAdminService.upload(file);
+			Source source = priceListImportService.importFile(file.getInputStream(), ImportType.MANUAL);
 			priceListChangesService.updateAllChanges();
 			redirectAttributes.addFlashAttribute("msg", "OK!");
 			redirectAttributes.addFlashAttribute("source", source);
@@ -52,10 +53,10 @@ class PriceListAdminController extends AbstractVisualAdminController {
 			redirectAttributes.addFlashAttribute("customError", e.getMessage());
 		}
 
-		return "redirect:/admin/upload-price-list";
+		return "redirect:/admin/price-list";
 	}
 
-	@GetMapping("/upload-price-list")
+	@GetMapping("/price-list")
 	ModelAndView form(
 		@RequestHeader(name = "referer", required = false) String referer)
 	{

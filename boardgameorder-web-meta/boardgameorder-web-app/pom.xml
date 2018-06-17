@@ -51,6 +51,13 @@
             <artifactId>spring-boot-starter-mustache</artifactId>
         </dependency>
 
+        <!-- My Libs -->
+
+        <dependency>
+            <groupId>com.github.bogdanovmn.httpclient</groupId>
+            <artifactId>http-client-impl-simple</artifactId>
+        </dependency>
+
         <!-- Other -->
 
         <dependency>

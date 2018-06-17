@@ -1,0 +1,22 @@
+{{#layout}}
+
+{{> inc/admin_menu }}
+
+{{#autoImport.history.0}}
+	<h1>История авто-импорта</h1>
+	{{#autoImport.history}}
+		<div class="auto-import-block">
+			{{status}} -- {{importDate}} -- {{fileModifyDate}}
+			<div>{{errorMsg}}</div>
+			{{#source}}
+				<a href="{{layout.contextPath}}/price-list/changes/{{source.id}}">Список изменений</a>
+			{{/source}}
+		</div>
+	{{/autoImport.history}}
+{{/autoImport.history.0}}
+
+{{^autoImport.history.0}}
+	<h1>Пусто</h1>
+{{/autoImport.history.0}}
+
+{{/layout}}

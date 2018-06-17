@@ -2,6 +2,8 @@ package com.github.bogdanovmn.boardgameorder.web.orm;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
@@ -11,12 +13,12 @@ public class Source extends BaseEntity {
 	@Column(nullable = false)
 	private Date importDate;
 	@Column(nullable = false)
-	private Date fileCreateDate;
-	@Column(nullable = false)
 	private Date fileModifyDate;
 	@Column(length = 32, unique = true)
 	private String contentHash;
 	private Integer itemsCount;
+	@Enumerated(EnumType.STRING)
+	private ImportType importType;
 
 	public Date getImportDate() {
 		return importDate;
@@ -49,12 +51,12 @@ public class Source extends BaseEntity {
 		return this;
 	}
 
-	public Date getFileCreateDate() {
-		return fileCreateDate;
+	public ImportType getImportType() {
+		return importType;
 	}
 
-	public Source setFileCreateDate(final Date fileCreateDate) {
-		this.fileCreateDate = fileCreateDate;
+	public Source setImportType(final ImportType importType) {
+		this.importType = importType;
 		return this;
 	}
 

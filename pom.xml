@@ -44,6 +44,11 @@
 				<artifactId>cmdline-app</artifactId>
 				<version>1.0</version>
 			</dependency>
+			<dependency>
+				<groupId>com.github.bogdanovmn.httpclient</groupId>
+				<artifactId>http-client-impl-simple</artifactId>
+				<version>1.6</version>
+			</dependency>
 
 			<!-- Libs -->
 

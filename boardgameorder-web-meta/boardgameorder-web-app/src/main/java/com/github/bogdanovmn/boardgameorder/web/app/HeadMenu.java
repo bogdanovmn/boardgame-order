@@ -46,7 +46,7 @@ public class HeadMenu {
 			items.add(new MenuItem(ITEM.PRICE_LIST_CHANGES.name(), "/price-list/changes/last", "Что новенького?"));
 			items.add(new MenuItem(ITEM.ORDER.name(), "/user/order/items", "Корзина"));
 			if (this.isAdmin) {
-				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/upload-price-list", "Админка"));
+				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/price-list", "Админка"));
 			}
 			this.isPrepared = true;
 		}
