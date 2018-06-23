@@ -35,6 +35,8 @@ form table td { padding: 10px; }
 
 a.logout { text-decoration: none; font-weight: bold; color: #a11e0d; }
 a.button { text-decoration: none }
+a.button div { padding: 5px 10px; border: 1px solid gray; border-radius: 25px; font-size: 85%; }
+a.button-registration div { border-color: #8dcaa5; color: #39b45b; background: #f3fbf3; }
 
 div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc; text-align: center; color: #4c260b; padding: 10px 30px; }
 
@@ -66,3 +68,4 @@ div.button-copy { float: right; display: block; border-color: #778d78; backgroun
 div.in-action div.button { border: 1px dotted gray; color: gray; }
 
 div.hero { padding: 20px 10px; width: 55%; margin: 20px auto; border-radius: 45px; border: 1px dotted #a2bca3; color: #778d78; font-size: 80%; }
+span.no-sms { color: #c3c2bb; font-size: 80%; }

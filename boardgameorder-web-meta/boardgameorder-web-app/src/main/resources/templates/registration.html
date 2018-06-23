@@ -24,8 +24,11 @@
 			<td><input type=text name=name value="{{userRegistrationForm.name}}">
             <td>{{formError.name}}
 		<tr>
-			<td colspan=3><input type=submit name=register_submit value='  Готово  '>
-			&nbsp;&nbsp;&nbsp;&nbsp;<a href="login">Войти</a>
+			<td><input type=submit name=register_submit value='  Зарегистрироваться  '>
+			<td colspan="2">
+				<a href="login" class="button button-registration">
+					<div>У меня уже есть логин</div>
+				</a>
 		</table>
 	</form>
 </div>
