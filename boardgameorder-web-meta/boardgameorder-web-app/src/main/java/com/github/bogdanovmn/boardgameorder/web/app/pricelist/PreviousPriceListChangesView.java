@@ -23,7 +23,7 @@ class PreviousPriceListChangesView {
 
 	private List<PublisherPriceChangeView> getItems(ItemPriceChangeType type) {
 		return changes.stream()
-			.filter(x -> x.getType().equals(type))
+			.filter(x -> type == ItemPriceChangeType.ANY || x.getType().equals(type))
 			.collect(
 				Collectors.groupingBy(
 					x -> x.getItem().getPublisher(),
@@ -54,5 +54,9 @@ class PreviousPriceListChangesView {
 
 	List<PublisherPriceChangeView> getModifiedItems() {
 		return getItems(ItemPriceChangeType.MODIFY);
+	}
+
+	List<PublisherPriceChangeView> getAllItems() {
+		return getItems(ItemPriceChangeType.ANY);
 	}
 }

@@ -23,6 +23,10 @@ class PriceListChangesController extends AbstractVisualController {
 
 	@GetMapping("/last")
 	ModelAndView last() {
-		return new ModelAndView("price_list_changes", "sources", priceListService.priceListLastChangesView().getLastChanges());
+		return new ModelAndView(
+			"price_list_changes_by_publisher",
+			"priceChanges",
+			priceListService.priceListLastChangesView().getLastChanges()
+		);
 	}
 }

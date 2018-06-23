@@ -1,0 +1,63 @@
+{{#layout}}
+
+<h1>Изменения в прайсах</h1>
+
+{{#priceChanges}}
+	<h1>{{source.fileModifyDateFormatted}}</h1>
+	{{#allItems}}
+		<div class="publisher-block">
+			<h2>{{publisher.normalizedName}} <i>({{changes.size}})</i></h2>
+			<table class="price-and-item">
+				{{#changes}}
+				<tr class="{{type}}">
+					{{#priceCurrent}}
+						<td class="count">
+							{{#countChange}}
+								<span class="change">
+									<i class="{{#countChangeSign}}plus{{/countChangeSign}}{{^countChangeSign}}minus{{/countChangeSign}}">
+										{{countChangeSign}}{{countChange}}
+									</i>
+								</span>
+							{{/countChange}}
+							{{countCurrent}}<i>шт</i>
+						</td>
+						<td class="price">
+							{{#priceChange}}
+								<span class="change">
+									<i class="{{#priceChangeSign}}minus{{/priceChangeSign}}{{^priceChangeSign}}plus{{/priceChangeSign}}">
+										{{priceChangeSign}}{{priceChangeRounded}}
+									</i>
+								</span>
+							{{/priceChange}}
+							{{priceCurrentRounded}}<i>р</i>
+						</td>
+						<td class="action">
+							<div
+								class="button button-add-item"
+								data-href="/user/order/items/{{item.id}}"
+								data-type="add"
+								data-id="{{item.id}}">+</div>
+						</td>
+					{{/priceCurrent}}
+					{{^priceCurrent}}
+						<td colspan="3" class="delete-note">удалено</td>
+					{{/priceCurrent}}
+					<td class="title" >
+						{{{item.htmlTitle}}}
+						{{#item.url}}
+							<a target="_blank" href="{{item.url}}">фото</a>
+						{{/item.url}}
+					</td>
+				</tr>
+				{{/changes}}
+			</table>
+		</div>
+	{{/allItems}}
+{{/priceChanges}}
+
+{{^priceChanges}}
+	<h1>Пусто</h1>
+{{/priceChanges}}
+
+
+{{/layout}}

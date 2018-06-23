@@ -38,16 +38,19 @@ a.button { text-decoration: none }
 
 div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc; text-align: center; color: #4c260b; padding: 10px 30px; }
 
-div.publisher-block { text-align: left; padding: 5px 2px 3px 2px ;}
+div.publisher-block { text-align: left; padding: 0 2px 3px 2px ;}
 div.publisher-block h2 i { color: #a2bca3; font-size: 80%; }
 div.publisher-block h3 i { color: #a2bca3; font-size: 80%; }
 
 table.price-and-item { text-align: left; margin-left: 20px; }
 table.price-and-item tr.ordered td.title span { background: #a2bca3 }
+table.price-and-item tr.NEW { background: #62e67554; }
+table.price-and-item tr.DELETE { background: #da35351f }
 table.price-and-item td.count { color: #a2bca3; white-space: nowrap;}
 table.price-and-item td.price { color: #778d78; white-space: nowrap;}
 table.price-and-item td.title  { color: #575651; white-space: nowrap;}
 table.price-and-item td.title a { text-decoration: none; color: #1299b4; }
+table.price-and-item td.delete-note { color: #d8796d; text-align: center; font-size: 80%; }
 table.price-and-item td       { padding: 2px 8px; }
 table.price-and-item td i     { color: #c3c2bb;}
 table.price-and-item td span.change { font-size: 80%; }
