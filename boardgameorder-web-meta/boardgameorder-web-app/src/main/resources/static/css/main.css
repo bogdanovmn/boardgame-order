@@ -1,4 +1,4 @@
-a,body,table,tr,td,li,p,input,textarea,pre {font-family: verdana, arial, serif;color:#101610;padding:0;margin:0}
+a,body,table,tr,td,li,p,input,textarea,pre {font-family: verdana, arial, serif;color:#575651;padding:0;margin:0}
 table{width:auto;table-layout:fixed;border-collapse:collapse;text-align:left}
 
 h1 { color: #575651}
@@ -64,3 +64,5 @@ div.button-del-item { border-color: #b43f39; color: #b43f39; }
 div.button-copy { float: right; display: block; border-color: #778d78; background: #a2bca3; font-size: 100%; padding: 15px 20px; }
 
 div.in-action div.button { border: 1px dotted gray; color: gray; }
+
+div.hero { padding: 20px 10px; width: 55%; margin: 20px auto; border-radius: 45px; border: 1px dotted #a2bca3; color: #778d78; font-size: 80%; }
