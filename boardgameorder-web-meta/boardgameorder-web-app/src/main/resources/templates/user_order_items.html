@@ -43,95 +43,25 @@
 {{/order.items.0}}
 
 <script>
-	Order = function() {
-		this.itemsCount = parseInt("{{order.itemsCount}}") || 0;
-		this.total = parseInt("{{order.total}}") || 0;
-
-		this.totalWithDiscount = function() {
-			var x = this.total * 0.92;
-			// round to 50 RUB
-			y = x % 50;
-			if (y > 0) {
-				x = x + 50 - y;
-			}
-			return x;
-		};
-
-		this.addItem = function(id) {
-			var item = new Item(id);
-			this.total += item.getPrice();
-			this.itemsCount++;
-			item.render(1, item.getPrice())
-		};
-
-		this.delItem = function(id) {
-			var item = new Item(id);
-			this.total -= item.getPrice();
-			this.itemsCount--;
-			item.render(-1, -1*item.getPrice())
-		};
-
-		this.render = function() {
-			$("#orderSummary div.data").html(
-				"<p>Итого: " + this.total + " руб." +
-				"<p>Со скидкой: <b>" + this.totalWithDiscount() + "</b> руб."
-			)
-		};
-
-		this.getText = function() {
-			var text = "";
-			$("table.price-and-item tr").each(function(i) {
-				var count = parseInt($(this).find("td.count span").text());
-				if (count !== 0) {
-					if (count > 1) {
-						text += "[КОЛ-ВО: " + count + "] ";
-					}
-					text += $(this).find("td.title span").text() + "\r\n";
-				}
-			});
-			return text;
-		}
-	};
-
-	Item = function(id) {
-		this.id = id;
-		this.element = $("#item-" + this.id);
-
-		this.getPrice = function() {
-			return parseInt(
-				this.element.attr("data-item-price")
-			);
-		};
-		this.render = function(countInc, priceInc) {
-			var itemCountElement = this.element.find("td.count span");
-			var itemTotalElement = this.element.find("td.price span");
-
-			itemCountElement.text(
-				parseInt(itemCountElement.text()) + countInc
-			);
-
-			itemTotalElement.text(
-				parseInt(itemTotalElement.text()) + priceInc
-			);
-		}
-	};
-
-	var blockInAction = {};
-	var order = new Order();
+	const order = new Order(
+		parseInt("{{order.itemsCount}}") || 0,
+		parseInt("{{order.total}}") || 0
+	);
 	order.render();
 
+	const blockInAction = {};
 	$('div.button').click(
 		function() {
-			var button = $(this);
-			var actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
-			var itemId = button.attr("data-id");
+			const button = $(this);
+			const actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
+			const itemId = button.attr("data-id");
 
 			if (blockInAction[itemId]) {
 				return
 			}
 			blockInAction[itemId] = true;
 
-			var itemBlock = $("#item-" + itemId);
+			const itemBlock = $("#item-" + itemId);
 			itemBlock.toggleClass("in-action");
 
 			switch (button.attr("data-action")) {
@@ -175,7 +105,7 @@
 	}
 
 	function copyOrderText() {
-		var temp = $("<textarea>");
+		const temp = $("<textarea>");
 		$("body").append(temp);
 		temp.val(order.getText()).select();
 		document.execCommand("copy");

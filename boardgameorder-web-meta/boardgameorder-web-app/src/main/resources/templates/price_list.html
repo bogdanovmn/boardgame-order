@@ -16,7 +16,7 @@
 				<h2>{{publisher.normalizedName}} <i>({{prices.size}})</i></h2>
 				<table class="price-and-item">
 				{{#prices}}
-					<tr id="item-{{price.item.id}}" class="price-item {{#ordered}}ordered{{/ordered}}">
+					<tr id="item-{{price.item.id}}" class="{{#ordered}}ordered{{/ordered}}">
 						<td class="count">{{price.count}}<i>шт</i></td>
 						<td class="price">{{price.roundedPrice}}<i>р</i></td>
 						<td class="action">
@@ -45,72 +45,25 @@
 {{/actualPriceList.publisherPrices.0}}
 
 <script>
-	OrderBlock = function() {
-		this.itemsCount = parseInt("{{actualPriceList.userOrder.itemsCount}}") || 0;
-		this.total = parseInt("{{actualPriceList.userOrder.total}}") || 0;
-		this.totalWithDiscount = function() {
-			var x = this.total * 0.92;
-			// round to 50 RUB
-			var y = x % 50;
-			if (y > 0) {
-				x = x + 50 - y;
-			}
-			return x;
-		};
-
-		this.addItem = function(id) {
-			var item = new Item(id);
-			this.total += item.getPrice();
-			this.itemsCount++;
-			item.renderOrder();
-			orderedItems[id] = 1;
-		};
-
-		this.render = function() {
-			$("#order div.details").html(
-				"<p>Выбрано:<b>" + this.itemsCount + "</b><p>Сумма:<br>" + this.total + " руб.<p>Со скидкой:<br><b>" + this.totalWithDiscount() + "</b> руб."
-			)
-		}
-	};
-
-	Item = function(id) {
-		this.id = id;
-		this.element = $("#item-" + this.id);
-
-		this.getPrice = function() {
-			return parseInt(
-				this.element.find("td.price").text()
-			);
-		};
-
-		this.renderOrder =function() {
-			if (orderedItems[this.id] !== 1) {
-				this.element.toggleClass("ordered");
-			}
-		}
-	};
-
-	var blockInAction = {};
-	var order = new OrderBlock();
+	const blockInAction = {};
+	const order = new OrderBlock(
+		parseInt("{{actualPriceList.userOrder.itemsCount}}") || 0,
+		parseInt("{{actualPriceList.userOrder.total}}") || 0
+	);
 	order.render();
-
-	var orderedItems = {};
-	$("tr.ordered div.button-add-item").each(function(i) {
-		orderedItems[$(this).attr("data-id")] = 1;
-	});
 
 	$('div.button').click(
 		function() {
-			var button = $(this);
-			var actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
-			var itemId = button.attr("data-id");
+			const button = $(this);
+			const actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
+			const itemId = button.attr("data-id");
 
 			if (blockInAction[itemId]) {
 				return
 			}
 			blockInAction[itemId] = true;
 
-			var itemBlock = $("#item-" + itemId);
+			const itemBlock = $("#item-" + itemId);
 			itemBlock.toggleClass("in-action");
 
 			switch (button.attr("data-type")) {
@@ -118,9 +71,6 @@
 					addItem(itemId, actionUrl, "PUT");
 					break;
 			}
-
-			itemBlock.toggleClass("in-action");
-			blockInAction[itemId] = false;
 		}
 	);
 	function addItem(itemId, url, method) {
@@ -134,6 +84,10 @@
 			})
 			.fail(function (jqXHR, excpetion) {
 				console.log("[ERROR] " + url + "\n" + excpetion)
+			})
+			.always(function() {
+				$("#item-" + itemId).toggleClass("in-action");
+				blockInAction[itemId] = false;
 			})
 	}
 </script>
