@@ -20,7 +20,7 @@ public class PlChangesFilterToggleMenuItemTest {
 	@Test
 	public void title() {
 		assertEquals(
-			"count",
+			"Изменения в кол-ве",
 			new PlChangesFilterToggleMenuItem(COUNT, TOGGLES).title()
 		);
 	}
