@@ -1,8 +1,15 @@
 {{#layout}}
 
 {{#priceChanges}}
-	<h1>{{source.fileModifyDateFormatted}}</h1>
-	{{#allItems}}
+	<h1>Изменения в прайсе от {{source.fileModifyDateFormatted}}</h1>
+	<div class="sub-menu">
+		{{#filter.menu}}
+			<span class="{{selected}}">
+				<a href='{{layout.contextPath}}{{filter.resourcePath}}?{{filterParams}}'>{{title}}</a>
+			</span>
+		{{/filter.menu}}
+	</div>
+	{{#items}}
 		<div class="publisher-block">
 			<h2>{{publisher.normalizedName}} <i>({{changes.size}})</i></h2>
 			<table class="price-and-item">
@@ -43,7 +50,7 @@
 				{{/changes}}
 			</table>
 		</div>
-	{{/allItems}}
+	{{/items}}
 {{/priceChanges}}
 
 {{^priceChanges}}

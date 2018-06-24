@@ -6,10 +6,10 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user/order/items/{id}")
-class UserItemOrderController extends AbstractController {
+class UserOrderItemController extends AbstractController {
 	private final UserOrderService userOrderService;
 
-	UserItemOrderController(final UserOrderService userOrderService) {
+	UserOrderItemController(final UserOrderService userOrderService) {
 		this.userOrderService = userOrderService;
 	}
 

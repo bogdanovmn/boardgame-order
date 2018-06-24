@@ -32,14 +32,19 @@ class PriceListService {
 	}
 
 	List<ItemPrice> getActualPriceList() {
-		Source source = sourceRepository.findTopByOrderByFileModifyDateDesc();
+		Source source = getActualSource();
 		return itemPriceRepository.findBySource(source);
 	}
 
-	PriceListChangesView priceListLastChangesView() {
-		Source source = sourceRepository.findTopByOrderByFileModifyDateDesc();
-		return PriceListChangesView.fromFullList(
-			itemPriceChangeRepository.findAllBySource(source)
+	PlChangesView priceListLastChangesView(PlChangesFilter filter) {
+		Source source = getActualSource();
+		return new PlChangesView(
+			itemPriceChangeRepository.findAllBySource(source),
+			filter
 		);
+	}
+
+	private Source getActualSource() {
+		return sourceRepository.findTopByOrderByFileModifyDateDesc();
 	}
 }

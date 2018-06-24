@@ -54,6 +54,9 @@ public class ItemPriceChange extends BaseEntity {
 	public Double getPriceChange() {
 		return priceChange;
 	}
+	public Boolean isPriceChange() {
+		return priceChange != null;
+	}
 
 	public int getPriceChangeRounded() {
 		return (int)Math.round(priceChange);
@@ -66,6 +69,9 @@ public class ItemPriceChange extends BaseEntity {
 
 	public Integer getCountChange() {
 		return countChange;
+	}
+	public Boolean isCountChange() {
+		return countChange != null;
 	}
 
 	public ItemPriceChange setCountChange(final Integer countChange) {

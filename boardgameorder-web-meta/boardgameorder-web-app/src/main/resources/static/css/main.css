@@ -69,3 +69,8 @@ div.in-action div.button { border: 1px dotted gray; color: gray; }
 
 div.hero { padding: 20px 10px; width: 55%; margin: 20px auto; border-radius: 45px; border: 1px dotted #a2bca3; color: #778d78; font-size: 80%; }
 span.no-sms { color: #c3c2bb; font-size: 80%; }
+
+div.sub-menu span { margin-left: 10px; padding: 5px 15px; border: 1px dotted #1299b4; border-radius: 25px; }
+div.sub-menu a { text-decoration: none; }
+div.sub-menu span.false { background: #f4fbfb;}
+div.sub-menu span.true { background: #a4e6ecc4; font-weight: bold; }
