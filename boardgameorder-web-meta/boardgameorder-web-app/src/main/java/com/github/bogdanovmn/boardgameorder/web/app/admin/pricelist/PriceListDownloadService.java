@@ -64,7 +64,7 @@ class PriceListDownloadService {
 
 					priceListChangesService.updateAllChanges();
 				}
-				catch (UploadDuplicateException | IOException e) {
+				catch (Exception e) {
 					LOG.error(e.getMessage());
 					currentAutoImport.setErrorMsg(e.getMessage());
 				}

@@ -116,7 +116,10 @@ public class PriceListExcelFile implements Closeable {
 				);
 			}
 			else {
-				currentGroup = row.cellStringValue(0);
+				String groupPretender = row.cellStringValue(0);
+				if (groupPretender.matches("^\\s*\\d.*")) {
+					currentGroup = groupPretender;
+				}
 			}
 		}
 		return result;

@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 class ItemsMap {
 	private final Map<String, List<Item>> mapByBarcode;
-	private final Map<String, Item> mapByTitle;
+	private final Map<String, List<Item>> mapByTitle;
 
 	ItemsMap(final List<Item> items) {
 		this.mapByBarcode = items.stream()
@@ -18,8 +18,8 @@ class ItemsMap {
 				Item::getBarcode, Collectors.toList()
 			));
 		this.mapByTitle = items.stream()
-			.collect(Collectors.toMap(
-				Item::getTitle, x -> x
+			.collect(Collectors.groupingBy(
+				Item::getTitle, Collectors.toList()
 			));
 	}
 
@@ -52,7 +52,16 @@ class ItemsMap {
 	}
 
 	private Item getByTitle(ExcelPriceItem excelPriceItem) {
-		return mapByTitle.get(excelPriceItem.getTitle());
+		List<Item> items = mapByTitle.get(excelPriceItem.getTitle());
+		if (items != null) {
+			items = items.stream()
+				.filter(x -> x.getPublisher().getName().equals(excelPriceItem.getGroup()))
+				.collect(Collectors.toList());
+		}
+
+		return items != null && items.size() == 1
+			? items.get(0)
+			: null;
 	}
 
 	private Item getByBarcode(ExcelPriceItem excelPriceItem) {

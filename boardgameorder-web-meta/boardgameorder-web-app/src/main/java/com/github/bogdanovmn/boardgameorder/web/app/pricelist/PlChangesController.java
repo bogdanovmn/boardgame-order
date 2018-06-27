@@ -31,7 +31,7 @@ class PlChangesController extends AbstractVisualController {
 		@RequestParam(required = false, defaultValue = "true",  name = "new") Boolean showNew,
 		@RequestParam(required = false, defaultValue = "false", name = "count") Boolean showCountChange,
 		@RequestParam(required = false, defaultValue = "true",  name = "price") Boolean showPriceChange,
-		@RequestParam(required = false, defaultValue = "true",  name = "delete") Boolean showDeleted
+		@RequestParam(required = false, defaultValue = "false",  name = "delete") Boolean showDeleted
 	) {
 		return new ModelAndView(
 			"price_list_changes_by_publisher",
