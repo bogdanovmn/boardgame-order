@@ -16,24 +16,28 @@
 				{{#changes}}
 				<tr class="{{type}}">
 					{{#priceCurrent}}
+						<td class="change">
+						{{#countChange}}
+							<span class="change">
+								<i class="{{#countChangeSign}}plus{{/countChangeSign}}{{^countChangeSign}}minus{{/countChangeSign}}">
+									{{countChangeSign}}{{countChange}}
+								</i>
+							</span>
+						{{/countChange}}
+						</td>
 						<td class="count">
-							{{#countChange}}
-								<span class="change">
-									<i class="{{#countChangeSign}}plus{{/countChangeSign}}{{^countChangeSign}}minus{{/countChangeSign}}">
-										{{countChangeSign}}{{countChange}}
-									</i>
-								</span>
-							{{/countChange}}
 							{{countCurrent}}<i>шт</i>
 						</td>
-						<td class="price">
+						<td class="change">
 							{{#priceChange}}
-								<span class="change">
-									<i class="{{#priceChangeSign}}minus{{/priceChangeSign}}{{^priceChangeSign}}plus{{/priceChangeSign}}">
-										{{priceChangeSign}}{{priceChangeRounded}}
-									</i>
-								</span>
+							<span class="change">
+								<i class="{{#priceChangeSign}}minus{{/priceChangeSign}}{{^priceChangeSign}}plus{{/priceChangeSign}}">
+									{{priceChangeSign}}{{priceChangeRounded}}
+								</i>
+							</span>
 							{{/priceChange}}
+						</td>
+						<td class="price">
 							{{priceCurrentRounded}}<i>р</i>
 						</td>
 					{{/priceCurrent}}
