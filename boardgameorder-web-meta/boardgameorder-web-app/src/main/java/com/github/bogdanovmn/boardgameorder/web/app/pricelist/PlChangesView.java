@@ -19,7 +19,9 @@ class PlChangesView {
 	}
 
 	Source getSource() {
-		return allChanges.get(0).getSource();
+		return allChanges.size() > 0
+			? allChanges.get(0).getSource()
+			: null;
 	}
 
 	List<PublisherPriceChangeView> getItems() {
