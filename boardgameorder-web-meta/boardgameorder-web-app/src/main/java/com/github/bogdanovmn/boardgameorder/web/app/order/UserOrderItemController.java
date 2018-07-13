@@ -1,4 +1,4 @@
-package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
+package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractController;
 import org.springframework.http.ResponseEntity;

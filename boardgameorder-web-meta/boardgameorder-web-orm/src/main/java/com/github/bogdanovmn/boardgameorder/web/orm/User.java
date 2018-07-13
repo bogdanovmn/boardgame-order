@@ -25,11 +25,11 @@ public class User extends BaseEntityWithUniqueName {
 
 	@ManyToMany(cascade = CascadeType.MERGE)
 	@JoinTable(
-		name = "item2user",
+		name = "favorite_items",
 		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "item_id", referencedColumnName = "id")
 	)
-	private Set<Item> items;
+	private Set<Item> favoriteItems;
 
 	public User() {}
 

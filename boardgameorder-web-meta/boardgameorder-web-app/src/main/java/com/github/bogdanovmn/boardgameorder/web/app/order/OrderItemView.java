@@ -1,4 +1,4 @@
-package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
+package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.Item;
 import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;

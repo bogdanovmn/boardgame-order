@@ -2,11 +2,11 @@ package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
 
-class ItemPriceView {
+class PlItemView {
 	private final ItemPrice itemPrice;
 	private final boolean ordered;
 
-	ItemPriceView(final ItemPrice itemPrice, final boolean ordered) {
+	PlItemView(final ItemPrice itemPrice, final boolean ordered) {
 		this.itemPrice = itemPrice;
 		this.ordered = ordered;
 	}

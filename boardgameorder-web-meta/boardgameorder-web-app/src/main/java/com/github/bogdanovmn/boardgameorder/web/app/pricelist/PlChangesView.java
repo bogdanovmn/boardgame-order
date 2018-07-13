@@ -24,7 +24,7 @@ class PlChangesView {
 			: null;
 	}
 
-	List<PublisherPriceChangeView> getItems() {
+	List<PlChangesPublisherView> getItems() {
 		return allChanges.stream()
 			.filter(filter::apply)
 			.collect(
@@ -39,7 +39,7 @@ class PlChangesView {
 					).reversed()
 				)
 				.map(x ->
-					new PublisherPriceChangeView(
+					new PlChangesPublisherView(
 						x.getKey(),
 						x.getValue()
 					)

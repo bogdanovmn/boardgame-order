@@ -9,12 +9,12 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-class PublisherPriceView {
+class PlPublisherView {
 	private final Publisher publisher;
 	private final List<ItemPrice> prices;
 	private final List<UserOrderItem> userOrderItems;
 
-	PublisherPriceView(final Publisher publisher, final List<ItemPrice> prices, final List<UserOrderItem> userOrderItems) {
+	PlPublisherView(final Publisher publisher, final List<ItemPrice> prices, final List<UserOrderItem> userOrderItems) {
 		this.publisher = publisher;
 		this.prices = prices;
 		this.userOrderItems = userOrderItems;
@@ -24,7 +24,7 @@ class PublisherPriceView {
 		return publisher;
 	}
 
-	List<ItemPriceView> getPrices() {
+	List<PlItemView> getPrices() {
 		Set<Integer> ordered = userOrderItems.stream().map(x -> x.getItem().getId()).collect(Collectors.toSet());
 		return prices.stream()
 			.sorted(
@@ -38,7 +38,7 @@ class PublisherPriceView {
 						x.getItem().getEffectiveTitle()
 				)
 			)
-			.map(x -> new ItemPriceView(x, ordered.contains(x.getItem().getId())))
+			.map(x -> new PlItemView(x, ordered.contains(x.getItem().getId())))
 			.collect(Collectors.toList());
 	}
 }

@@ -10,9 +10,9 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/price-list")
 class PlController extends AbstractVisualController {
-	private final PriceListService priceListService;
+	private final PlService priceListService;
 
-	PlController(PriceListService priceListService) {
+	PlController(PlService priceListService) {
 		this.priceListService = priceListService;
 	}
 

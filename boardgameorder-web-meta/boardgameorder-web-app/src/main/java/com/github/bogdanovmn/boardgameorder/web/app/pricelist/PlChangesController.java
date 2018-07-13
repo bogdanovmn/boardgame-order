@@ -15,14 +15,14 @@ import static com.github.bogdanovmn.boardgameorder.web.app.pricelist.PlChangesFi
 @Controller
 @RequestMapping("/price-list/changes")
 class PlChangesController extends AbstractVisualController {
-	private final PriceListService priceListService;
+	private final PlService priceListService;
 
 	@Override
 	protected HeadMenu.ITEM currentMenuItem() {
 		return HeadMenu.ITEM.PRICE_LIST_CHANGES;
 	}
 
-	PlChangesController(PriceListService priceListService) {
+	PlChangesController(PlService priceListService) {
 		this.priceListService = priceListService;
 	}
 

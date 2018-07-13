@@ -1,5 +1,7 @@
-package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
+package com.github.bogdanovmn.boardgameorder.web.app.order;
 
+import com.github.bogdanovmn.boardgameorder.web.app.SourceService;
+import com.github.bogdanovmn.boardgameorder.web.app.UserOrder;
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
 import org.springframework.stereotype.Service;
 
@@ -9,12 +11,12 @@ import java.util.Date;
 class UserOrderService {
 	private final UserOrderItemRepository userOrderItemRepository;
 	private final ItemRepository itemRepository;
-	private final PriceListService priceListService;
+	private final SourceService sourceService;
 
-	UserOrderService(final UserOrderItemRepository userOrderItemRepository, final ItemRepository itemRepository, final PriceListService priceListService) {
+	UserOrderService(final UserOrderItemRepository userOrderItemRepository, final ItemRepository itemRepository, final SourceService sourceService) {
 		this.userOrderItemRepository = userOrderItemRepository;
 		this.itemRepository = itemRepository;
-		this.priceListService = priceListService;
+		this.sourceService = sourceService;
 	}
 
 	void addItem(final User user, final Integer id) {
@@ -62,9 +64,11 @@ class UserOrderService {
 
 	// TODO можно грузить не весь прайс, а только заказанные позиции
 	UserOrderView getUserOrderView(final User user) {
-		return UserOrderView.fromAllPrices(
-			priceListService.getActualPriceList(),
-			userOrderItemRepository.getAllByUser(user)
+		return new UserOrderView(
+			UserOrder.fromAllPrices(
+				sourceService.actualPrices(),
+				userOrderItemRepository.getAllByUser(user)
+			)
 		);
 	}
 }

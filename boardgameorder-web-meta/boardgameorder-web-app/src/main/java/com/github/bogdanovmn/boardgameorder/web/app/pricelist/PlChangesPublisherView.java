@@ -7,11 +7,11 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
-class PublisherPriceChangeView {
+class PlChangesPublisherView {
 	private final Publisher publisher;
 	private final List<ItemPriceChange> itemPriceChanges;
 
-	PublisherPriceChangeView(final Publisher publisher, final List<ItemPriceChange> changes) {
+	PlChangesPublisherView(final Publisher publisher, final List<ItemPriceChange> changes) {
 		this.publisher = publisher;
 		this.itemPriceChanges = changes;
 	}

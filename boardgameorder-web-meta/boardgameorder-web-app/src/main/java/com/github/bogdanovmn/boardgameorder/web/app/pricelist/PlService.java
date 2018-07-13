@@ -1,39 +1,32 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
+import com.github.bogdanovmn.boardgameorder.web.app.SourceService;
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-class PriceListService {
-	private final SourceRepository sourceRepository;
-	private final ItemPriceRepository itemPriceRepository;
+class PlService {
 	private final UserOrderItemRepository userOrderItemRepository;
 	private final ItemPriceChangeRepository itemPriceChangeRepository;
+	private final SourceService sourceService;
 
-	PriceListService(
-		final SourceRepository sourceRepository,
-		final ItemPriceRepository itemPriceRepository,
+	PlService(
 		final UserOrderItemRepository userOrderItemRepository,
-		final ItemPriceChangeRepository itemPriceChangeRepository)
-	{
-		this.sourceRepository = sourceRepository;
-		this.itemPriceRepository = itemPriceRepository;
+		final ItemPriceChangeRepository itemPriceChangeRepository,
+		final SourceService sourceService
+	) {
 		this.userOrderItemRepository = userOrderItemRepository;
 		this.itemPriceChangeRepository = itemPriceChangeRepository;
+		this.sourceService = sourceService;
 	}
 
-	PriceListView actualPriceListView(User user) {
-		List<ItemPrice> itemPrices = getActualPriceList();
+	PlView actualPriceListView(User user) {
+		List<ItemPrice> itemPrices = sourceService.actualPrices();
 		List<UserOrderItem> userOrderItems = userOrderItemRepository.getAllByUser(user);
 
-		return new PriceListView(itemPrices, userOrderItems);
-	}
-
-	List<ItemPrice> getActualPriceList() {
-		Source source = getActualSource();
-		return itemPriceRepository.findBySource(source);
+		return new PlView(itemPrices, userOrderItems);
 	}
 
 	PlChangesView priceListLastChangesView(PlChangesFilter filter) {
@@ -43,9 +36,5 @@ class PriceListService {
 			itemPriceChangeRepository.findAllBySource(source),
 			filter
 		);
-	}
-
-	private Source getActualSource() {
-		return sourceRepository.findTopByOrderByFileModifyDateDesc();
 	}
 }
