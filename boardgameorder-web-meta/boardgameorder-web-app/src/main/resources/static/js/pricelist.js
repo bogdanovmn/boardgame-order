@@ -39,8 +39,14 @@ class OrderBlock {
 	};
 
 	render() {
-		$("#order div.details").html(
-			`<p>Выбрано:<b>${this.itemsCount}</b><p>Сумма:<br>${this.total} руб.<p>Со скидкой:<br><b>${new Discount(this.total).value()}</b> руб.`
-		)
+		if (this.itemsCount === 0) {
+			$("#order").hide();
+		}
+		else {
+			$("#order").show();
+			$("#order div.details").html(
+				`<p>Выбрано:<b>${this.itemsCount}</b><p>Сумма:<br>${this.total} руб.<p>Со скидкой:<br><b>${new Discount(this.total).value()}</b> руб.`
+			)
+		}
 	}
 }
