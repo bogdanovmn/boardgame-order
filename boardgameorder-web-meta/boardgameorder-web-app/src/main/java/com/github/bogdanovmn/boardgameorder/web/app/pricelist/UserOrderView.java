@@ -31,9 +31,11 @@ class UserOrderView {
 	}
 
 	Integer getItemsCount() {
-		return orderedItems.values().stream()
-			.mapToInt(x -> x)
-			.sum();
+		return getTotal() > 0
+			? orderedItems.values().stream()
+				.mapToInt(x -> x)
+				.sum()
+			: 0;
 	}
 
 	Integer getTotal() {
