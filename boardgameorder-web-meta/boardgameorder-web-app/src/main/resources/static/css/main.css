@@ -53,6 +53,7 @@ table.price-and-item td.count { color: #a2bca3; white-space: nowrap; padding-rig
 table.price-and-item td.price { color: #778d78; white-space: nowrap;}
 table.price-and-item td.title  { color: #575651; white-space: nowrap;}
 table.price-and-item td.title a { text-decoration: none; color: #1299b4; }
+table.price-and-item td.title a.google { text-decoration: none; color: #c3c2bb; }
 table.price-and-item td.delete-note { color: #d8796d; text-align: center; font-size: 80%; }
 table.price-and-item td       { padding: 2px 8px; }
 table.price-and-item td i     { color: #c3c2bb;}
