@@ -100,7 +100,7 @@ public class PriceListExcelFile implements Closeable {
 
 //			printRow(rawRow);
 
-			if (new ExcelCell(row.cell(1)).isNumber()) {
+			if (row.cell(1).isNumber()) {
 				if (currentGroup == null) {
 					throw new IllegalStateException("Row like price but without group");
 				}
@@ -116,9 +116,11 @@ public class PriceListExcelFile implements Closeable {
 				);
 			}
 			else {
-				String groupPretender = row.cellStringValue(0);
-				if (groupPretender.matches("^\\s*\\d.*")) {
-					currentGroup = groupPretender;
+				if (!row.cell(0).isBlank()) {
+					String groupPretender = row.cellStringValue(0);
+					if (groupPretender.matches("^\\s*\\d.*")) {
+						currentGroup = groupPretender;
+					}
 				}
 			}
 		}

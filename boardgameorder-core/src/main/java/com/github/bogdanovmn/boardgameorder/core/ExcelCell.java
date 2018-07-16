@@ -48,14 +48,14 @@ class ExcelCell {
 	}
 
 	boolean isNumber() {
-		return cell.getCellTypeEnum().equals(CellType.NUMERIC);
+		return !isBlank() && cell.getCellTypeEnum().equals(CellType.NUMERIC);
 	}
 	boolean isString() {
 		return cell.getCellTypeEnum().equals(CellType.STRING);
 	}
 
 	boolean isBlank() {
-		return cell.getCellTypeEnum().equals(CellType.BLANK);
+		return cell == null || cell.getCellTypeEnum().equals(CellType.BLANK);
 
 	}
 

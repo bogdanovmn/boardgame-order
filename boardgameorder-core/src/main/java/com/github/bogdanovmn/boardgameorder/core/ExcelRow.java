@@ -1,6 +1,5 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
-import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 class ExcelRow {
@@ -11,8 +10,10 @@ class ExcelRow {
 		this.row = row;
 	}
 
-	Cell cell(int i) {
-		return row.getCell(i);
+	ExcelCell cell(int i) {
+		return new ExcelCell(
+			row.getCell(i)
+		);
 	}
 
 	String cellStringValue(Integer cellNum) {
