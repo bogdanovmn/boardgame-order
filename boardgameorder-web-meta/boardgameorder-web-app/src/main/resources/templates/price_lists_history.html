@@ -1,0 +1,30 @@
+{{#layout}}
+
+<h1>История прайсов</h1>
+{{#history.0}}
+	<table class="price-list-history">
+		<tr>
+			<th>Изменение прайса</th>
+			<th>Кол-во позиций</th>
+			<th colspan="2"></th>
+		</tr>
+		{{#history}}
+			<tr>
+				<td class="date">{{fileModifyDateFormatted}} <span>{{fileModifyTimeFormatted}}</span></td>
+				<td class="count">{{itemsCount}}</td></td>
+				<td>
+					<a href="{{layout.contextPath}}/price-lists/{{id}}/changes">Изменения</a>
+				</td>
+				<td>
+					<a href="{{layout.contextPath}}/price-lists/{{id}}">Прайс</a>
+				</td>
+			</tr>
+		{{/history}}
+
+{{/history.0}}
+
+{{^history.0}}
+	<h1>Пусто</h1>
+{{/history.0}}
+
+{{/layout}}

@@ -83,3 +83,9 @@ div.auto-import-block-DONE span.head { color: #778d78; }
 div.auto-import-block-ERROR { border-color: #b43f39; }
 div.auto-import-block-ERROR span.head { color: #b43f39; }
 div.auto-import-block-ERROR span.msg { color: #575651; font-weight: bold; }
+
+table.price-list-history { margin: 0 auto; }
+table.price-list-history th { border-bottom: 1px solid #575651; padding: 7px 10px; text-align: left; }
+table.price-list-history td { padding: 3px 10px; text-align: left; }
+table.price-list-history td.date span { color: #c3c2bb; }
+table.price-list-history td.count { color: #778d78; }

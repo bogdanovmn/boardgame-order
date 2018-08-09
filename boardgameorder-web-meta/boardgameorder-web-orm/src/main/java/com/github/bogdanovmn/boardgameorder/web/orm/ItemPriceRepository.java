@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface ItemPriceRepository extends JpaRepository<ItemPrice, Integer> {
 	@EntityGraph(attributePaths = {"item", "item.publisher"})
-	List<ItemPrice> findBySource(Source source);
+	List<ItemPrice> findBySourceId(Integer sourceId);
 }

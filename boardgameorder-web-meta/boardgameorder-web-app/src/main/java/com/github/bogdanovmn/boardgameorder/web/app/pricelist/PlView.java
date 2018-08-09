@@ -4,6 +4,7 @@ import com.github.bogdanovmn.boardgameorder.web.app.UserOrder;
 import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
 import com.github.bogdanovmn.boardgameorder.web.orm.UserOrderItem;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -15,6 +16,10 @@ class PlView {
 	PlView(final List<ItemPrice> itemPrices, final List<UserOrderItem> userOrderItems) {
 		this.itemPrices = itemPrices;
 		this.userOrderItems = userOrderItems;
+	}
+
+	PlView(List<ItemPrice> itemPrices) {
+		this(itemPrices, new ArrayList<>(0));
 	}
 
 	List<PlPublisherView> getPublisherPrices() {

@@ -37,6 +37,10 @@ public class Source extends BaseEntity {
 		return new SimpleDateFormat("yyyy-MM-dd").format(fileModifyDate);
 	}
 
+	public String getFileModifyTimeFormatted() {
+		return new SimpleDateFormat("HH:mm:ss").format(fileModifyDate);
+	}
+
 	public Source setFileModifyDate(Date fileModifyDate) {
 		this.fileModifyDate = fileModifyDate;
 		return this;

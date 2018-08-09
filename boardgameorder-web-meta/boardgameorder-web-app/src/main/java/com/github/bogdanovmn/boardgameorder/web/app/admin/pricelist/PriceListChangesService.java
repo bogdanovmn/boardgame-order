@@ -50,11 +50,11 @@ class PriceListChangesService {
 	}
 
 	private void updateChanges(final Source previousSource, final Source source) {
-		Map<Integer, ItemPrice> sourcePrices = itemPriceRepository.findBySource(source).stream()
+		Map<Integer, ItemPrice> sourcePrices = itemPriceRepository.findBySourceId(source.getId()).stream()
 			.collect(Collectors.toMap(
 				x -> x.getItem().getId(), x -> x
 			));
-		Map<Integer, ItemPrice> prevSourcePrices = itemPriceRepository.findBySource(previousSource).stream()
+		Map<Integer, ItemPrice> prevSourcePrices = itemPriceRepository.findBySourceId(previousSource.getId()).stream()
 			.collect(Collectors.toMap(
 				x -> x.getItem().getId(), x -> x
 			));

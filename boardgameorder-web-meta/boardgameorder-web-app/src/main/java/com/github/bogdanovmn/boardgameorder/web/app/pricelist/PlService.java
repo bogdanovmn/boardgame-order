@@ -29,12 +29,28 @@ class PlService {
 		return new PlView(itemPrices, userOrderItems);
 	}
 
+	PlView priceListView(Integer sourceId) {
+		List<ItemPrice> itemPrices = sourceService.prices(sourceId);
+		return new PlView(itemPrices);
+	}
+
 	PlChangesView priceListLastChangesView(PlChangesFilter filter) {
 		ItemPriceChange itemPriceChange = itemPriceChangeRepository.findFirstByOrderBySourceIdDesc();
 		Source source = itemPriceChange.getSource();
 		return new PlChangesView(
-			itemPriceChangeRepository.findAllBySource(source),
+			itemPriceChangeRepository.findAllBySourceId(source.getId()),
 			filter
 		);
+	}
+
+	PlChangesView priceListChangesView(Integer sourceId, PlChangesFilter filter) {
+		return new PlChangesView(
+			itemPriceChangeRepository.findAllBySourceId(sourceId),
+			filter
+		);
+	}
+
+	List<Source> history() {
+		return sourceService.allSources();
 	}
 }

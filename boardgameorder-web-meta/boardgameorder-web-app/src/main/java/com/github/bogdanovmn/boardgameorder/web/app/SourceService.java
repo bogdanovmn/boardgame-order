@@ -18,13 +18,21 @@ public class SourceService {
 		this.itemPriceRepository = itemPriceRepository;
 	}
 
-	private Source getActualSource() {
+	private Source actualSource() {
 		return sourceRepository.findTopByOrderByFileModifyDateDesc();
 	}
 
 	public List<ItemPrice> actualPrices() {
-		return itemPriceRepository.findBySource(
-			getActualSource()
+		return itemPriceRepository.findBySourceId(
+			actualSource().getId()
 		);
+	}
+
+	public List<ItemPrice> prices(Integer sourceId) {
+		return itemPriceRepository.findBySourceId(sourceId);
+	}
+
+	public List<Source> allSources() {
+		return sourceRepository.findAllByOrderByFileModifyDateDesc();
 	}
 }
