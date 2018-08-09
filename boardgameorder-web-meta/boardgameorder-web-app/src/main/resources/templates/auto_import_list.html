@@ -4,15 +4,23 @@
 
 {{#autoImport.history.0}}
 	<h1>История авто-импорта</h1>
+	<p>Последнее обновление - <b>{{autoImport.lastImport.importDate}}</b></p>
+
 	{{#autoImport.history}}
-		<div class="auto-import-block">
-			{{status}} -- {{importDate}} -- {{fileModifyDate}}
-			<div>{{errorMsg}}</div>
+		<div class="auto-import-block auto-import-block-{{status}}">
+			<span class="head">{{importDate}} <b>{{status}}</b></span>
+			<br>
+			Файл изменен: {{fileModifyDate}}
 			{{#source}}
 				<a href="{{layout.contextPath}}/price-list/changes/{{source.id}}">Список изменений</a>
 			{{/source}}
+			<br>
+			{{#errorMsg}}
+				Ошибка: <span class="msg">{{errorMsg}}</span>
+			{{/errorMsg}}
 		</div>
 	{{/autoImport.history}}
+
 {{/autoImport.history.0}}
 
 {{^autoImport.history.0}}

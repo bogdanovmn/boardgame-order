@@ -1,6 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.AutoImportRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.AutoImportStatus;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,7 +14,8 @@ class AutoImportService {
 
 	AutoImportListView getAutoImportListView() {
 		return new AutoImportListView(
-			autoImportRepository.findAllByOrderById()
+			autoImportRepository.findTopByOrderByIdDesc(),
+			autoImportRepository.findAllByStatusIsNotOrderByIdDesc(AutoImportStatus.NO_CHANGES)
 		);
 	}
 }

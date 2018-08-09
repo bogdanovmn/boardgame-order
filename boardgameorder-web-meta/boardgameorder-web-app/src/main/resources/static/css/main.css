@@ -76,3 +76,10 @@ div.sub-menu span { margin-left: 10px; padding: 5px 15px; border: 1px dotted #12
 div.sub-menu a { text-decoration: none; }
 div.sub-menu span.false { background: #f4fbfb;}
 div.sub-menu span.true { background: #a4e6ecc4; font-weight: bold; }
+
+div.auto-import-block { padding: 10px 20px; text-align: left; margin: 20px; border-radius: 20px; border: 1px dotted; }
+div.auto-import-block-DONE { border-color: #778d78; }
+div.auto-import-block-DONE span.head { color: #778d78; }
+div.auto-import-block-ERROR { border-color: #b43f39; }
+div.auto-import-block-ERROR span.head { color: #b43f39; }
+div.auto-import-block-ERROR span.msg { color: #575651; font-weight: bold; }

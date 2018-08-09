@@ -6,6 +6,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 @Component
 public class MustacheConfig {
 	@Bean
@@ -18,6 +21,14 @@ public class MustacheConfig {
 		collector.setEnvironment(environment);
 
 		return Mustache.compiler()
+			.withFormatter(obj -> {
+				if (obj instanceof Date) {
+					return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(obj);
+				}
+				else {
+					return obj.toString();
+				}
+			})
 			.defaultValue("")
 			.withLoader(mustacheTemplateLoader)
 			.withCollector(collector);

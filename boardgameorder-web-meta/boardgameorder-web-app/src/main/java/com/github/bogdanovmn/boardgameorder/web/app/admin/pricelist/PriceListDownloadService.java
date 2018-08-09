@@ -46,7 +46,7 @@ class PriceListDownloadService {
 
 		AutoImport currentAutoImport = new AutoImport().setImportDate(new Date());
 
-		AutoImport lastImport = autoImportRepository.findTopByStatusOrderByFileModifyDateDesc(AutoImportStatus.DONE);
+		AutoImport lastImport = autoImportRepository.findTopByStatusOrderByIdDesc(AutoImportStatus.DONE);
 		Date currentModifiedDate = null;
 		try {
 			currentModifiedDate = httpClient.getLastModified(PRICE_URL);
