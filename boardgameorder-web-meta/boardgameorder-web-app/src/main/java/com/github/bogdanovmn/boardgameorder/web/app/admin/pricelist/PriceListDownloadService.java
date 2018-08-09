@@ -2,10 +2,13 @@ package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
 import com.github.bogdanovmn.httpclient.simple.SimpleHttpClient;
+import com.google.common.io.ByteStreams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -14,6 +17,9 @@ import java.util.Date;
 @Service
 class PriceListDownloadService {
 	private static final Logger LOG = LoggerFactory.getLogger(PriceListDownloadService.class);
+
+	@Value("${price-list-dir}")
+	private String priceListDir;
 
 	private final static String PRICE_URL = "http://www.bambytoys.ru/bamby.xls";
 	private final SimpleHttpClient httpClient = new SimpleHttpClient("");
@@ -34,7 +40,8 @@ class PriceListDownloadService {
 	}
 
 	@Scheduled(fixedDelay = 9 * 3600 * 1000)
-	void autoImport() {
+	@Transactional(rollbackFor = Exception.class)
+	public void autoImport() {
 		LOG.info("Start check for updates");
 
 		AutoImport currentAutoImport = new AutoImport().setImportDate(new Date());
@@ -54,18 +61,23 @@ class PriceListDownloadService {
 		if (currentModifiedDate != null) {
 			currentAutoImport.setFileModifyDate(currentModifiedDate);
 			if (lastImport == null || lastImport.getFileModifyDate().compareTo(currentModifiedDate) < 0) {
-				try {
-					LOG.info("Downloading price list...");
-					InputStream fileStream = httpClient.downloadFile(PRICE_URL);
+				LOG.info("Downloading price list...");
+				try (InputStream fileStream = httpClient.downloadFile(PRICE_URL)) {
 					LOG.info("Downloading completed, start import");
-					Source source = priceListImportService.importFile(fileStream, ImportType.AUTO);
+					byte[] fileData = ByteStreams.toByteArray(fileStream);
+					Source source = priceListImportService.importFile(fileData, ImportType.AUTO);
+
+					LOG.info("Import done, saving original file");
+					new PlFileOnDisk(fileData, currentModifiedDate, priceListDir)
+						.save();
+
+					LOG.info("All is OK, update changes between prices");
 					currentAutoImport.setStatus(AutoImportStatus.DONE)
 						.setSource(source);
-
 					priceListChangesService.updateAllChanges();
 				}
 				catch (Exception e) {
-					LOG.error(e.getMessage());
+					LOG.error(e.getMessage(), e);
 					currentAutoImport.setErrorMsg(e.getMessage());
 				}
 			}

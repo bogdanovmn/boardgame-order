@@ -4,6 +4,7 @@ import com.github.bogdanovmn.boardgameorder.web.app.AdminMenu;
 import com.github.bogdanovmn.boardgameorder.web.app.admin.AbstractVisualAdminController;
 import com.github.bogdanovmn.boardgameorder.web.orm.ImportType;
 import com.github.bogdanovmn.boardgameorder.web.orm.Source;
+import com.google.common.io.ByteStreams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,7 +38,10 @@ class PriceListAdminController extends AbstractVisualAdminController {
 	@PostMapping("/price-list")
 	String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
 		try {
-			Source source = priceListImportService.importFile(file.getInputStream(), ImportType.MANUAL);
+			Source source = priceListImportService.importFile(
+				ByteStreams.toByteArray(file.getInputStream()),
+				ImportType.MANUAL
+			);
 			priceListChangesService.updateAllChanges();
 			redirectAttributes.addFlashAttribute("msg", "OK!");
 			redirectAttributes.addFlashAttribute("source", source);

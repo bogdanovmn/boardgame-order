@@ -4,7 +4,6 @@ import com.github.bogdanovmn.boardgameorder.core.ExcelPriceItem;
 import com.github.bogdanovmn.boardgameorder.core.PriceListContent;
 import com.github.bogdanovmn.boardgameorder.core.PriceListExcelFile;
 import com.github.bogdanovmn.boardgameorder.web.orm.*;
-import com.google.common.io.ByteStreams;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import org.springframework.util.DigestUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -41,13 +39,12 @@ public class PriceListImportService {
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public synchronized Source importFile(InputStream fileStream, ImportType type)
+	public synchronized Source importFile(byte[] fileData, ImportType type)
 		throws IOException, UploadDuplicateException
 	{
 		LOG.info("Import data from file ({})", type);
 
-		byte[] fileBytes = ByteStreams.toByteArray(fileStream);
-		String fileMd5 = DigestUtils.md5DigestAsHex(fileBytes);
+		String fileMd5 = DigestUtils.md5DigestAsHex(fileData);
 		Source existingSource = sourceRepository.findFirstByContentHash(fileMd5);
 		if (existingSource != null) {
 			throw new UploadDuplicateException(
@@ -62,7 +59,7 @@ public class PriceListImportService {
 		LOG.info("Parse Excel file");
 		List<ExcelPriceItem> items;
 		final Source source = new Source();
-		try (PriceListExcelFile excelFile = new PriceListExcelFile(new ByteArrayInputStream(fileBytes)))
+		try (PriceListExcelFile excelFile = new PriceListExcelFile(new ByteArrayInputStream(fileData)))
 		{
 			PriceListContent price = new PriceListContent(excelFile);
 			items = price.boardGames();
