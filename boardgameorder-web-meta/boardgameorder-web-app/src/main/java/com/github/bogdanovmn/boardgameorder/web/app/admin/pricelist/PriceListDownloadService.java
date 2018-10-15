@@ -40,7 +40,6 @@ class PriceListDownloadService {
 	}
 
 	@Scheduled(fixedDelay = 9 * 3600 * 1000)
-	@Transactional(rollbackFor = Exception.class)
 	public void autoImport() {
 		LOG.info("Start check for updates");
 
