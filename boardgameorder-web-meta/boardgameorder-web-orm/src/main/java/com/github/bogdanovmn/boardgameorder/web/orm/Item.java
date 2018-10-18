@@ -90,6 +90,6 @@ public class Item extends BaseEntity {
 
 	@Override
 	public String toString() {
-		return String.format("Item{title='%s', barcode='%s', publisher=%s}", title, barcode, publisher);
+		return String.format("Item{title='%s', barcode='%s', publisher=%s, id=%s}", title, barcode, publisher, id);
 	}
 }

@@ -85,9 +85,11 @@ public class PriceListImportService {
 		int newItems = 0;
 		int updatedItems = 0;
 		for (ExcelPriceItem excelPriceItem : items) {
+			LOG.info("Excel Item: {}", excelPriceItem);
 			Item item = itemsMap.get(excelPriceItem);
 			if (item != null) {
-				if (updateItem(item, excelPriceItem, source)) {
+				LOG.info("Found Item: {}", item);
+				if (updateItem(item, excelPriceItem)) {
 					updatedItems++;
 				}
 			}
@@ -121,9 +123,15 @@ public class PriceListImportService {
 		return newItem;
 	}
 
-	private boolean updateItem(Item item, ExcelPriceItem excelPriceItem, Source source) {
+	private boolean updateItem(Item item, ExcelPriceItem excelPriceItem) {
 		boolean updated = false;
 		FormattedStringBuilder updateDetails = new FormattedStringBuilder();
+
+		if (!Objects.equals(item.getTitle(), excelPriceItem.getTitle())) {
+			updateDetails.append("Item title change: %s --> %s\n", item.getTitle(), excelPriceItem.getTitle());
+			item.setTitle(excelPriceItem.getTitle());
+			updated = true;
+		}
 
 		if (!Objects.equals(item.getUrl(), excelPriceItem.getUrl())) {
 			updateDetails.append("Item URL change: %s --> %s\n", item.getUrl(), excelPriceItem.getUrl());
