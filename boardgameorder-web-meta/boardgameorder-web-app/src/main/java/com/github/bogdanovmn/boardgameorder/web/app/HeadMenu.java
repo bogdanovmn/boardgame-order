@@ -10,6 +10,7 @@ public class HeadMenu {
 		ORDER,
 		SETTINGS,
 		PRICE_LIST_HISTORY,
+		INVITE,
 		ADMIN
 	}
 
@@ -50,6 +51,7 @@ public class HeadMenu {
 			if (this.isAdmin) {
 				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/price-list", "Админка"));
 			}
+			items.add(new MenuItem(ITEM.INVITE.name(), "/invites", "Инвайты"));
 			this.isPrepared = true;
 		}
 	}

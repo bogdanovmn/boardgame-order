@@ -1,0 +1,32 @@
+{{#layout}}
+
+<h1>Активные инвайты</h1>
+
+{{#invites.0}}
+
+	<table class="invites">
+		<tr>
+			<th>Код</th>
+			<th>Годен до</th>
+		</tr>
+		{{#invites}}
+			<tr>
+				<td>{{code}}</td>
+				<td>{{expireDate}}</td>
+			</tr>
+		{{/invites}}
+	</table>
+
+{{/invites.0}}
+
+{{^invites.0}}
+	<h2>Пусто</h2>
+{{/invites.0}}
+
+<h1>Создать еще один инвайт</h1>
+<form method="post">
+	<input type="submit" value="Создать инвайт"/>
+</form>
+
+
+{{/layout}}

@@ -2,7 +2,7 @@ a,body,table,tr,td,li,p,input,textarea,pre {font-family: verdana, arial, serif;c
 table{width:auto;table-layout:fixed;border-collapse:collapse;text-align:left}
 
 h1 { color: #575651}
-div.main { width: 1000px; margin: 0 auto; text-align: center; }
+div.main { width: 1280px; margin: 0 auto; text-align: center; }
 
 #top_menu { position: static; font-size: 100%; }
 	.links     { float: left;  width: 70%; background: #ddd; padding: 5px; text-align: left;}
@@ -92,3 +92,7 @@ table.price-list-history td.count { color: #778d78; }
 
 table.users { margin-top: 20px; }
 table.users td, th { padding: 3px 10px; }
+
+table.invites { margin-top: 20px; }
+table.invites td, th { padding: 3px 10px; }
+table.invites td.code { font-weight: bold; }

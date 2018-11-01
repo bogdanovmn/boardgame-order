@@ -1,11 +1,10 @@
 package com.github.bogdanovmn.boardgameorder.web.app.user;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.EntityFactory;
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+import com.github.bogdanovmn.boardgameorder.web.app.config.security.ProjectSecurityService;
+import com.github.bogdanovmn.boardgameorder.web.orm.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
 import java.util.Date;
@@ -15,14 +14,46 @@ import java.util.HashSet;
 class RegistrationService {
 	private final UserRepository userRepository;
 	private final EntityFactory entityFactory;
+	private final InviteService inviteService;
+	private final ProjectSecurityService securityService;
+
+
 
 	@Autowired
-	public RegistrationService(UserRepository userRepository, EntityFactory entityFactory) {
+	RegistrationService(UserRepository userRepository, EntityFactory entityFactory, InviteService inviteService, ProjectSecurityService securityService) {
 		this.userRepository = userRepository;
 		this.entityFactory = entityFactory;
+		this.inviteService = inviteService;
+		this.securityService = securityService;
 	}
 
-	User addUser(UserRegistrationForm userForm) {
+	@Transactional(rollbackFor = Exception.class)
+	public void registration(UserRegistrationForm userForm) throws RegistrationException {
+		Invite invite = inviteService.findByCode(userForm.getInviteCode());
+		if (invite == null) {
+			throw new RegistrationException("invite", "Инвайт не действителен");
+		}
+		else if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+			throw new RegistrationException("passwordConfirm", "Пароль не совпадает");
+		}
+		else if (isUserExists(userForm.getEmail())) {
+			throw new RegistrationException("Пользователь с таким email уже существует");
+		}
+		else if (isUserNameExists(userForm.getName())) {
+			throw new RegistrationException("Пользователь с таким именем уже существует");
+		}
+
+		User user = addUser(userForm);
+
+		inviteService.complete(invite, user);
+
+		securityService.login(
+			user.getName(),
+			user.getPasswordHash()
+		);
+	}
+
+	private User addUser(UserRegistrationForm userForm) {
 		return userRepository.save(
 			new User(userForm.getName())
 				.setEmail(
@@ -37,7 +68,7 @@ class RegistrationService {
 				.setRoles(
 					new HashSet<UserRole>() {{
 						add(
-							(UserRole) entityFactory.getPersistBaseEntityWithUniqueName(
+							entityFactory.getPersistBaseEntityWithUniqueName(
 								new UserRole("User")
 							)
 						);
@@ -46,11 +77,11 @@ class RegistrationService {
 		);
 	}
 
-	boolean isUserExists(String email) {
+	private boolean isUserExists(String email) {
 		return userRepository.findFirstByEmail(email) != null;
 	}
 
-	boolean isUserNameExists(String name) {
+	private boolean isUserNameExists(String name) {
 		return userRepository.findFirstByName(name) != null;
 	}
 }

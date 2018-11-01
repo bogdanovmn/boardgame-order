@@ -2,8 +2,6 @@ package com.github.bogdanovmn.boardgameorder.web.app.user;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractMinVisualController;
 import com.github.bogdanovmn.boardgameorder.web.app.FormErrors;
-import com.github.bogdanovmn.boardgameorder.web.app.config.security.ProjectSecurityService;
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,12 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 @RequestMapping("/registration")
 class RegistrationController extends AbstractMinVisualController {
 	private final RegistrationService registrationService;
-	private final ProjectSecurityService securityService;
 
 	@Autowired
-	public RegistrationController(RegistrationService registrationService, ProjectSecurityService securityService) {
+	public RegistrationController(RegistrationService registrationService) {
 		this.registrationService = registrationService;
-		this.securityService = securityService;
 	}
 
 	@GetMapping
@@ -34,21 +30,23 @@ class RegistrationController extends AbstractMinVisualController {
 	}
 
 	@PostMapping
-	ModelAndView registration1(
+	ModelAndView registration(
 		UserRegistrationForm userForm,
 		BindingResult bindingResult,
 		Model model
 	) {
 		FormErrors formErrors = new FormErrors(bindingResult);
 
-		if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
-			formErrors.add("passwordConfirm", "Пароль не совпадает");
+		try {
+			registrationService.registration(userForm);
 		}
-		else if (registrationService.isUserExists(userForm.getEmail())) {
-			formErrors.addCustom("Пользователь с таким email уже существует");
-		}
-		else if (registrationService.isUserNameExists(userForm.getName())) {
-			formErrors.addCustom("Пользователь с таким именем уже существует");
+		catch (RegistrationException e) {
+			if (e.isCustomError()) {
+				formErrors.addCustom(e.getMsg());
+			}
+			else {
+				formErrors.add(e.getField(), e.getMsg());
+			}
 		}
 
 		if (formErrors.isNotEmpty()) {
@@ -56,13 +54,6 @@ class RegistrationController extends AbstractMinVisualController {
 			return new ModelAndView("registration", model.asMap());
 		}
 
-		User user = registrationService.addUser(userForm);
-
-		securityService.login(
-			user.getName(),
-			user.getPasswordHash()
-		);
-
-		return new ModelAndView("redirect:/index");
+		return new ModelAndView("redirect:/price-lists/last");
 	}
 }

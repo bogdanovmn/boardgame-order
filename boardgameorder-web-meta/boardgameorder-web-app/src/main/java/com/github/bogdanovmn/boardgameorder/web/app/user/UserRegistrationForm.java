@@ -19,6 +19,10 @@ class UserRegistrationForm {
 	@NotNull
 	private String email;
 
+	@NotNull
+	@Size(min = 32, max = 32)
+	private String inviteCode;
+
 
 	String getName() {
 		return name;
@@ -54,5 +58,9 @@ class UserRegistrationForm {
 	public UserRegistrationForm setEmail(String email) {
 		this.email = email;
 		return this;
+	}
+
+	String getInviteCode() {
+		return inviteCode;
 	}
 }
