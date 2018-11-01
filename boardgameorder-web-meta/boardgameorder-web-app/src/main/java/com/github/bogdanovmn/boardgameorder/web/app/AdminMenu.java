@@ -7,6 +7,7 @@ public class AdminMenu {
 	public enum ITEM {
 		UPLOAD_PRICE_LIST,
 		AUTO_IMPORT,
+		USER_LIST,
 		NONE
 	}
 
@@ -35,6 +36,7 @@ public class AdminMenu {
 			items = new ArrayList<>();
 			items.add(new MenuItem(ITEM.UPLOAD_PRICE_LIST.name(), "/admin/price-list", "Загрузить прайс"));
 			items.add(new MenuItem(ITEM.AUTO_IMPORT.name(), "/admin/auto-imports", "История авто-импорта"));
+			items.add(new MenuItem(ITEM.USER_LIST.name(), "/admin/users", "Пользователи"));
 		}
 		isPrepared = true;
 	}

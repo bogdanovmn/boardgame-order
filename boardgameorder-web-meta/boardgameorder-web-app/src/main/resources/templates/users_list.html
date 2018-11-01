@@ -1,0 +1,33 @@
+{{#layout}}
+
+{{> inc/admin_menu }}
+
+{{#users.0}}
+
+	<table class="users">
+		<tr>
+			<th>id</th>
+			<th>Имя</th>
+			<th>email</th>
+			<th>Дата регистрации</th>
+			<th>Роль</th>
+		</tr>
+		{{#users}}
+			<tr>
+				<td>{{id}}</td>
+				<td>{{name}}</td>
+				<td>{{email}}</td>
+				<td>{{registerDate}}</td>
+				<td>{{roles}}</td>
+			</tr>
+		{{/users}}
+	</table>
+
+{{/users.0}}
+
+{{^users.0}}
+	<h1>Пусто</h1>
+{{/users.0}}
+
+
+{{/layout}}

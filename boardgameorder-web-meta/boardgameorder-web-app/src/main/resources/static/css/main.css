@@ -89,3 +89,6 @@ table.price-list-history th { border-bottom: 1px solid #575651; padding: 7px 10p
 table.price-list-history td { padding: 3px 10px; text-align: left; }
 table.price-list-history td.date span { color: #c3c2bb; }
 table.price-list-history td.count { color: #778d78; }
+
+table.users { margin-top: 20px; }
+table.users td, th { padding: 3px 10px; }
