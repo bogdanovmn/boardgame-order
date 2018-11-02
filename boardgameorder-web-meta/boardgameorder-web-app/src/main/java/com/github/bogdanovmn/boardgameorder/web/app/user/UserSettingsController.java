@@ -99,6 +99,6 @@ class UserSettingsController extends AbstractVisualController {
 
 		userRepository.save(user);
 
-		return new ModelAndView("redirect:/");
+		return new ModelAndView("redirect:" + HeadMenu.DEFAULT_PAGE);
 	}
 }

@@ -5,23 +5,26 @@ import com.github.bogdanovmn.boardgameorder.web.orm.InviteRepository;
 import com.github.bogdanovmn.boardgameorder.web.orm.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.time.Instant;
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Service
 class InviteService {
 	private static final Logger LOG = LoggerFactory.getLogger(InviteService.class);
-
+	@Value("${invite.create-interval-in-seconds}")
+	private int createIntervalInSeconds;
 	private final InviteRepository inviteRepository;
 
 	InviteService(InviteRepository inviteRepository) {
 		this.inviteRepository = inviteRepository;
 	}
 
-	List<Invite> allActiveByUser(User user) {
-		return inviteRepository.getAllByCreator(user);
+	UserInvites userInvites(User user) {
+		return UserInvites.from(
+			inviteRepository.getAllByCreator(user)
+		);
 	}
 
 	void create(User user) {
@@ -40,16 +43,10 @@ class InviteService {
 	}
 
 	private boolean isCreateInviteLimitReached(User user) {
-		Invite lastInvite = inviteRepository.getTopByCreatorOrderById(user);
+		Invite lastInvite = inviteRepository.getTopByCreatorOrderByIdDesc(user);
 		return
 			lastInvite != null
 			&&
-			lastInvite.getCreateDate().plusSeconds(1800).isBefore(Instant.now());
-	}
-
-	void complete(Invite invite, User user) {
-		inviteRepository.save(
-			invite.setInvited(user)
-		);
+			lastInvite.getCreateDate().plusSeconds(createIntervalInSeconds).isAfter(LocalDateTime.now());
 	}
 }

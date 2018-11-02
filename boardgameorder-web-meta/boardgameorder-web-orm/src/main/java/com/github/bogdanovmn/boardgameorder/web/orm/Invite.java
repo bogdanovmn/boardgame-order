@@ -3,7 +3,7 @@ package com.github.bogdanovmn.boardgameorder.web.orm;
 import org.springframework.util.DigestUtils;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 public class Invite extends BaseEntity {
@@ -11,14 +11,14 @@ public class Invite extends BaseEntity {
 	@JoinColumn(name = "creator_user_id")
 	private User creator;
 
-	@Column(unique = true)
+	@Column(unique = true, length = 32)
 	private String code;
 
 	@Column(nullable = false)
-	private Instant createDate = Instant.now();
+	private LocalDateTime createDate = LocalDateTime.now();
 
 	@Column(nullable = false)
-	private Instant expireDate = Instant.now().plusSeconds(3 * 86400);
+	private LocalDateTime expireDate = LocalDateTime.now().plusSeconds(3 * 86400);
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "invited_user_id")
@@ -45,11 +45,15 @@ public class Invite extends BaseEntity {
 		return this;
 	}
 
-	public Instant getCreateDate() {
+	public LocalDateTime getCreateDate() {
 		return createDate;
 	}
 
 	public String getCode() {
 		return code;
+	}
+
+	public LocalDateTime getExpireDate() {
+		return expireDate;
 	}
 }

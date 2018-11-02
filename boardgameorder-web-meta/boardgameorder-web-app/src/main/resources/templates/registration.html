@@ -9,16 +9,16 @@
 		<table>
 		<tr>
 			<td>Код инвайта
-			<td><input type=text name=invite value="{{userRegistrationForm.invite}}">
-			<td>{{formError.invite}}
+			<td><input type=text name=inviteCode value="{{userRegistrationForm.inviteCode}}">
+			<td class="error">{{formError.inviteCode}}
 		<tr>
 			<td>E-mail
 			<td><input type=text name=email value="{{userRegistrationForm.email}}">
-            <td>
+            <td class="error">
 		<tr>
 			<td>Пароль (не от мыла)
 			<td><input type=password name=password value='{{userRegistrationForm.password}}'>
-            <td>{{formError.password}}
+            <td class="error">{{formError.password}}
         <tr>
 			<td>Пароль еще разок
 			<td><input type=password name=passwordConfirm value='{{userRegistrationForm.passwordConfirm}}'>
@@ -26,7 +26,7 @@
         <tr>
 			<td>Как к Вам обращаться
 			<td><input type=text name=name value="{{userRegistrationForm.name}}">
-            <td>{{formError.name}}
+            <td class="error">{{formError.name}}
 		<tr>
 			<td><input type=submit name=register_submit value='  Зарегистрироваться  '>
 			<td colspan="2">

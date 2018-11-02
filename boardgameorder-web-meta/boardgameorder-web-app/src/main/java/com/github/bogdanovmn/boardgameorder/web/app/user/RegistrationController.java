@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.user;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractMinVisualController;
 import com.github.bogdanovmn.boardgameorder.web.app.FormErrors;
+import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -54,6 +55,6 @@ class RegistrationController extends AbstractMinVisualController {
 			return new ModelAndView("registration", model.asMap());
 		}
 
-		return new ModelAndView("redirect:/price-lists/last");
+		return new ModelAndView("redirect:" + HeadMenu.DEFAULT_PAGE);
 	}
 }

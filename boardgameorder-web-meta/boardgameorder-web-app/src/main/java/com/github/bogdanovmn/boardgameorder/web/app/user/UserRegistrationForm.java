@@ -63,4 +63,9 @@ class UserRegistrationForm {
 	String getInviteCode() {
 		return inviteCode;
 	}
+
+	public UserRegistrationForm setInviteCode(String inviteCode) {
+		this.inviteCode = inviteCode;
+		return this;
+	}
 }

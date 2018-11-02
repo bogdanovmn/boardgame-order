@@ -2,31 +2,52 @@
 
 <h1>Активные инвайты</h1>
 
-{{#invites.0}}
+{{#invites.active.0}}
 
 	<table class="invites">
 		<tr>
 			<th>Код</th>
 			<th>Годен до</th>
 		</tr>
-		{{#invites}}
+		{{#invites.active}}
 			<tr>
 				<td>{{code}}</td>
 				<td>{{expireDate}}</td>
 			</tr>
-		{{/invites}}
+		{{/invites.active}}
 	</table>
 
-{{/invites.0}}
+{{/invites.active.0}}
 
-{{^invites.0}}
+{{^invites.active.0}}
 	<h2>Пусто</h2>
-{{/invites.0}}
+{{/invites.active.0}}
 
-<h1>Создать еще один инвайт</h1>
 <form method="post">
 	<input type="submit" value="Создать инвайт"/>
 </form>
 
+<h1>Использованные инвайты</h1>
+
+{{#invites.completed.0}}
+
+<table class="invites">
+	<tr>
+		<th>Код</th>
+		<th>Приглашенный пользователь</th>
+	</tr>
+	{{#invites.completed}}
+	<tr>
+		<td>{{code}}</td>
+		<td>{{invited.name}}</td>
+	</tr>
+	{{/invites.completed}}
+</table>
+
+{{/invites.completed.0}}
+
+{{^invites.completed.0}}
+<h2>Пусто</h2>
+{{/invites.completed.0}}
 
 {{/layout}}

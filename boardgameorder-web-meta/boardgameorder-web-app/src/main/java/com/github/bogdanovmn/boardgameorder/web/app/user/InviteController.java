@@ -22,7 +22,7 @@ class InviteController extends AbstractVisualController {
 		return new ModelAndView(
 			"invites_active_list",
 			"invites",
-			inviteService.allActiveByUser(getUser())
+			inviteService.userInvites(getUser())
 		);
 	}
 

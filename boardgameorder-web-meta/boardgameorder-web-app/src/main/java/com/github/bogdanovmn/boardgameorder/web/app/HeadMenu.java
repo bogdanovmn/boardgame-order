@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class HeadMenu {
+	public final static String DEFAULT_PAGE = "/price-lists/last";
+
 	public enum ITEM {
 		PRICE_LIST,
 		PRICE_LIST_CHANGES,

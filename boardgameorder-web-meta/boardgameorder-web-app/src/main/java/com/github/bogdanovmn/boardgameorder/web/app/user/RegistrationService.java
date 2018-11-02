@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.HashSet;
 
@@ -30,8 +31,15 @@ class RegistrationService {
 	@Transactional(rollbackFor = Exception.class)
 	public void registration(UserRegistrationForm userForm) throws RegistrationException {
 		Invite invite = inviteService.findByCode(userForm.getInviteCode());
+
 		if (invite == null) {
-			throw new RegistrationException("invite", "Инвайт не действителен");
+			throw new RegistrationException("inviteCode", "Инвайт бракованный");
+		}
+		if (invite.getInvited() != null) {
+			throw new RegistrationException("inviteCode", "Инвайт уже использован");
+		}
+		if (invite.getExpireDate().isBefore(LocalDateTime.now())) {
+			throw new RegistrationException("inviteCode", "Инвайт просрочен");
 		}
 		else if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
 			throw new RegistrationException("passwordConfirm", "Пароль не совпадает");
@@ -44,8 +52,7 @@ class RegistrationService {
 		}
 
 		User user = addUser(userForm);
-
-		inviteService.complete(invite, user);
+		invite.setInvited(user);
 
 		securityService.login(
 			user.getName(),
