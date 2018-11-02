@@ -1,5 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.security;
 
+import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
+import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -29,12 +31,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.authorizeRequests()
 				.antMatchers("/registration").anonymous()
 				.antMatchers("/css/**").permitAll()
-				.antMatchers("/admin/**").hasAuthority("Admin")
+				.antMatchers("/admin/**").hasAuthority(UserRole.Type.Admin.name())
+				.antMatchers("/invites/**").hasAuthority(UserRole.Type.Invite.name())
 				.anyRequest().authenticated()
 
 		.and().formLogin()
 			.loginPage("/login")
-			.defaultSuccessUrl("/price-lists/last", true)
+			.defaultSuccessUrl(HeadMenu.DEFAULT_PAGE, true)
 			.permitAll()
 
 		.and().logout()

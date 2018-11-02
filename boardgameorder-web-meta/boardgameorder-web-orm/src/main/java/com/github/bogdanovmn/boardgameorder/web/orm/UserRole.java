@@ -6,6 +6,8 @@ import java.util.Set;
 
 @Entity
 public class UserRole extends BaseEntityWithUniqueName {
+	public enum Type { User, Admin, Invite }
+
 	@ManyToMany(mappedBy = "roles")
 	private Set<User> users;
 

@@ -2,8 +2,11 @@ package com.github.bogdanovmn.boardgameorder.web.app.admin.user;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AdminMenu;
 import com.github.bogdanovmn.boardgameorder.web.app.admin.AbstractVisualAdminController;
+import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 
@@ -27,5 +30,14 @@ class UserAdminController extends AbstractVisualAdminController {
 			"users",
 			userService.usersSummary()
 		);
+	}
+
+	@PostMapping("/users/{id}/role-toggle/{role}")
+	String toggleUserRole(
+		@PathVariable Integer id,
+		@PathVariable String role
+	) {
+		userService.toggleRole(id, UserRole.Type.valueOf(role));
+		return "redirect:/admin/users";
 	}
 }

@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app;
 
 import com.github.bogdanovmn.boardgameorder.web.app.config.security.ProjectSecurityService;
 import com.github.bogdanovmn.boardgameorder.web.orm.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.ModelAttribute;
 
@@ -16,6 +17,6 @@ public abstract class AbstractController {
 	@ModelAttribute("isAdmin")
 	public boolean isAdmin() {
 		User user = getUser();
-		return user != null && user.getRoles().stream().anyMatch(x -> x.getName().equals("Admin"));
+		return user != null && user.hasRole(UserRole.Type.Admin);
 	}
 }

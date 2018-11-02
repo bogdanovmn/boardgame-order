@@ -1,5 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app;
 
+import com.github.bogdanovmn.boardgameorder.web.orm.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,18 +20,13 @@ public class HeadMenu {
 	}
 
 	private final String current;
+	private final User user;
 	private List<MenuItem> items;
 	private boolean isPrepared = false;
-	private final boolean isAdmin;
 
-	HeadMenu(ITEM current) {
+	HeadMenu(ITEM current, User user) {
 		this.current = current.name();
-		this.isAdmin = false;
-	}
-
-	HeadMenu(ITEM current, boolean isAdmin) {
-		this.current = current.name();
-		this.isAdmin = isAdmin;
+		this.user = user;
 	}
 
 	List<MenuItem> getItems() {
@@ -50,10 +48,12 @@ public class HeadMenu {
 			items.add(new MenuItem(ITEM.PRICE_LIST_CHANGES.name(), "/price-lists/last/changes", "Что новенького?"));
 			items.add(new MenuItem(ITEM.ORDER.name(), "/user/order/items", "Корзина"));
 			items.add(new MenuItem(ITEM.PRICE_LIST_HISTORY.name(), "/price-lists", "История прайсов"));
-			if (this.isAdmin) {
+			if (user.hasRole(UserRole.Type.Admin)) {
 				items.add(new MenuItem(ITEM.ADMIN.name(), "/admin/price-list", "Админка"));
 			}
-			items.add(new MenuItem(ITEM.INVITE.name(), "/invites", "Инвайты"));
+			if (user.hasRole(UserRole.Type.Invite)) {
+				items.add(new MenuItem(ITEM.INVITE.name(), "/invites", "Инвайты"));
+			}
 			this.isPrepared = true;
 		}
 	}

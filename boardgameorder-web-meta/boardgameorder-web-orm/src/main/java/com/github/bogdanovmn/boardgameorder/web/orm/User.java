@@ -72,4 +72,8 @@ public class User extends BaseEntityWithUniqueName {
 		this.roles = roles;
 		return this;
 	}
+
+	public boolean hasRole(UserRole.Type roleType) {
+		return roles.contains(new UserRole(roleType.name()));
+	}
 }

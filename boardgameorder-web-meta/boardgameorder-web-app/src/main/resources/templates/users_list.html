@@ -11,6 +11,7 @@
 			<th>email</th>
 			<th>Дата регистрации</th>
 			<th>Роль</th>
+			<th>...</th>
 		</tr>
 		{{#users}}
 			<tr>
@@ -19,6 +20,11 @@
 				<td>{{email}}</td>
 				<td>{{registerDate}}</td>
 				<td>{{roles}}</td>
+				<td>
+					<form method="post" action="{{layout.contextPath}}/admin/users/{{id}}/role-toggle/Invite">
+						<input type="submit" value="Invite toggle">
+					</form>
+				</td>
 			</tr>
 		{{/users}}
 	</table>
