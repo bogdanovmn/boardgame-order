@@ -13,8 +13,8 @@ import java.time.LocalDateTime;
 @Service
 class InviteService {
 	private static final Logger LOG = LoggerFactory.getLogger(InviteService.class);
-	@Value("${invite.create-interval-in-seconds}")
-	private int createIntervalInSeconds;
+	@Value("${invite.max-active}")
+	private int maxActive;
 	private final InviteRepository inviteRepository;
 
 	InviteService(InviteRepository inviteRepository) {
@@ -43,10 +43,9 @@ class InviteService {
 	}
 
 	private boolean isCreateInviteLimitReached(User user) {
-		Invite lastInvite = inviteRepository.getTopByCreatorOrderByIdDesc(user);
-		return
-			lastInvite != null
-			&&
-			lastInvite.getCreateDate().plusSeconds(createIntervalInSeconds).isAfter(LocalDateTime.now());
+		UserInvites invites = UserInvites.from(
+			inviteRepository.getAllByCreator(user)
+		);
+		return invites.activeCount() > maxActive;
 	}
 }

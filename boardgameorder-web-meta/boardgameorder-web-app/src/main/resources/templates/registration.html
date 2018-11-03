@@ -4,13 +4,14 @@
 
 {{>inc/error_msg}}
 
+{{^inviteError}}
+
+<h2>Приглашение от пользователя <i>{{invite.creator.name}}</i> <span>(истекает {{invite.expireDate}})</span></h2>
+
 <div class=register>
-	<form method=post>
+	<form method=post action="{{layout.contextPath}}/registration">
+		<input type="hidden" name="inviteCode" value="{{invite.code}}"/>
 		<table>
-		<tr>
-			<td>Код инвайта
-			<td><input type=text name=inviteCode value="{{userRegistrationForm.inviteCode}}">
-			<td class="error">{{formError.inviteCode}}
 		<tr>
 			<td>E-mail
 			<td><input type=text name=email value="{{userRegistrationForm.email}}">
@@ -37,4 +38,5 @@
 	</form>
 </div>
 
+{{/inviteError}}
 {{/layout}}

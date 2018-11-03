@@ -36,9 +36,6 @@ form table td { padding: 10px; }
 table td.error { color: #b43f39; }
 
 a.logout { text-decoration: none; font-weight: bold; color: #a11e0d; }
-a.button { text-decoration: none }
-a.button div { padding: 5px 10px; border: 1px solid gray; border-radius: 25px; font-size: 85%; }
-a.button-registration div { border-color: #8dcaa5; color: #39b45b; background: #f3fbf3; }
 
 div.error { border-radius: 10px; border: 1px solid #d47d7d; background: #f5cccc; text-align: center; color: #4c260b; padding: 10px 30px; }
 
@@ -63,11 +60,16 @@ table.price-and-item td.change { padding: 2px 0; font-size: 80%; }
 table.price-and-item td.change span i.plus { color: #09b24d;  }
 table.price-and-item td.change span i.minus { color: #b21e00;  }
 
-div.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
-div.button:hover { border: 1px dotted; }
-div.button-add-item { border-color: seagreen; color: seagreen; }
-div.button-del-item { border-color: #b43f39; color: #b43f39; }
-div.button-copy { float: right; display: block; border-color: #778d78; background: #a2bca3; font-size: 100%; padding: 15px 20px; }
+.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
+.button:hover { border: 1px dotted; }
+.button-login { border-color: #8dcaa5; color: #39b45b; background: #f3fbf3; padding: 10px; font-size: 100%; }
+.button-add-item { border-color: seagreen; color: seagreen; }
+.button-del-item { border-color: #b43f39; color: #b43f39; }
+.button-copy { float: right; display: block; border-color: #778d78; background: #a2bca3; font-size: 100%; padding: 15px 20px; }
+.button-admin-action { border-color: #b28e42; color: #b28e42; }
+form.create-invite { text-align: left; }
+.button-create-invite { padding: 10px; border: 1px solid #1299b4; border-radius: 25px; color: #1299b4; cursor: pointer; }
+.button-copy-invite { padding: 5px; border: 1px solid #778d78; border-radius: 15px; color: #778d78; cursor: pointer; }
 
 div.in-action div.button { border: 1px dotted gray; color: gray; }
 
@@ -98,3 +100,5 @@ table.users td, th { padding: 3px 10px; }
 table.invites { margin-top: 20px; }
 table.invites td, th { padding: 3px 10px; }
 table.invites td.code { font-weight: bold; }
+
+div.login td.action { text-align: center; }

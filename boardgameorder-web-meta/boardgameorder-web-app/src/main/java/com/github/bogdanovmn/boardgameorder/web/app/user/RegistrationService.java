@@ -30,18 +30,9 @@ class RegistrationService {
 
 	@Transactional(rollbackFor = Exception.class)
 	public void registration(UserRegistrationForm userForm) throws RegistrationException {
-		Invite invite = inviteService.findByCode(userForm.getInviteCode());
+		Invite invite = validInvite(userForm.getInviteCode());
 
-		if (invite == null) {
-			throw new RegistrationException("inviteCode", "Инвайт бракованный");
-		}
-		if (invite.getInvited() != null) {
-			throw new RegistrationException("inviteCode", "Инвайт уже использован");
-		}
-		if (invite.getExpireDate().isBefore(LocalDateTime.now())) {
-			throw new RegistrationException("inviteCode", "Инвайт просрочен");
-		}
-		else if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
+		if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
 			throw new RegistrationException("passwordConfirm", "Пароль не совпадает");
 		}
 		else if (isUserExists(userForm.getEmail())) {
@@ -53,11 +44,22 @@ class RegistrationService {
 
 		User user = addUser(userForm);
 		invite.setInvited(user);
+	}
 
-		securityService.login(
-			user.getName(),
-			user.getPasswordHash()
-		);
+	Invite validInvite(String code) throws RegistrationInviteException {
+		Invite invite = inviteService.findByCode(code);
+
+		if (invite == null) {
+			throw new RegistrationInviteException("Инвайт бракованный");
+		}
+		if (invite.getInvited() != null) {
+			throw new RegistrationInviteException("Инвайт уже использован");
+		}
+		if (invite.getExpireDate().isBefore(LocalDateTime.now())) {
+			throw new RegistrationInviteException("Инвайт просрочен");
+		}
+
+		return invite;
 	}
 
 	private User addUser(UserRegistrationForm userForm) {

@@ -8,11 +8,17 @@
 		<tr>
 			<th>Код</th>
 			<th>Годен до</th>
+			<th>Ссылка на регистрацию по инвайту</th>
 		</tr>
 		{{#invites.active}}
 			<tr>
 				<td>{{code}}</td>
 				<td>{{expireDate}}</td>
+				<td>
+					<button class="button button-copy-invite" onclick="copyText('http://bmn85.ru/bgorder/registration/{{code}}');">
+						Копировать в буффер обмена
+					</button>
+				</td>
 			</tr>
 		{{/invites.active}}
 	</table>
@@ -23,8 +29,8 @@
 	<h2>Пусто</h2>
 {{/invites.active.0}}
 
-<form method="post">
-	<input type="submit" value="Создать инвайт"/>
+<form method="post" class="create-invite">
+	<input type="submit" value="Создать инвайт" class="button button-create-invite"/>
 </form>
 
 <h1>Использованные инвайты</h1>
@@ -50,4 +56,13 @@
 <h2>Пусто</h2>
 {{/invites.completed.0}}
 
+<script>
+	function copyText(textToCopy) {
+		const temp = $("<textarea>");
+		$("body").append(temp);
+		temp.val(textToCopy).select();
+		document.execCommand("copy");
+		temp.remove();
+	}
+</script>
 {{/layout}}

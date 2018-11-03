@@ -36,4 +36,8 @@ class UserInvites {
 
 		return new UserInvites(active, completed, expired);
 	}
+
+	int activeCount() {
+		return active.size();
+	}
 }

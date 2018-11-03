@@ -5,13 +5,13 @@ class RegistrationException extends Exception {
 	private final String msg;
 
 	RegistrationException(String field, String msg) {
+		super(msg);
 		this.field = field;
 		this.msg = msg;
 	}
 
 	RegistrationException(String msg) {
-		this.field = null;
-		this.msg = msg;
+		this(null, msg);
 	}
 
 
