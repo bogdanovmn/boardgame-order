@@ -8,7 +8,10 @@ import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 public class PriceListContent {
-	private final static Pattern BOARD_GAME = Pattern.compile("^.*(наст.*игр|игр.*наст|протекторы|дополнение).*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
+	private final static Pattern BOARD_GAME = Pattern.compile(
+		"^.*(наст.*игр|игр.*наст|протекторы|дополнение|доп.*игр).*$",
+			Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE
+	);
 	private final static Pattern ZVEZDA_TANK_MODELS = Pattern.compile("^.*танк.*[тt]-\\d.*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
 	private final static Pattern ZVEZDA_MODELS =
 		Pattern.compile(
