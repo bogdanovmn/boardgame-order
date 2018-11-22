@@ -55,6 +55,9 @@ public class ExcelPriceItem {
 
 	@Override
 	public String toString() {
-		return String.format("ExcelPriceItem{group='%s', title='%s', barcode='%s'}", group, title, barcode);
+		return String.format(
+			"ExcelPriceItem{group='%s', title='%s', barcode='%s'}",
+				group, title, barcode
+		);
 	}
 }

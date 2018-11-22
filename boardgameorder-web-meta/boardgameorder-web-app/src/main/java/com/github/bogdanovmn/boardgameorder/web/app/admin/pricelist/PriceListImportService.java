@@ -86,6 +86,16 @@ public class PriceListImportService {
 		int updatedItems = 0;
 		for (ExcelPriceItem excelPriceItem : items) {
 			LOG.info("Excel Item: {}", excelPriceItem);
+
+			if (excelPriceItem.getPrice() == null) {
+				LOG.warn("Price is empty, skip it");
+				continue;
+			}
+			if (excelPriceItem.getCount() == null) {
+				LOG.warn("Count is empty, skip it");
+				continue;
+			}
+
 			Item item = itemsMap.get(excelPriceItem);
 			if (item != null) {
 				LOG.info("Found Item: {}", item);
