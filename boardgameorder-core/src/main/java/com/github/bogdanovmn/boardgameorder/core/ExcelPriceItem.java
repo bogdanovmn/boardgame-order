@@ -5,6 +5,7 @@ import java.util.regex.Pattern;
 public class ExcelPriceItem {
 	private static final Pattern VALID_BARCODE_PATTERN = Pattern.compile("^\\d+$");
 
+	private final String groupOriginal;
 	private final String group;
 	private final String title;
 	private final Double price;
@@ -21,7 +22,8 @@ public class ExcelPriceItem {
 		String url
 	  ) {
 
-		this.group = group.replaceAll("\\s+", " ");
+		this.groupOriginal = group.replaceAll("\\s+", " ");
+		this.group = this.groupOriginal.replaceFirst("^\\s*\\d+(\\.\\d+)?\\s*", "");
 		this.title = title.replaceAll("\\s+", " ");
 		this.price = price;
 		this.count = count == null ? null : count.intValue();
@@ -29,8 +31,8 @@ public class ExcelPriceItem {
 		this.url = url;
 	}
 
-	public String getGroup() {
-		return group;
+	public String getGroupOriginal() {
+		return groupOriginal;
 	}
 
 	public String getTitle() {
@@ -53,11 +55,16 @@ public class ExcelPriceItem {
 		return url;
 	}
 
+	public String getGroup() {
+		return group;
+	}
+
 	@Override
 	public String toString() {
 		return String.format(
-			"ExcelPriceItem{group='%s', title='%s', barcode='%s'}",
-				group, title, barcode
+			"ExcelPriceItem{groupOriginal='%s', group='%s', title='%s', barcode='%s'}",
+			groupOriginal, group, title, barcode
 		);
 	}
+
 }

@@ -33,8 +33,8 @@ public class PriceListContent {
 		return file.priceItems().stream()
 			.filter(x ->
 				(BOARD_GAME.matcher(x.getTitle()).find() ||
-					BOARD_GAME.matcher(x.getGroup()).find())
-						&& !x.getGroup().contains("УЦЕНКА")
+					BOARD_GAME.matcher(x.getGroupOriginal()).find())
+						&& !x.getGroupOriginal().contains("УЦЕНКА")
 						&& !x.getTitle().contains("склейка")
 						&& !ZVEZDA_MODELS.matcher(x.getTitle()).find()
 						&& !ZVEZDA_TANK_MODELS.matcher(x.getTitle()).find()
@@ -46,7 +46,7 @@ public class PriceListContent {
 		Map<String, Integer> groupStat = new HashMap<>();
 		boardGames().forEach(
 			row -> groupStat.compute(
-				row.getGroup(),
+				row.getGroupOriginal(),
 				(k, v) -> v == null ? 1 : v + 1
 			)
 		);
