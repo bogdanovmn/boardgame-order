@@ -27,11 +27,18 @@ class ItemsMap {
 	}
 
 	private String normalizeTitle(String title) {
-		return title
+		return title.toLowerCase()
 			.replaceAll("/\\d+", "")
-			.replaceAll("РРЦ\\s+\\d+\\s+руб", "")
-			.replaceAll("\\p{P}|\\s", "")
-			.toLowerCase();
+			.replaceAll("м?ррц\\s*-?\\s*\\d+\\s*(руб|р|рублей)?", "")
+			.replaceAll("(промо|фикс|фиксированная)\\W+цена", "")
+			.replaceAll("\\Wарт\\.\\s*\\S+", "")
+			.replaceAll("№\\S+", "")
+			.replaceFirst("^\\s*новинка", "")
+			.replaceAll("crowd games", "")
+			.replaceFirst("\\bнаст(\\.\\s*|ольная)\\s*игра", "")
+			.replaceFirst("\\s\\d{3,}\\s*$", "")
+			.replaceFirst("\\s[a-z]+\\d{2,}\\w*", "")
+			.replaceAll("\\p{P}|\\s", "");
 	}
 
 	private Item getByTitle(ExcelPriceItem excelPriceItem) {
@@ -40,7 +47,7 @@ class ItemsMap {
 			excelPriceItem.getTitle()
 		);
 
-		LOG.info("Normalized title: {}", normalizedTitle);
+		LOG.debug("Normalized title: {}", normalizedTitle);
 
 		List<Item> items = mapByTitle.get(normalizedTitle);
 		if (items != null) {

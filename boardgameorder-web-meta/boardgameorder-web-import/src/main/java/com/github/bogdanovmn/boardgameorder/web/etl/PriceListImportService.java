@@ -15,9 +15,7 @@ import org.springframework.util.DigestUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 @Service
 public class PriceListImportService {
@@ -91,23 +89,36 @@ public class PriceListImportService {
 		LOG.info("Import items: {}", items.size());
 		int newItems = 0;
 		int updatedItems = 0;
+		int noPriceItems = 0;
+		int noCountItems = 0;
+		int dublicates = 0;
+		Set<Integer> priceItems = new HashSet<>();
 		for (ExcelPriceItem excelPriceItem : items) {
 			LOG.debug("Excel Item: {}", excelPriceItem);
 
 			if (excelPriceItem.getPrice() == null) {
 				LOG.warn("Price is empty, skip it");
+				noPriceItems++;
 				continue;
 			}
 			if (excelPriceItem.getCount() == null) {
 				LOG.warn("Count is empty, skip it");
+				noCountItems++;
 				continue;
 			}
 
 			Item item = itemsMap.get(excelPriceItem);
 			if (item != null) {
-				LOG.debug("Found Item: {}", item);
-				if (updateItem(item, excelPriceItem)) {
-					updatedItems++;
+				LOG.debug("Found item: {}", item);
+				if (priceItems.contains(item.getId())) {
+					LOG.warn("Duplicate: {} with {}", excelPriceItem.getTitle(), item.getTitle());
+					dublicates++;
+					continue;
+				}
+				else {
+					if (updateItem(item, excelPriceItem)) {
+						updatedItems++;
+					}
 				}
 			}
 			else {
@@ -122,8 +133,12 @@ public class PriceListImportService {
 					.setCount(excelPriceItem.getCount())
 					.setPrice(excelPriceItem.getPrice())
 			);
+			priceItems.add(item.getId());
 		}
-		LOG.info("Import items done. New: {}, updated: {}", newItems, updatedItems);
+		LOG.info(
+			"Import items done. New: {}, updated: {}, no price: {}, no count: {}, duplicates {}",
+				newItems, updatedItems, noPriceItems, noCountItems, dublicates
+		);
 
 		return source;
 	}

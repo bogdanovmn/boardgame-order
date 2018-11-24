@@ -36,9 +36,9 @@ class PlService {
 
 	PlChangesView priceListLastChangesView(PlChangesFilter filter) {
 		ItemPriceChange itemPriceChange = itemPriceChangeRepository.findFirstByOrderBySourceIdDesc();
-		Source source = itemPriceChange.getSource();
 		return new PlChangesView(
-			itemPriceChangeRepository.findAllBySourceId(source.getId()),
+			itemPriceChangeRepository.findAllBySourceId(
+				itemPriceChange == null ? 0 : itemPriceChange.getSource().getId()),
 			filter
 		);
 	}
