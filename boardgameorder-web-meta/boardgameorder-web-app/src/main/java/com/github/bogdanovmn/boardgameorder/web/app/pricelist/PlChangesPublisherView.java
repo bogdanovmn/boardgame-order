@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPriceChange;
-import com.github.bogdanovmn.boardgameorder.web.orm.Publisher;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPriceChange;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.Publisher;
 
 import java.util.Comparator;
 import java.util.List;

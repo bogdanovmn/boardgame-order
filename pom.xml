@@ -37,6 +37,12 @@
 				<version>1.0-SNAPSHOT</version>
 			</dependency>
 
+			<dependency>
+				<groupId>com.github.bogdanovmn.boardgameorder</groupId>
+				<artifactId>boardgameorder-web-import</artifactId>
+				<version>1.0-SNAPSHOT</version>
+			</dependency>
+
 			<!-- My Libs -->
 
 			<dependency>

@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.security;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

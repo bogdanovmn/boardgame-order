@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.*;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.*;
 import com.google.common.collect.Sets;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

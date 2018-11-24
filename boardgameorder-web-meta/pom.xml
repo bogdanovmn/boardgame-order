@@ -17,6 +17,7 @@
 	<modules>
 		<module>boardgameorder-web-app</module>
 		<module>boardgameorder-web-orm</module>
+		<module>boardgameorder-web-import</module>
 	</modules>
 
 

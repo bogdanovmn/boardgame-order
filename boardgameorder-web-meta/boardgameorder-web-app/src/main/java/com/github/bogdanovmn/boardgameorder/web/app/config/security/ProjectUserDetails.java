@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.security;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;

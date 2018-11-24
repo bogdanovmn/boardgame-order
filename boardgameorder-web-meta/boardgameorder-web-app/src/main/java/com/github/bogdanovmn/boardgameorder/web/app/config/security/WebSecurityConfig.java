@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.security;
 
 import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;

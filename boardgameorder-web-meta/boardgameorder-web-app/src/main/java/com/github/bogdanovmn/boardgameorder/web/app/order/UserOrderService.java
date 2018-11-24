@@ -2,7 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.app.SourceService;
 import com.github.bogdanovmn.boardgameorder.web.app.UserOrder;
-import com.github.bogdanovmn.boardgameorder.web.orm.*;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;

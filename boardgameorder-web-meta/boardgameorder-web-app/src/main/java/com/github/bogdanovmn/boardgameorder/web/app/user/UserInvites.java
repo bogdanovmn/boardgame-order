@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.app.user;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.Invite;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.Invite;
 
 import java.time.LocalDateTime;
 import java.util.LinkedList;

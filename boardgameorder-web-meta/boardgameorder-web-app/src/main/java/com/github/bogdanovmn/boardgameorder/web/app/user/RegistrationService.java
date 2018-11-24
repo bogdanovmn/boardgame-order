@@ -1,7 +1,11 @@
 package com.github.bogdanovmn.boardgameorder.web.app.user;
 
 import com.github.bogdanovmn.boardgameorder.web.app.config.security.ProjectSecurityService;
-import com.github.bogdanovmn.boardgameorder.web.orm.*;
+import com.github.bogdanovmn.boardgameorder.web.orm.common.EntityFactory;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.Invite;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

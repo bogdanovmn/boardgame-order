@@ -28,6 +28,11 @@
             <artifactId>boardgameorder-core</artifactId>
         </dependency>
 
+        <dependency>
+            <groupId>com.github.bogdanovmn.boardgameorder</groupId>
+            <artifactId>boardgameorder-web-import</artifactId>
+        </dependency>
+
         <!-- Spring -->
 
         <dependency>

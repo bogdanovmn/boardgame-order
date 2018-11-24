@@ -1,14 +1,12 @@
 package com.github.bogdanovmn.boardgameorder.web.app.user;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.Invite;
-import com.github.bogdanovmn.boardgameorder.web.orm.InviteRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.Invite;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.InviteRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-
-import java.time.LocalDateTime;
 
 @Service
 class InviteService {

@@ -1,9 +1,9 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.user;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.EntityFactory;
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+import com.github.bogdanovmn.boardgameorder.web.orm.common.EntityFactory;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

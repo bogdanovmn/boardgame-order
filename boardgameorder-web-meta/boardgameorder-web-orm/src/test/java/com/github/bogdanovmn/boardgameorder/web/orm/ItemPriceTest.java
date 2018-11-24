@@ -1,5 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.orm;
 
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

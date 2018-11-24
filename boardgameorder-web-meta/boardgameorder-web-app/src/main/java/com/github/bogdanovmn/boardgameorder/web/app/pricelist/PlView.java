@@ -1,8 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.app.UserOrder;
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserOrderItem;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItem;
 
 import java.util.ArrayList;
 import java.util.Comparator;

@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.AutoImportRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.AutoImportStatus;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.AutoImportRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.AutoImportStatus;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.order;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.Item;
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.Item;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
 
 class OrderItemView {
 	private final ItemPrice price;

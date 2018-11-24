@@ -1,6 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.*;
+import com.github.bogdanovmn.boardgameorder.web.etl.PriceListFileOnDisk;
+import com.github.bogdanovmn.boardgameorder.web.etl.PriceListImportService;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.*;
 import com.github.bogdanovmn.httpclient.simple.SimpleHttpClient;
 import com.google.common.io.ByteStreams;
 import org.slf4j.Logger;
@@ -66,8 +68,8 @@ class PriceListDownloadService {
 					Source source = priceListImportService.importFile(fileData, ImportType.AUTO);
 
 					LOG.info("Import done, saving original file");
-					new PlFileOnDisk(fileData, currentModifiedDate, priceListDir)
-						.save();
+					new PriceListFileOnDisk(currentModifiedDate, priceListDir)
+						.save(fileData);
 
 					LOG.info("All is OK, update changes between prices");
 					currentAutoImport.setStatus(AutoImportStatus.DONE)

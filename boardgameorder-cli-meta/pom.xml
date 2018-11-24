@@ -16,6 +16,7 @@
 
     <modules>
 		<module>boardgameorder-cli-parser</module>
+		<module>boardgameorder-cli-rebase</module>
 	</modules>
 
 	<dependencies>

@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.AutoImport;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.AutoImport;
 
 import java.util.List;
 

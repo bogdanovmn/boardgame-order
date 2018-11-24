@@ -1,9 +1,9 @@
 package com.github.bogdanovmn.boardgameorder.web.app;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPriceRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.Source;
-import com.github.bogdanovmn.boardgameorder.web.orm.SourceRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPriceRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.Source;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.SourceRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;

@@ -1,6 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.ItemPrice;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;

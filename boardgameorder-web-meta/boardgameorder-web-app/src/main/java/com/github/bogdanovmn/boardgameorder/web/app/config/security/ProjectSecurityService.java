@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.security;
 
 
-import com.github.bogdanovmn.boardgameorder.web.orm.User;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -2,7 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.admin.user;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AdminMenu;
 import com.github.bogdanovmn.boardgameorder.web.app.admin.AbstractVisualAdminController;
-import com.github.bogdanovmn.boardgameorder.web.orm.UserRole;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

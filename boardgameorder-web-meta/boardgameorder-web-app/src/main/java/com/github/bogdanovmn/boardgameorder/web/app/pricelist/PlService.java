@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.app.SourceService;
-import com.github.bogdanovmn.boardgameorder.web.orm.*;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.*;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
