@@ -1,8 +1,17 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
+import com.github.bogdanovmn.common.spring.jpa.BaseEntityWithUniqueName;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Set;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 @Entity
 public class User extends BaseEntityWithUniqueName {
@@ -31,46 +40,8 @@ public class User extends BaseEntityWithUniqueName {
 	)
 	private Set<Item> favoriteItems;
 
-	public User() {}
-
 	public User(String name) {
 		super(name);
-	}
-
-	public String getEmail() {
-		return email;
-	}
-
-	public User setEmail(String email) {
-		this.email = email;
-		return this;
-	}
-
-	public String getPasswordHash() {
-		return passwordHash;
-	}
-
-	public User setPasswordHash(String passwordHash) {
-		this.passwordHash = passwordHash;
-		return this;
-	}
-
-	public Date getRegisterDate() {
-		return registerDate;
-	}
-
-	public User setRegisterDate(Date registerDate) {
-		this.registerDate = registerDate;
-		return this;
-	}
-
-	public Set<UserRole> getRoles() {
-		return roles;
-	}
-
-	public User setRoles(Set<UserRole> roles) {
-		this.roles = roles;
-		return this;
 	}
 
 	public boolean hasRole(UserRole.Type roleType) {

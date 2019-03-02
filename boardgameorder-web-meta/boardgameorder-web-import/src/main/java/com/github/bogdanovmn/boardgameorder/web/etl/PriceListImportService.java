@@ -3,8 +3,9 @@ package com.github.bogdanovmn.boardgameorder.web.etl;
 import com.github.bogdanovmn.boardgameorder.core.ExcelPriceItem;
 import com.github.bogdanovmn.boardgameorder.core.PriceListContent;
 import com.github.bogdanovmn.boardgameorder.core.PriceListExcelFile;
-import com.github.bogdanovmn.boardgameorder.web.orm.common.EntityFactory;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.*;
+import com.github.bogdanovmn.common.core.BigString;
+import com.github.bogdanovmn.common.spring.jpa.EntityFactory;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -157,28 +158,28 @@ public class PriceListImportService {
 
 	private boolean updateItem(Item item, ExcelPriceItem excelPriceItem) {
 		boolean updated = false;
-		FormattedStringBuilder updateDetails = new FormattedStringBuilder();
+		BigString updateDetails = new BigString();
 
 		if (!Objects.equals(item.getTitle(), excelPriceItem.getTitle())) {
-			updateDetails.append("Item title change: %s --> %s\n", item.getTitle(), excelPriceItem.getTitle());
+			updateDetails.addLine("Item title change: %s --> %s", item.getTitle(), excelPriceItem.getTitle());
 			item.setTitle(excelPriceItem.getTitle());
 			updated = true;
 		}
 
 		if (!Objects.equals(item.getUrl(), excelPriceItem.getUrl())) {
-			updateDetails.append("Item URL change: %s --> %s\n", item.getUrl(), excelPriceItem.getUrl());
+			updateDetails.addLine("Item URL change: %s --> %s", item.getUrl(), excelPriceItem.getUrl());
 			item.setUrl(excelPriceItem.getUrl());
 			updated = true;
 		}
 
 		if (!Objects.equals(item.getBarcode(), excelPriceItem.getBarcode())) {
-			updateDetails.append("Item barcode change: %s --> %s\n", item.getBarcode(), excelPriceItem.getBarcode());
+			updateDetails.addLine("Item barcode change: %s --> %s", item.getBarcode(), excelPriceItem.getBarcode());
 			item.setBarcode(excelPriceItem.getBarcode());
 			updated = true;
 		}
 
 		if (!Objects.equals(item.getPublisher().getName(), excelPriceItem.getGroup())) {
-			updateDetails.append("Item publisher change: %s --> %s\n", item.getPublisher().getName(), excelPriceItem.getGroup());
+			updateDetails.addLine("Item publisher change: %s --> %s", item.getPublisher().getName(), excelPriceItem.getGroup());
 			item.setPublisher(
 				getPersistentPublisher(excelPriceItem.getGroup())
 			);

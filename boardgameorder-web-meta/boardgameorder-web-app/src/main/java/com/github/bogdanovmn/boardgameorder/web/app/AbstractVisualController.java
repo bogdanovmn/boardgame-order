@@ -13,7 +13,7 @@ public abstract class AbstractVisualController extends AbstractController {
 	@Autowired
 	private Mustache.Compiler compiler;
 
-	@Value("${server.context-path:}")
+	@Value("${server.servlet.context-path:}")
 	private String contextPath;
 
 	@ModelAttribute("layout")

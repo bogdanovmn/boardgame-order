@@ -1,5 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
+import com.github.bogdanovmn.common.spring.jpa.BaseEntityWithUniqueName;
+
 import javax.persistence.Entity;
 
 @Entity

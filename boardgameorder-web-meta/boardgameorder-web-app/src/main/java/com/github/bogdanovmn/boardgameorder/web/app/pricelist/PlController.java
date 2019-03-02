@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractVisualController;
 import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
+import com.github.bogdanovmn.common.spring.mvc.ViewTemplate;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,11 +25,9 @@ class PlController extends AbstractVisualController {
 
 	@GetMapping("/{id}")
 	ModelAndView allPrices(@PathVariable Integer id) {
-		return new ModelAndView(
-			"price_list",
-			"actualPriceList",
-			priceListService.priceListView(id)
-		);
+		return new ViewTemplate("price_list")
+			.with("actualPriceList", priceListService.priceListView(id))
+			.modelAndView();
 	}
 
 	@Override

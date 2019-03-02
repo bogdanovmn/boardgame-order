@@ -1,9 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.user;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.common.EntityFactory;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRepository;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRole;
+import com.github.bogdanovmn.common.spring.jpa.EntityFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -22,23 +21,24 @@ class UserService {
 
 	List<UserSummary> usersSummary() {
 		return userRepository.findAll().stream()
-			.map(x -> new UserSummary(x))
+			.map(UserSummary::new)
 			.collect(Collectors.toList());
 	}
 
 	void toggleRole(Integer userId, UserRole.Type roleType) {
-		User user = userRepository.findOne(userId);
-		if (user != null) {
-			Set<UserRole> roles = user.getRoles();
-			UserRole toggleRole = entityFactory.getPersistBaseEntityWithUniqueName(
-				new UserRole(roleType.name())
-			);
+		userRepository.findById(userId).ifPresent(
+			user -> {
+				Set<UserRole> roles = user.getRoles();
+				UserRole toggleRole = entityFactory.getPersistBaseEntityWithUniqueName(
+					new UserRole(roleType.name())
+				);
 
-			if (!roles.remove(toggleRole)) {
-				roles.add(toggleRole);
+				if (!roles.remove(toggleRole)) {
+					roles.add(toggleRole);
+				}
+
+				userRepository.save(user);
 			}
-
-			userRepository.save(user);
-		}
+		);
 	}
 }

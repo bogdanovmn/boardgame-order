@@ -1,8 +1,14 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
+import com.github.bogdanovmn.common.spring.jpa.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
-import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+@Setter
+@Getter
 
 @Entity
 @Table(
@@ -35,57 +41,6 @@ public class Item extends BaseEntity {
 
 	public String getHtmlTitle() {
 		return title.replaceFirst(EFFECTIVE_TITLE_REGEXP, "\"<b>$1</b>\"");
-	}
-
-	public String getEffectiveTitle() {
-		return effectiveTitle;
-	}
-
-	public String getTitle() {
-		return title;
-	}
-
-	public Item setTitle(String title) {
-		this.title = title;
-		likeBoardGameTitle = BOARD_GAME_PATTERN.matcher(title).find();
-
-		Matcher m = EFFECTIVE_TITLE_PATTERN.matcher(title);
-		effectiveTitle = m.find()
-			? m.group(1).replaceAll("\"", "")
-			: title;
-
-		return this;
-	}
-
-	public String getBarcode() {
-		return barcode;
-	}
-
-	public Item setBarcode(String barcode) {
-		this.barcode = barcode;
-		return this;
-	}
-
-	public String getUrl() {
-		return url;
-	}
-
-	public Item setUrl(String url) {
-		this.url = url;
-		return this;
-	}
-
-	public Publisher getPublisher() {
-		return publisher;
-	}
-
-	public Item setPublisher(Publisher publisher) {
-		this.publisher = publisher;
-		return this;
-	}
-
-	public boolean isLikeBoardGameTitle() {
-		return likeBoardGameTitle;
 	}
 
 	@Override
