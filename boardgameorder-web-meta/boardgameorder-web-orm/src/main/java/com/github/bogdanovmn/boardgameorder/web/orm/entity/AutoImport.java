@@ -20,4 +20,12 @@ public class AutoImport extends BaseEntity {
 	private String errorMsg;
 	@OneToOne
 	private Source source;
+
+	public AutoImport setErrorMsg(final String errorMsg) {
+		this.errorMsg = errorMsg;
+		if (errorMsg != null) {
+			status = AutoImportStatus.ERROR;
+		}
+		return this;
+	}
 }

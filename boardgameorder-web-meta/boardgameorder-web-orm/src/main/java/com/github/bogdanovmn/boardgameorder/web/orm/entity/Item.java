@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Setter
@@ -41,6 +42,18 @@ public class Item extends BaseEntity {
 
 	public String getHtmlTitle() {
 		return title.replaceFirst(EFFECTIVE_TITLE_REGEXP, "\"<b>$1</b>\"");
+	}
+
+	public Item setTitle(String title) {
+		this.title = title;
+		likeBoardGameTitle = BOARD_GAME_PATTERN.matcher(title).find();
+
+		Matcher m = EFFECTIVE_TITLE_PATTERN.matcher(title);
+		effectiveTitle = m.find()
+			? m.group(1).replaceAll("\"", "")
+			: title;
+
+		return this;
 	}
 
 	@Override
