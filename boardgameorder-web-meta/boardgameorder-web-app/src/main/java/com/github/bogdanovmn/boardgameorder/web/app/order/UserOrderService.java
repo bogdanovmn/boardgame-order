@@ -20,10 +20,9 @@ class UserOrderService {
 	}
 
 	void addItem(final User user, final Integer id) {
-		Item item = itemRepository.findOne(id);
-		if (item == null) {
-			throw new IllegalStateException("Item not exists: " + id);
-		}
+		Item item = itemRepository.findById(id).orElseThrow(
+			() -> new IllegalStateException("Item not exists: " + id)
+		);
 
 		UserOrderItem orderItem = userOrderItemRepository.findFirstByUserAndItem(user, item);
 		if (orderItem == null) {
@@ -42,10 +41,9 @@ class UserOrderService {
 	}
 
 	void deleteItem(final User user, final Integer id) {
-		Item item = itemRepository.findOne(id);
-		if (item == null) {
-			throw new IllegalStateException("Item not exists: " + id);
-		}
+		Item item = itemRepository.findById(id).orElseThrow(
+			() -> new IllegalStateException("Item not exists: " + id)
+		);
 
 		UserOrderItem orderItem = userOrderItemRepository.findFirstByUserAndItem(user, item);
 		if (orderItem == null) {

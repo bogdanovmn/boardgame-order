@@ -129,13 +129,13 @@ class PriceListChangesService {
 		);
 
 		if (!newPrices.isEmpty()) {
-			itemPriceChangeRepository.save(newPrices);
+			itemPriceChangeRepository.saveAll(newPrices);
 		}
 		if (!deletedPrices.isEmpty()) {
-			itemPriceChangeRepository.save(deletedPrices);
+			itemPriceChangeRepository.saveAll(deletedPrices);
 		}
 		if (!modifiedPrices.isEmpty()) {
-			itemPriceChangeRepository.save(modifiedPrices);
+			itemPriceChangeRepository.saveAll(modifiedPrices);
 		}
 		LOG.info("Changes update is done");
 	}

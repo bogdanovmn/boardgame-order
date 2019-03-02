@@ -1,7 +1,14 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
+import com.github.bogdanovmn.common.spring.jpa.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Objects;
+
+@Setter
+@Getter
 
 @Entity
 @Table(
@@ -23,41 +30,6 @@ public class ItemPrice extends BaseEntity {
 
 	public int getRoundedPrice() {
 		return (int)Math.round(price);
-	}
-	public Source getSource() {
-		return source;
-	}
-
-	public ItemPrice setSource(Source source) {
-		this.source = source;
-		return this;
-	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public ItemPrice setItem(Item item) {
-		this.item = item;
-		return this;
-	}
-
-	public Double getPrice() {
-		return price;
-	}
-
-	public ItemPrice setPrice(Double price) {
-		this.price = price;
-		return this;
-	}
-
-	public Integer getCount() {
-		return count;
-	}
-
-	public ItemPrice setCount(Integer count) {
-		this.count = count;
-		return this;
 	}
 
 	@Override

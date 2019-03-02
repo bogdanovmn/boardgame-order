@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.admin.user;
 
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.BaseEntityWithUniqueName;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
+import com.github.bogdanovmn.common.spring.jpa.BaseEntityWithUniqueName;
 
 import java.util.Date;
 import java.util.stream.Collectors;

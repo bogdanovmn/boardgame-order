@@ -1,5 +1,9 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
+import com.github.bogdanovmn.common.spring.jpa.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -7,6 +11,9 @@ import javax.persistence.Enumerated;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Objects;
+
+@Setter
+@Getter
 
 @Entity
 public class Source extends BaseEntity {
@@ -20,57 +27,12 @@ public class Source extends BaseEntity {
 	@Enumerated(EnumType.STRING)
 	private ImportType importType;
 
-	public Date getImportDate() {
-		return importDate;
-	}
-
-	public Source setImportDate(Date importDate) {
-		this.importDate = importDate;
-		return this;
-	}
-
-	public Date getFileModifyDate() {
-		return fileModifyDate;
-	}
-
 	public String getFileModifyDateFormatted() {
 		return new SimpleDateFormat("yyyy-MM-dd").format(fileModifyDate);
 	}
 
 	public String getFileModifyTimeFormatted() {
 		return new SimpleDateFormat("HH:mm:ss").format(fileModifyDate);
-	}
-
-	public Source setFileModifyDate(Date fileModifyDate) {
-		this.fileModifyDate = fileModifyDate;
-		return this;
-	}
-
-	public String getContentHash() {
-		return contentHash;
-	}
-
-	public Source setContentHash(String contentHash) {
-		this.contentHash = contentHash;
-		return this;
-	}
-
-	public ImportType getImportType() {
-		return importType;
-	}
-
-	public Source setImportType(final ImportType importType) {
-		this.importType = importType;
-		return this;
-	}
-
-	public Integer getItemsCount() {
-		return itemsCount;
-	}
-
-	public Source setItemsCount(final Integer itemsCount) {
-		this.itemsCount = itemsCount;
-		return this;
 	}
 
 	@Override

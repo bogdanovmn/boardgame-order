@@ -20,7 +20,17 @@
 		<module>boardgameorder-web-import</module>
 	</modules>
 
-
+	<dependencies>
+		<dependency>
+			<groupId>com.github.bogdanovmn.common</groupId>
+			<artifactId>common-core</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>com.github.bogdanovmn.common</groupId>
+			<artifactId>common-spring</artifactId>
+		</dependency>
+	</dependencies>
+	
 	<dependencyManagement>
 		<dependencies>
 			<dependency>

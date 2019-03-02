@@ -1,8 +1,17 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
+import com.github.bogdanovmn.common.spring.jpa.BaseEntity;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.Objects;
+
+@Setter
+@Getter
+@NoArgsConstructor
 
 @Entity
 @Table(
@@ -26,45 +35,6 @@ public class UserOrderItem extends BaseEntity {
 
 	@Column(nullable = false)
 	private Date updated = new Date();
-
-	public UserOrderItem() {
-	}
-
-	public User getUser() {
-		return user;
-	}
-
-	public UserOrderItem setUser(User user) {
-		this.user = user;
-		return this;
-	}
-
-	public Date getUpdated() {
-		return updated;
-	}
-
-	public UserOrderItem setUpdated(Date updated) {
-		this.updated = updated;
-		return this;
-	}
-
-	public Item getItem() {
-		return item;
-	}
-
-	public UserOrderItem setItem(final Item item) {
-		this.item = item;
-		return this;
-	}
-
-	public Integer getCount() {
-		return count;
-	}
-
-	public UserOrderItem setCount(final Integer count) {
-		this.count = count;
-		return this;
-	}
 
 	@Override
 	public boolean equals(final Object o) {

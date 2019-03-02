@@ -1,9 +1,14 @@
 package com.github.bogdanovmn.boardgameorder.web.orm.entity;
 
-import org.springframework.util.DigestUtils;
+import com.github.bogdanovmn.common.spring.jpa.BaseEntity;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+
+@Setter
+@Getter
 
 @Entity
 public class Invite extends BaseEntity {
@@ -23,37 +28,4 @@ public class Invite extends BaseEntity {
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "invited_user_id")
 	private User invited;
-
-	public User getCreator() {
-		return creator;
-	}
-
-	public Invite setCreator(User creator) {
-		this.creator = creator;
-		this.code = DigestUtils.md5DigestAsHex(
-			(creator.id.toString() + createDate.toString()).getBytes()
-		);
-		return this;
-	}
-
-	public User getInvited() {
-		return invited;
-	}
-
-	public Invite setInvited(User invited) {
-		this.invited = invited;
-		return this;
-	}
-
-	public LocalDateTime getCreateDate() {
-		return createDate;
-	}
-
-	public String getCode() {
-		return code;
-	}
-
-	public LocalDateTime getExpireDate() {
-		return expireDate;
-	}
 }
