@@ -55,7 +55,7 @@ class OrderBlock {
 			$("#order div.details").html(`
 				<p>Выбрано:<b>${this.itemsCount}</b>
 				<p>Сумма:<br>${this.total} руб.
-				<p>Со скидкой:<br><b>${new Discount(this.total - this.totalWithFixPrice).value() + this.totalWithFixPrice}</b> руб.`
+				<p>Со скидкой:<br><b>${new Discount(this.total, this.totalWithFixPrice).value()}</b> руб.`
 			)
 		}
 	}

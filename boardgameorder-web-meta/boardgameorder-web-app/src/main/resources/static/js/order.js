@@ -28,7 +28,7 @@ class Order{
 	render() {
 		$("#orderSummary div.data").html(`
 			<p>Итого: ${this.total} руб.
-			<p>Со скидкой: <b> ${new Discount(this.total - this.totalWithFixPrice).value() + this.totalWithFixPrice}</b> руб.
+			<p>Со скидкой: <b> ${new Discount(this.total, this.totalWithFixPrice).value()}</b> руб.
 		`)
 	};
 
