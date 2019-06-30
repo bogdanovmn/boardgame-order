@@ -60,7 +60,7 @@ table.price-and-item td.change { padding: 2px 0; font-size: 80%; }
 table.price-and-item td.change span i.plus { color: #09b24d;  }
 table.price-and-item td.change span i.minus { color: #b21e00;  }
 
-.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; }
+.button { border-radius: 25px; border: 1px solid; text-align: center; padding: 3px 10px; font-size: 70%; display: inline; margin: 3px 5px; cursor: pointer; text-decoration: none; }
 .button:hover { border: 1px dotted; }
 .button-login { border-color: #8dcaa5; color: #39b45b; background: #f3fbf3; padding: 10px; font-size: 100%; }
 .button-add-item { border-color: seagreen; color: seagreen; }

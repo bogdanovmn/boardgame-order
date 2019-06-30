@@ -25,15 +25,13 @@
 			<td><input type=password name=passwordConfirm value='{{userRegistrationForm.passwordConfirm}}'>
             <td>{{formError.passwordConfirm}}
         <tr>
-			<td>Как к Вам обращаться
+			<td>Как к Вам обращаться (логин)
 			<td><input type=text name=name value="{{userRegistrationForm.name}}">
             <td class="error">{{formError.name}}
 		<tr>
 			<td><input type=submit name=register_submit value='  Зарегистрироваться  '>
 			<td colspan="2">
-				<a href="login" class="button button-registration">
-					<div>У меня уже есть логин</div>
-				</a>
+				<a href="{{layout.contextPath}}/login" class="button button-login">У меня уже есть логин</a>
 		</table>
 	</form>
 </div>
