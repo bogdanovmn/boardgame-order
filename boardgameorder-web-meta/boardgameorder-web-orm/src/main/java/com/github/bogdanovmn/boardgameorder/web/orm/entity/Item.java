@@ -27,6 +27,11 @@ public class Item extends BaseEntity {
 	private final static String EFFECTIVE_TITLE_REGEXP = "\"(.*)\"";
 	private final static Pattern EFFECTIVE_TITLE_PATTERN = Pattern.compile(EFFECTIVE_TITLE_REGEXP);
 
+	private final static Pattern FIX_PRICE_PATTERN = Pattern.compile(
+		"^.*(фикс[.а-я]*\\s*цена).*$",
+		Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE
+	);
+
 	@Column(nullable = false)
 	private String title;
 	@Column(length = 20)
@@ -54,6 +59,10 @@ public class Item extends BaseEntity {
 			: title;
 
 		return this;
+	}
+
+	public boolean isLikeFixPriceTitle() {
+		return FIX_PRICE_PATTERN.matcher(title).find();
 	}
 
 	@Override

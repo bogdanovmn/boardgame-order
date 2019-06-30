@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractVisualController;
 import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
+import com.github.bogdanovmn.common.spring.mvc.ViewTemplate;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,11 +19,9 @@ class UserOrderController extends AbstractVisualController {
 
 	@GetMapping("/items")
 	ModelAndView getItems(Integer id) {
-		return new ModelAndView(
-			"user_order_items",
-			"order",
-			userOrderService.getUserOrderView(getUser())
-		);
+		return new ViewTemplate("user_order_items")
+			.with("order", userOrderService.getUserOrderView(getUser()))
+			.modelAndView();
 	}
 
 	@Override

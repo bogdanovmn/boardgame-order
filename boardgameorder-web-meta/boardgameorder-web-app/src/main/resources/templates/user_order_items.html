@@ -1,10 +1,10 @@
 {{#layout}}
 
 {{#order.items.0}}
-	<h1>Ваша текущий заказ</h1>
+	<h1>Ваш текущий заказ</h1>
 	<table class="price-and-item">
 	{{#order.items}}
-		<tr id="item-{{item.id}}" data-item-price="{{itemPrice}}">
+		<tr id="item-{{item.id}}" data-item-price="{{itemPrice}}" data-fix-price="{{item.isLikeFixPriceTitle}}">
 			<td class="count"><span>{{count}}</span><i>шт</i></td>
 			<td class="price"><span>{{total}}</span><i>р</i></td>
 			<td class="action">
@@ -45,7 +45,8 @@
 <script>
 	const order = new Order(
 		parseInt("{{order.itemsCount}}") || 0,
-		parseInt("{{order.total}}") || 0
+		parseInt("{{order.total}}") || 0,
+		parseInt("{{order.totalWithFixPrice}}") || 0
 	);
 	order.render();
 

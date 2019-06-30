@@ -53,6 +53,13 @@ public class UserOrder {
 			.sum();
 	}
 
+	public Integer getTotalWithFixPrice() {
+		return itemPrices.values().stream()
+			.filter(x -> x.getItem().isLikeFixPriceTitle())
+			.mapToInt(x -> x.getRoundedPrice() * orderedItems.get(x.getItem().getId()))
+			.sum();
+	}
+
 	public Set<Integer> items() {
 		return orderedItems.keySet();
 	}

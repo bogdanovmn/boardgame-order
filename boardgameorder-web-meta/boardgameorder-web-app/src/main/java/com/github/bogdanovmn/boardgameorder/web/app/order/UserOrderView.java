@@ -20,6 +20,10 @@ class UserOrderView {
 		return userOrder.getTotal();
 	}
 
+	Integer getTotalWithFixPrice() {
+		return userOrder.getTotalWithFixPrice();
+	}
+
 	List<OrderItemView> getItems() {
 		return userOrder.items().stream()
 			.map(

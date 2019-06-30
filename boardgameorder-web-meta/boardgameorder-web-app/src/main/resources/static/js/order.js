@@ -1,11 +1,15 @@
 class Order{
-	constructor(itemsCount, total) {
+	constructor(itemsCount, total, totalWithFixPrice) {
 		this.itemsCount = itemsCount;
 		this.total = total;
+		this.totalWithFixPrice = totalWithFixPrice;
 	}
 
 	addItem(id) {
 		const item = new OrderItem(id);
+		if (item.isFixPrice()) {
+			this.totalWithFixPrice += item.getPrice();
+		}
 		this.total += item.getPrice();
 		this.itemsCount++;
 		item.render(1, item.getPrice())
@@ -13,15 +17,19 @@ class Order{
 
 	delItem(id) {
 		const item = new OrderItem(id);
+		if (item.isFixPrice()) {
+			this.totalWithFixPrice -= item.getPrice();
+		}
 		this.total -= item.getPrice();
 		this.itemsCount--;
 		item.render(-1, -1*item.getPrice())
 	};
 
 	render() {
-		$("#orderSummary div.data").html(
-			`<p>Итого: ${this.total} руб.<p>Со скидкой: <b>${new Discount(this.total).value()}</b> руб.`
-		)
+		$("#orderSummary div.data").html(`
+			<p>Итого: ${this.total} руб.
+			<p>Со скидкой: <b> ${new Discount(this.total - this.totalWithFixPrice).value() + this.totalWithFixPrice}</b> руб.
+		`)
 	};
 
 	getText() {
@@ -49,6 +57,10 @@ class OrderItem {
 		return parseInt(
 			this.element.attr("data-item-price")
 		);
+	}
+
+	isFixPrice() {
+		return $.parseJSON(this.element.attr("data-fix-price"));
 	}
 
 	render(countInc, priceInc) {

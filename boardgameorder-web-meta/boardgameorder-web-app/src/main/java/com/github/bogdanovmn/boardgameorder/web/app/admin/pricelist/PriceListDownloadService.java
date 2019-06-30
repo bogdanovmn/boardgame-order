@@ -23,7 +23,7 @@ class PriceListDownloadService {
 	private String priceListDir;
 
 	private final static String PRICE_URL = "http://www.bambytoys.ru/bamby.xls";
-	private final SimpleHttpClient httpClient = new SimpleHttpClient("");
+	private final SimpleHttpClient httpClient = new SimpleHttpClient();
 
 	private final AutoImportRepository autoImportRepository;
 	private final PriceListImportService priceListImportService;

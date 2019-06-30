@@ -16,7 +16,7 @@
 				<h2>{{publisher.normalizedName}} <i>({{prices.size}})</i></h2>
 				<table class="price-and-item">
 				{{#prices}}
-					<tr id="item-{{price.item.id}}" class="{{#ordered}}ordered{{/ordered}}">
+					<tr id="item-{{price.item.id}}" class="{{#ordered}}ordered{{/ordered}}" data-fix-price="{{price.item.isLikeFixPriceTitle}}">
 						<td class="count">{{price.count}}<i>шт</i></td>
 						<td class="price">{{price.roundedPrice}}<i>р</i></td>
 						<td class="action">
@@ -49,7 +49,8 @@
 	const blockInAction = {};
 	const order = new OrderBlock(
 		parseInt("{{actualPriceList.userOrder.itemsCount}}") || 0,
-		parseInt("{{actualPriceList.userOrder.total}}") || 0
+		parseInt("{{actualPriceList.userOrder.total}}") || 0,
+		parseInt("{{actualPriceList.userOrder.totalWithFixPrice}}") || 0
 	);
 	order.render();
 
