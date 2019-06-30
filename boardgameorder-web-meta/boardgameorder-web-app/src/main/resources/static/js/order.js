@@ -37,10 +37,11 @@ class Order{
 		$("table.price-and-item tr").each(function(i) {
 			const count = parseInt($(this).find("td.count span").text());
 			if (count !== 0) {
+				text += `${i + 1}) `;
 				if (count > 1) {
-					text += "[КОЛ-ВО: " + count + "] ";
+					text += `[!! Кол-во: ${count} !!] `;
 				}
-				text += $(this).find("td.title span").text() + "\r\n";
+				text += $(this).find("td.title span").text() + "\r\n\n";
 			}
 		});
 		return text;

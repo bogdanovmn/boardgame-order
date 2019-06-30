@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.app.UserOrder;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,6 +27,11 @@ class UserOrderView {
 
 	List<OrderItemView> getItems() {
 		return userOrder.items().stream()
+			.sorted(
+				Comparator.comparing(itemId ->
+					userOrder.itemPrice(itemId).getItem().getEffectiveTitle()
+				)
+			)
 			.map(
 				itemId -> new OrderItemView(
 					userOrder.itemPrice(itemId),
