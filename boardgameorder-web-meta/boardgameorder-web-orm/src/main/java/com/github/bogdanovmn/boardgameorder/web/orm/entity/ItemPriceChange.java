@@ -14,6 +14,12 @@ import javax.persistence.*;
 	uniqueConstraints = {
 		@UniqueConstraint(
 			columnNames = {"source_id", "previous_source_id", "item_id"}
+		),
+		@UniqueConstraint(
+			columnNames = {"source_id"}
+		),
+		@UniqueConstraint(
+			columnNames = {"previous_source_id"}
 		)
 	}
 )

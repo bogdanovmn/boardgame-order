@@ -74,7 +74,7 @@ class PriceListDownloadService {
 					LOG.info("All is OK, update changes between prices");
 					currentAutoImport.setStatus(AutoImportStatus.DONE)
 						.setSource(source);
-					priceListChangesService.updateAllChanges();
+					priceListChangesService.updateLastChanges();
 				}
 				catch (Exception e) {
 					LOG.error(e.getMessage(), e);

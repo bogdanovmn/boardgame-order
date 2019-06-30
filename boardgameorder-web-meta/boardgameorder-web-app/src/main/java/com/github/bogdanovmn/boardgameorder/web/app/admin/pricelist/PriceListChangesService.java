@@ -49,6 +49,22 @@ class PriceListChangesService {
 		}
 	}
 
+	@Transactional(rollbackFor = Exception.class)
+	public void updateLastChanges() {
+		List<Source> sources = sourceRepository.findAllByOrderByFileModifyDateDesc();
+
+		if (sources.size() > 1) {
+			Source prevSource = sources.get(1);
+			Source lastSource = sources.get(0);
+
+			LOG.info("Update changes between {} and {}", lastSource, prevSource);
+				updateChanges(prevSource, lastSource);
+		}
+		else {
+			LOG.info("No changes found, price lists count: {}", sources.size());
+		}
+	}
+
 	private void updateChanges(final Source previousSource, final Source source) {
 		Map<Integer, ItemPrice> sourcePrices = itemPriceRepository.findBySourceId(source.getId()).stream()
 			.collect(Collectors.toMap(
