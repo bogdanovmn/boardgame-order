@@ -1,5 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
 import org.apache.poi.ss.usermodel.*;
@@ -12,6 +13,7 @@ import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
+@Slf4j
 public class PriceListExcelFile implements Closeable {
 	private final Workbook excelBook;
 
@@ -102,7 +104,10 @@ public class PriceListExcelFile implements Closeable {
 
 			if (row.cell(1).isNumber()) {
 				if (currentGroup == null) {
-					throw new IllegalStateException("Row like price but without group");
+					LOG.debug(row.toString());
+					throw new IllegalStateException(
+						String.format("Row like price but without group: %s", row)
+					);
 				}
 				result.add(
 					new ExcelPriceItem(
@@ -117,10 +122,7 @@ public class PriceListExcelFile implements Closeable {
 			}
 			else {
 				if (!row.cell(0).isBlank()) {
-					String groupPretender = row.cellStringValue(0);
-					if (groupPretender.matches("^\\s*\\d.*")) {
-						currentGroup = groupPretender;
-					}
+					currentGroup = row.cellStringValue(0);
 				}
 			}
 		}

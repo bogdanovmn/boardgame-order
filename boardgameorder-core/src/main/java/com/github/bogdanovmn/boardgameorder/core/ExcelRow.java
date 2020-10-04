@@ -1,5 +1,6 @@
 package com.github.bogdanovmn.boardgameorder.core;
 
+import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 
 class ExcelRow {
@@ -36,5 +37,23 @@ class ExcelRow {
 		return cell.isBlank()
 			? null
 			: cell.urlValue();
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder result = new StringBuilder();
+		for (Cell cell : row) {
+			result.append(
+				String.format(
+					"[%d %7s] '%s'\n",
+					cell.getColumnIndex(),
+					cell.getCellTypeEnum(),
+					(cell.toString().equals("Фото")
+						? cell.getHyperlink().getAddress()
+						: cell)
+				)
+			);
+		}
+		return result.toString();
 	}
 }
