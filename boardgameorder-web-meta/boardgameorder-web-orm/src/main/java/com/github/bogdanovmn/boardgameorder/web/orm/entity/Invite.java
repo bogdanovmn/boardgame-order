@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 
 @Entity
 public class Invite extends BaseEntity {
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "creator_user_id")
 	private User creator;
 

@@ -1,6 +1,5 @@
 package com.github.bogdanovmn.boardgameorder.web.app.user;
 
-import com.github.bogdanovmn.boardgameorder.web.app.config.security.ProjectSecurityService;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.Invite;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserRepository;
@@ -20,22 +19,16 @@ class RegistrationService {
 	private final UserRepository userRepository;
 	private final EntityFactory entityFactory;
 	private final InviteService inviteService;
-	private final ProjectSecurityService securityService;
-
-
 
 	@Autowired
-	RegistrationService(UserRepository userRepository, EntityFactory entityFactory, InviteService inviteService, ProjectSecurityService securityService) {
+	RegistrationService(UserRepository userRepository, EntityFactory entityFactory, InviteService inviteService) {
 		this.userRepository = userRepository;
 		this.entityFactory = entityFactory;
 		this.inviteService = inviteService;
-		this.securityService = securityService;
 	}
 
 	@Transactional(rollbackFor = Exception.class)
-	public void registration(UserRegistrationForm userForm) throws RegistrationException {
-		Invite invite = validInvite(userForm.getInviteCode());
-
+	public void registration(UserRegistrationForm userForm, Invite invite) throws RegistrationException {
 		if (!userForm.getPassword().equals(userForm.getPasswordConfirm())) {
 			throw new RegistrationException("passwordConfirm", "Пароль не совпадает");
 		}

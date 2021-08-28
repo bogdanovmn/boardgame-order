@@ -1,5 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.web.app.user;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -16,7 +18,8 @@ class UserRegistrationForm {
 	@Size(min=1, max=32)
 	private String passwordConfirm;
 
-	@NotNull
+	@Email
+	@NotBlank
 	private String email;
 
 	@NotNull

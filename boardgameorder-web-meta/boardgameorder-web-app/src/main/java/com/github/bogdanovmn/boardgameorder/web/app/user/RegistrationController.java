@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+
 
 @Controller
 @RequestMapping("/registration")
@@ -41,14 +43,19 @@ class RegistrationController extends AbstractMinVisualController {
 
 	@PostMapping
 	ModelAndView registration(
-		UserRegistrationForm userForm,
+		@Valid UserRegistrationForm userForm,
 		BindingResult bindingResult,
 		Model model
 	) {
 		FormErrors formErrors = new FormErrors(bindingResult);
-
+		Invite invite = null;
 		try {
-			registrationService.registration(userForm);
+			invite = registrationService.validInvite(
+				userForm.getInviteCode()
+			);
+			if (!formErrors.isNotEmpty()) {
+				registrationService.registration(userForm, invite);
+			}
 		}
 		catch (RegistrationException e) {
 			if (e.isCustomError()) {
@@ -61,6 +68,7 @@ class RegistrationController extends AbstractMinVisualController {
 
 		if (formErrors.isNotEmpty()) {
 			model.addAllAttributes(formErrors.getModel());
+			model.addAttribute("invite", invite);
 			return new ModelAndView("registration", model.asMap());
 		}
 
