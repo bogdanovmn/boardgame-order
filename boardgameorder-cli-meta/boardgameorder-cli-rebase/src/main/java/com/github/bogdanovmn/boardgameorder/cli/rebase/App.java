@@ -1,7 +1,7 @@
 package com.github.bogdanovmn.boardgameorder.cli.rebase;
 
 
-import com.github.bogdanovmn.cmdlineapp.CmdLineAppBuilder;
+import com.github.bogdanovmn.cmdline.CmdLineAppBuilder;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;

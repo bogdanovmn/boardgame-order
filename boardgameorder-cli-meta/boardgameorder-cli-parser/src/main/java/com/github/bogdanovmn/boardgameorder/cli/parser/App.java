@@ -3,7 +3,7 @@ package com.github.bogdanovmn.boardgameorder.cli.parser;
 
 import com.github.bogdanovmn.boardgameorder.core.PriceListContent;
 import com.github.bogdanovmn.boardgameorder.core.PriceListExcelFile;
-import com.github.bogdanovmn.cmdlineapp.CmdLineAppBuilder;
+import com.github.bogdanovmn.cmdline.CmdLineAppBuilder;
 
 import java.io.FileInputStream;
 

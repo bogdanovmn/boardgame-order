@@ -22,11 +22,11 @@
 
 	<dependencies>
 		<dependency>
-			<groupId>com.github.bogdanovmn.common</groupId>
+			<groupId>com.github.bogdanovmn.common.core</groupId>
 			<artifactId>common-core</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>com.github.bogdanovmn.common</groupId>
+			<groupId>com.github.bogdanovmn.common.spring</groupId>
 			<artifactId>common-spring</artifactId>
 		</dependency>
 	</dependencies>
