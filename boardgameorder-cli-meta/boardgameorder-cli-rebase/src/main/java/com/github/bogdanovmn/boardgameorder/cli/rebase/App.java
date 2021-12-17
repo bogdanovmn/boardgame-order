@@ -1,10 +1,10 @@
 package com.github.bogdanovmn.boardgameorder.cli.rebase;
 
-
 import com.github.bogdanovmn.cmdline.CmdLineAppBuilder;
 import org.springframework.boot.Banner;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.annotation.ComponentScan;
@@ -26,6 +26,7 @@ public class App implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication app = new SpringApplication(App.class);
+		app.setWebApplicationType(WebApplicationType.NONE);
 		app.setBannerMode(Banner.Mode.OFF);
 		app.run(args);
 	}
