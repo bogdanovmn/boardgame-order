@@ -13,7 +13,7 @@ class PriceListColumnMap {
 	private final static Pattern PHOTO_PATTERN   = Pattern.compile("фото", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern NAME_PATTERN    = Pattern.compile("номенклатура", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 
-	private Map<String, Integer> columnMap = new HashMap<>();
+	private final Map<String, Integer> columnMap = new HashMap<>();
 
 	void put(final String title, final int index) {
 		columnMap.put(title, index);

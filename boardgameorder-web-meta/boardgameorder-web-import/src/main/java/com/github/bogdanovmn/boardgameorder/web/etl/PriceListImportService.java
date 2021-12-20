@@ -6,10 +6,9 @@ import com.github.bogdanovmn.boardgameorder.core.PriceListExcelFile;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.*;
 import com.github.bogdanovmn.common.core.BigString;
 import com.github.bogdanovmn.common.spring.jpa.EntityFactory;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.poi.openxml4j.exceptions.InvalidFormatException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
@@ -19,27 +18,15 @@ import java.io.IOException;
 import java.util.*;
 
 @Service
+@Slf4j
+@RequiredArgsConstructor
 public class PriceListImportService {
-	private static final Logger LOG = LoggerFactory.getLogger(PriceListImportService.class);
-
 	private final SourceRepository sourceRepository;
 	private final ItemRepository itemRepository;
 	private final ItemPriceRepository itemPriceRepository;
 	private final EntityFactory entityFactory;
 
-	@Autowired
-	public PriceListImportService(
-		SourceRepository sourceRepository,
-		ItemRepository itemRepository,
-		ItemPriceRepository itemPriceRepository,
-		EntityFactory entityFactory
-	) {
-		this.sourceRepository = sourceRepository;
-		this.itemRepository = itemRepository;
-		this.itemPriceRepository = itemPriceRepository;
-		this.entityFactory = entityFactory;
-	}
-
+	@Transactional(rollbackFor = Exception.class)
 	public Source importFile(byte[] fileData, ImportType type) throws IOException, UploadDuplicateException {
 		return importFile(fileData, type, null);
 	}
@@ -56,25 +43,25 @@ public class PriceListImportService {
 			throw new UploadDuplicateException(
 				String.format(
 					"Такой прайс уже загружен: %s (md5: %s)",
-						existingSource.toString(),
+						existingSource,
 						existingSource.getContentHash()
 				)
 			);
 		}
 
 		LOG.info("Parse Excel file");
-		List<ExcelPriceItem> items;
+		List<ExcelPriceItem> itemsToImport;
 		final Source source = new Source();
 		try (PriceListExcelFile excelFile = new PriceListExcelFile(new ByteArrayInputStream(fileData)))
 		{
 			PriceListContent price = new PriceListContent(excelFile);
-			items = price.boardGames();
+			itemsToImport = price.boardGames();
 			Date fileModifyDate = excelFile.modifiedDate();
 			Date currentDate = customDate != null ? customDate : new Date();
 			sourceRepository.save(
 				source
 					.setContentHash(fileMd5)
-					.setItemsCount(items.size())
+					.setItemsCount(itemsToImport.size())
 					.setFileModifyDate(fileModifyDate == null ? currentDate : fileModifyDate)
 					.setImportDate(currentDate)
 					.setImportType(type)
@@ -85,16 +72,16 @@ public class PriceListImportService {
 		}
 
 		LOG.info("Load exists items");
-		ItemsMap itemsMap = new ItemsMap(itemRepository.findAll());
+		ItemsMap previousItemsMap = new ItemsMap(itemRepository.findAll());
 
-		LOG.info("Import items: {}", items.size());
+		LOG.info("Import items: {}", itemsToImport.size());
 		int newItems = 0;
 		int updatedItems = 0;
 		int noPriceItems = 0;
 		int noCountItems = 0;
-		int dublicates = 0;
-		Set<Integer> priceItems = new HashSet<>();
-		for (ExcelPriceItem excelPriceItem : items) {
+		int duplicates = 0;
+		Set<Integer> processedPriceItems = new HashSet<>();
+		for (ExcelPriceItem excelPriceItem : itemsToImport) {
 			LOG.debug("Excel Item: {}", excelPriceItem);
 
 			if (excelPriceItem.getPrice() == null) {
@@ -108,37 +95,37 @@ public class PriceListImportService {
 				continue;
 			}
 
-			Item item = itemsMap.get(excelPriceItem);
-			if (item != null) {
-				LOG.debug("Found item: {}", item);
-				if (priceItems.contains(item.getId())) {
-					LOG.warn("Duplicate: {} with {}", excelPriceItem.getTitle(), item.getTitle());
-					dublicates++;
+			Item storedItem = previousItemsMap.get(excelPriceItem);
+			if (storedItem != null) {
+				LOG.debug("Found item: {}", storedItem);
+				if (processedPriceItems.contains(storedItem.getId())) {
+					LOG.warn("Duplicate: {} with {}", excelPriceItem.getTitle(), storedItem.getTitle());
+					duplicates++;
 					continue;
 				}
 				else {
-					if (updateItem(item, excelPriceItem)) {
+					if (updateItem(storedItem, excelPriceItem)) {
 						updatedItems++;
 					}
 				}
 			}
 			else {
 				LOG.debug("New item: {}", excelPriceItem);
-				item = addItem(excelPriceItem);
+				storedItem = addItem(excelPriceItem);
 				newItems++;
 			}
 			itemPriceRepository.save(
 				new ItemPrice()
-					.setItem(item)
+					.setItem(storedItem)
 					.setSource(source)
 					.setCount(excelPriceItem.getCount())
 					.setPrice(excelPriceItem.getPrice())
 			);
-			priceItems.add(item.getId());
+			processedPriceItems.add(storedItem.getId());
 		}
 		LOG.info(
 			"Import items done. New: {}, updated: {}, no price: {}, no count: {}, duplicates {}",
-				newItems, updatedItems, noPriceItems, noCountItems, dublicates
+				newItems, updatedItems, noPriceItems, noCountItems, duplicates
 		);
 
 		return source;
@@ -156,40 +143,39 @@ public class PriceListImportService {
 		return newItem;
 	}
 
-	private boolean updateItem(Item item, ExcelPriceItem excelPriceItem) {
+	private boolean updateItem(Item current, ExcelPriceItem newest) {
 		boolean updated = false;
 		BigString updateDetails = new BigString();
 
-		if (!Objects.equals(item.getTitle(), excelPriceItem.getTitle())) {
-			updateDetails.addLine("Item title change: %s --> %s", item.getTitle(), excelPriceItem.getTitle());
-			item.setTitle(excelPriceItem.getTitle());
+		if (!Objects.equals(current.getTitle(), newest.getTitle())) {
+			updateDetails.addLine("Item title change: %s --> %s", current.getTitle(), newest.getTitle());
+			current.setTitle(newest.getTitle());
 			updated = true;
 		}
 
-		if (!Objects.equals(item.getUrl(), excelPriceItem.getUrl())) {
-			updateDetails.addLine("Item URL change: %s --> %s", item.getUrl(), excelPriceItem.getUrl());
-			item.setUrl(excelPriceItem.getUrl());
+		if (!Objects.equals(current.getUrl(), newest.getUrl())) {
+			updateDetails.addLine("Item URL change: %s --> %s", current.getUrl(), newest.getUrl());
+			current.setUrl(newest.getUrl());
 			updated = true;
 		}
 
-		if (!Objects.equals(item.getBarcode(), excelPriceItem.getBarcode())) {
-			updateDetails.addLine("Item barcode change: %s --> %s", item.getBarcode(), excelPriceItem.getBarcode());
-			item.setBarcode(excelPriceItem.getBarcode());
+		if (!Objects.equals(current.getBarcode(), newest.getBarcode())) {
+			updateDetails.addLine("Item barcode change: %s --> %s", current.getBarcode(), newest.getBarcode());
+			current.setBarcode(newest.getBarcode());
 			updated = true;
 		}
 
-		if (!Objects.equals(item.getPublisher().getName(), excelPriceItem.getGroup())) {
-			updateDetails.addLine("Item publisher change: %s --> %s", item.getPublisher().getName(), excelPriceItem.getGroup());
-			item.setPublisher(
-				getPersistentPublisher(excelPriceItem.getGroup())
+		if (!Objects.equals(current.getPublisher().getName(), newest.getGroup())) {
+			updateDetails.addLine("Item publisher change: %s --> %s", current.getPublisher().getName(), newest.getGroup());
+			current.setPublisher(
+				getPersistentPublisher(newest.getGroup())
 			);
 			updated = true;
 		}
 
 		if (updated) {
-			LOG.info("Change item {}: \n{}", item, updateDetails);
+			LOG.info("Change item {}: \n{}", current, updateDetails);
 		}
-
 		return updated;
 	}
 

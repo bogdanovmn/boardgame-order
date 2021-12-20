@@ -12,7 +12,7 @@ public class App {
 		new CmdLineAppBuilder(args)
 			.withJarName("parser")
 			.withDescription("Parse Excel price list file and print total info")
-			.withArg("source", "data source file")
+			.withRequiredArg("source", "data source file")
 			.withEntryPoint(
 				cmdLine -> {
 					try (

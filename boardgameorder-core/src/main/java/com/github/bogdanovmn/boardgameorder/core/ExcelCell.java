@@ -59,8 +59,7 @@ class ExcelCell {
 
 	}
 
-	String
-	stringValue() {
+	String stringValue() {
 		return isString()
 			? cell.getStringCellValue()
 			: "";

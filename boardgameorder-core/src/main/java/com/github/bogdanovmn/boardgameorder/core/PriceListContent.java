@@ -31,13 +31,13 @@ public class PriceListContent {
 
 	public List<ExcelPriceItem> boardGames() {
 		return file.priceItems().stream()
-			.filter(x ->
-				(BOARD_GAME.matcher(x.getTitle()).find() ||
-					BOARD_GAME.matcher(x.getGroupOriginal()).find())
-						&& !x.getGroupOriginal().contains("УЦЕНКА")
-						&& !x.getTitle().contains("склейка")
-						&& !ZVEZDA_MODELS.matcher(x.getTitle()).find()
-						&& !ZVEZDA_TANK_MODELS.matcher(x.getTitle()).find()
+			.filter(item ->
+				(BOARD_GAME.matcher(item.getTitle()).find() ||
+					BOARD_GAME.matcher(item.getGroupOriginal()).find())
+						&& !item.getGroupOriginal().contains("УЦЕНКА")
+						&& !item.getTitle().contains("склейка")
+						&& !ZVEZDA_MODELS.matcher(item.getTitle()).find()
+						&& !ZVEZDA_TANK_MODELS.matcher(item.getTitle()).find()
 			)
 			.collect(Collectors.toList());
 	}
@@ -56,12 +56,7 @@ public class PriceListContent {
 				Comparator.comparingInt(groupStat::get)
 			)
 			.forEach(x ->
-				System.out.println(
-					String.format(
-						"[%3d] %s",
-						groupStat.get(x), x
-					)
-				)
+				System.out.printf("[%3d] %s%n", groupStat.get(x), x)
 			);
 	}
 

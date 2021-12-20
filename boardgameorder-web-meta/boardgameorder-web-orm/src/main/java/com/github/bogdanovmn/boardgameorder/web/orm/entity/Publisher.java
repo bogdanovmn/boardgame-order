@@ -12,6 +12,6 @@ public class Publisher extends BaseEntityWithUniqueName {
 
 	@Override
 	public String toString() {
-		return String.format("Publisher{name=%s}", getName());
+		return String.format("Publisher{id=%s, name=%s}", getId(), getName());
 	}
 }
