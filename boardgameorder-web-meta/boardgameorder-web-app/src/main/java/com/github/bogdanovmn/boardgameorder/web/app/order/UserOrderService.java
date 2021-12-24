@@ -61,10 +61,12 @@ class UserOrderService {
 	}
 
 	// TODO можно грузить не весь прайс, а только заказанные позиции
-	UserOrderView getUserOrderView(final User user) {
+	UserOrderView getUserOrderView(User user, Integer sourceId) {
 		return new UserOrderView(
 			UserOrder.fromAllPrices(
-				sourceService.actualPrices(),
+				sourceId == null
+					? sourceService.actualPrices()
+					: sourceService.prices(sourceId),
 				userOrderItemRepository.getAllByUser(user)
 			)
 		);
