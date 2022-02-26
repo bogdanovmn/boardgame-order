@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
 
 class PriceListColumnMap {
 	private final static Pattern COUNT_PATTERN   = Pattern.compile("(кол-во|наличие|остаток)", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
-	private final static Pattern PRICE_PATTERN   = Pattern.compile("(цена|база|базовая цена)", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
+	private final static Pattern PRICE_PATTERN   = Pattern.compile("(цена|база|базовая цена|базовый опт)", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern BARCODE_PATTERN = Pattern.compile("штрих", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern PHOTO_PATTERN   = Pattern.compile("фото", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
 	private final static Pattern NAME_PATTERN    = Pattern.compile("номенклатура", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);
