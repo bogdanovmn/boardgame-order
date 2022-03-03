@@ -12,26 +12,26 @@
 	<form method=post action="{{layout.contextPath}}/registration">
 		<input type="hidden" name="inviteCode" value="{{invite.code}}"/>
 		<table>
-		<tr>
-			<td>E-mail
-			<td><input type=text name=email value="{{userRegistrationForm.email}}">
-            <td class="error">{{formError.email}}
-		<tr>
-			<td>Пароль (не от мыла)
-			<td><input type=password name=password value='{{userRegistrationForm.password}}'>
-            <td class="error">{{formError.password}}
-        <tr>
-			<td>Пароль еще разок
-			<td><input type=password name=passwordConfirm value='{{userRegistrationForm.passwordConfirm}}'>
-            <td>{{formError.passwordConfirm}}
-        <tr>
-			<td>Как к Вам обращаться (логин)
-			<td><input type=text name=name value="{{userRegistrationForm.name}}">
-            <td class="error">{{formError.name}}
-		<tr>
-			<td><input type=submit name=register_submit value='  Зарегистрироваться  '>
-			<td colspan="2">
-				<a href="{{layout.contextPath}}/login" class="button button-login">У меня уже есть логин</a>
+			<tr>
+				<td>E-mail
+				<td><input type=text name=email value="{{userRegistrationForm.email}}">
+				<td class="error">{{formError.email}}
+			<tr>
+				<td>Пароль (не от мыла)
+				<td><input type=password name=password value='{{userRegistrationForm.password}}'>
+				<td class="error">{{formError.password}}
+			<tr>
+				<td>Пароль еще разок
+				<td><input type=password name=passwordConfirm value='{{userRegistrationForm.passwordConfirm}}'>
+				<td>{{formError.passwordConfirm}}
+			<tr>
+				<td>Как к Вам обращаться (логин)
+				<td><input type=text name=name value="{{userRegistrationForm.name}}">
+				<td class="error">{{formError.name}}
+			<tr>
+				<td><input type=submit name=register_submit value='  Зарегистрироваться  '>
+				<td colspan="2">
+					<a href="{{layout.contextPath}}/login" class="button button-login">У меня уже есть логин</a>
 		</table>
 	</form>
 </div>

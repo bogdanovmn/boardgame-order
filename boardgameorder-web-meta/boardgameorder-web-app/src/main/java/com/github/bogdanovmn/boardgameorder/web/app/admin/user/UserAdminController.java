@@ -12,32 +12,32 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 class UserAdminController extends AbstractVisualAdminController {
-	private final UserService userService;
+    private final UserService userService;
 
-	UserAdminController(UserService userService) {
-		this.userService = userService;
-	}
+    UserAdminController(UserService userService) {
+        this.userService = userService;
+    }
 
-	@Override
-	protected AdminMenu.ITEM currentAdminMenuItem() {
-		return AdminMenu.ITEM.USER_LIST;
-	}
+    @Override
+    protected AdminMenu.ITEM currentAdminMenuItem() {
+        return AdminMenu.ITEM.USER_LIST;
+    }
 
-	@GetMapping("/users")
-	ModelAndView users() {
-		return new ModelAndView(
-			"users_list",
-			"users",
-			userService.usersSummary()
-		);
-	}
+    @GetMapping("/users")
+    ModelAndView users() {
+        return new ModelAndView(
+            "users_list",
+            "users",
+            userService.usersSummary()
+        );
+    }
 
-	@PostMapping("/users/{id}/role-toggle/{role}")
-	String toggleUserRole(
-		@PathVariable Integer id,
-		@PathVariable String role
-	) {
-		userService.toggleRole(id, UserRole.Type.valueOf(role));
-		return "redirect:/admin/users";
-	}
+    @PostMapping("/users/{id}/role-toggle/{role}")
+    String toggleUserRole(
+        @PathVariable Integer id,
+        @PathVariable String role
+    ) {
+        userService.toggleRole(id, UserRole.Type.valueOf(role));
+        return "redirect:/admin/users";
+    }
 }

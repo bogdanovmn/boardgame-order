@@ -7,19 +7,19 @@ import java.util.Date;
 import java.util.stream.Collectors;
 
 class UserSummary {
-	private final Integer id;
-	private final String name;
-	private final String email;
-	private final Date registerDate;
-	private final String roles;
+    private final Integer id;
+    private final String name;
+    private final String email;
+    private final Date registerDate;
+    private final String roles;
 
-	UserSummary(User user) {
-		this.id = user.getId();
-		this.name = user.getName();
-		this.email = user.getEmail();
-		this.registerDate = user.getRegisterDate();
-		this.roles = user.getRoles().stream()
-			.map(BaseEntityWithUniqueName::getName)
-			.collect(Collectors.joining(", "));
-	}
+    UserSummary(User user) {
+        this.id = user.getId();
+        this.name = user.getName();
+        this.email = user.getEmail();
+        this.registerDate = user.getRegisterDate();
+        this.roles = user.getRoles().stream()
+            .map(BaseEntityWithUniqueName::getName)
+            .collect(Collectors.joining(", "));
+    }
 }

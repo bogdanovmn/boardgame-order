@@ -1,45 +1,47 @@
 {{#layout}}
 
 {{#order.items.0}}
-	<h1>Ваш текущий заказ</h1>
-	<table class="price-and-item">
+<h1>Ваш текущий заказ</h1>
+<table class="price-and-item">
 	{{#order.items}}
-		<tr id="item-{{item.id}}" data-item-price="{{itemPrice}}" data-fix-price="{{item.isLikeFixPriceTitle}}">
-			<td class="count"><span>{{count}}</span><i>шт</i></td>
-			<td class="price"><span>{{total}}</span><i>р</i></td>
-			<td class="action">
-				<div
-					class="button button-add-item"
-					data-href="/user/order/items/{{item.id}}"
-					data-action="add"
-					data-id="{{item.id}}">+</div>
-				<div
-					class="button button-del-item"
-					data-href="/user/order/items/{{item.id}}"
-					data-action="del"
-					data-id="{{item.id}}">&ndash;</div>
-			</td>
-			<td class="title" >
-				<span>{{{item.htmlTitle}}}</span>
-				{{#item.url}}
-					<a target="_blank" href="{{item.url}}">фото</a>
-				{{/item.url}}
-			</td>
-		</tr>
+	<tr id="item-{{item.id}}" data-item-price="{{itemPrice}}" data-fix-price="{{item.isLikeFixPriceTitle}}">
+		<td class="count"><span>{{count}}</span><i>шт</i></td>
+		<td class="price"><span>{{total}}</span><i>р</i></td>
+		<td class="action">
+			<div
+				class="button button-add-item"
+				data-href="/user/order/items/{{item.id}}"
+				data-action="add"
+				data-id="{{item.id}}">+
+			</div>
+			<div
+				class="button button-del-item"
+				data-href="/user/order/items/{{item.id}}"
+				data-action="del"
+				data-id="{{item.id}}">&ndash;
+			</div>
+		</td>
+		<td class="title">
+			<span>{{{item.htmlTitle}}}</span>
+			{{#item.url}}
+			<a target="_blank" href="{{item.url}}">фото</a>
+			{{/item.url}}
+		</td>
+	</tr>
 	{{/order.items}}
-	</table>
+</table>
 
-	<div id="orderSummary">
-		<div class="data"></div>
-		<div class="button button-copy" onclick="copyOrderText()">
-			Копировать текст заказа в буфер обмена
-		</div>
+<div id="orderSummary">
+	<div class="data"></div>
+	<div class="button button-copy" onclick="copyOrderText()">
+		Копировать текст заказа в буфер обмена
 	</div>
+</div>
 {{/order.items.0}}
 
 
 {{^order.items.0}}
-	<h1>Корзина пуста, выбрать настолки можно <a href="{{layout.contextPath}}/price-lists/last">тут</a></h1>
+<h1>Корзина пуста, выбрать настолки можно <a href="{{layout.contextPath}}/price-lists/last">тут</a></h1>
 {{/order.items.0}}
 
 <script>
@@ -52,7 +54,7 @@
 
 	const blockInAction = {};
 	$('div.button').click(
-		function() {
+		function () {
 			const button = $(this);
 			const actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
 			const itemId = button.attr("data-id");
@@ -78,11 +80,12 @@
 			blockInAction[itemId] = false;
 		}
 	);
+
 	function addItem(itemId, url) {
 		console.log("[action] PUT " + url);
 
-		$.ajax({ url: url, method: "PUT"})
-			.done(function(resp) {
+		$.ajax({url: url, method: "PUT"})
+			.done(function (resp) {
 				console.log('[OK] ' + url);
 				order.addItem(itemId);
 				order.render();
@@ -91,11 +94,12 @@
 				console.log("[ERROR] " + url + "\n" + excpetion)
 			})
 	}
+
 	function delItem(itemId, url) {
 		console.log("[action] DELETE " + url);
 
-		$.ajax({ url: url, method: "DELETE"})
-			.done(function(resp) {
+		$.ajax({url: url, method: "DELETE"})
+			.done(function (resp) {
 				console.log('[OK] ' + url);
 				order.delItem(itemId);
 				order.render();

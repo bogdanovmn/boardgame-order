@@ -9,14 +9,14 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import java.util.Map;
 
 public abstract class AbstractMinVisualController extends AbstractController {
-	@Autowired
-	private Mustache.Compiler compiler;
+    @Autowired
+    private Mustache.Compiler compiler;
 
-	@Value("${server.servlet.context-path:}")
-	private String contextPath;
+    @Value("${server.servlet.context-path:}")
+    private String contextPath;
 
-	@ModelAttribute("layout")
-	public Mustache.Lambda layout(Map<String, Object> model) {
-		return new Layout(compiler, "min", contextPath);
-	}
+    @ModelAttribute("layout")
+    public Mustache.Lambda layout(Map<String, Object> model) {
+        return new Layout(compiler, "min", contextPath);
+    }
 }

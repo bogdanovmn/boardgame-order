@@ -1,13 +1,12 @@
-
 <div id=top_menu>
 	<div class=links>
 		.::{{#menu}}
-			{{#isSelected}}
-				<b>{{title}}</b>
-			{{/isSelected}}
-			{{^isSelected}}
-				<a href='{{layout.contextPath}}{{url}}'>{{title}}</a>
-			{{/isSelected}}
+		{{#isSelected}}
+		<b>{{title}}</b>
+		{{/isSelected}}
+		{{^isSelected}}
+		<a href='{{layout.contextPath}}{{url}}'>{{title}}</a>
+		{{/isSelected}}
 		::{{/menu}}.
 	</div>
 	<div id=user_info>

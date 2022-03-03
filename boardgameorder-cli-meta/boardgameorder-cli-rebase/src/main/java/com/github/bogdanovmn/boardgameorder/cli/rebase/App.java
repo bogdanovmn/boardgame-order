@@ -18,35 +18,34 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @ComponentScan(basePackages = "com.github.bogdanovmn.boardgameorder")
 @EnableTransactionManagement
 public class App implements CommandLineRunner {
-	private final RebaseService rebaseService;
+    private final RebaseService rebaseService;
 
-	public App(RebaseService rebaseService) {
-		this.rebaseService = rebaseService;
-	}
+    public App(RebaseService rebaseService) {
+        this.rebaseService = rebaseService;
+    }
 
-	public static void main(String[] args) {
-		SpringApplication app = new SpringApplication(App.class);
-		app.setWebApplicationType(WebApplicationType.NONE);
-		app.setBannerMode(Banner.Mode.OFF);
-		app.run(args);
-	}
+    public static void main(String[] args) {
+        SpringApplication app = new SpringApplication(App.class);
+        app.setWebApplicationType(WebApplicationType.NONE);
+        app.setBannerMode(Banner.Mode.OFF);
+        app.run(args);
+    }
 
-	@Override
-	public void run(String... args)
-		throws Exception
-	{
-		new CmdLineAppBuilder(args)
-			.withJarName("rebase")
-			.withDescription("Import list of price lists")
-			.withArg("source", "directory with price list files (name format:  price-list--YYYY-MM-DD.xls)")
-			.withFlag("without-cleanup", "disable data cleanup before rebase")
-			.withEntryPoint(
-				cmdLine -> {
-					rebaseService.rebase(
-						cmdLine.getOptionValue("source"),
-						!cmdLine.hasOption("without-cleanup")
-					);
-				}
-			).build().run();
-	}
+    @Override
+    public void run(String... args)
+        throws Exception {
+        new CmdLineAppBuilder(args)
+            .withJarName("rebase")
+            .withDescription("Import list of price lists")
+            .withArg("source", "directory with price list files (name format:  price-list--YYYY-MM-DD.xls)")
+            .withFlag("without-cleanup", "disable data cleanup before rebase")
+            .withEntryPoint(
+                cmdLine -> {
+                    rebaseService.rebase(
+                        cmdLine.getOptionValue("source"),
+                        !cmdLine.hasOption("without-cleanup")
+                    );
+                }
+            ).build().run();
+    }
 }

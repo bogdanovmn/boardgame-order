@@ -10,26 +10,24 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class ProjectUserDetailsService implements UserDetailsService {
-	private final UserRepository userRepository;
+    private final UserRepository userRepository;
 
-	@Autowired
-	public ProjectUserDetailsService(UserRepository userRepository) {
-		this.userRepository = userRepository;
-	}
+    @Autowired
+    public ProjectUserDetailsService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
-	@Override
-//	@Transactional(readOnly = true)
-	public UserDetails loadUserByUsername(String name)
-		throws UsernameNotFoundException
-	{
-		User user = userRepository.findFirstByName(name);
+    @Override
+    public UserDetails loadUserByUsername(String name)
+        throws UsernameNotFoundException {
+        User user = userRepository.findFirstByName(name);
 
-		if (user == null) {
-			throw new UsernameNotFoundException(
-				String.format("User '%s' not found", name)
-			);
-		}
+        if (user == null) {
+            throw new UsernameNotFoundException(
+                String.format("User '%s' not found", name)
+            );
+        }
 
-		return new ProjectUserDetails(user);
-	}
+        return new ProjectUserDetails(user);
+    }
 }

@@ -5,9 +5,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface AutoImportRepository extends JpaRepository<AutoImport, Integer> {
-	AutoImport findTopByStatusOrderByIdDesc(AutoImportStatus status);
+    AutoImport findTopByStatusOrderByIdDesc(AutoImportStatus status);
 
-	AutoImport findTopByOrderByIdDesc();
+    AutoImport findTopByOrderByIdDesc();
 
-	List<AutoImport> findAllByStatusIsNotOrderByIdDesc(AutoImportStatus status);
+    List<AutoImport> findAllByStatusIsNotOrderByIdDesc(AutoImportStatus status);
 }

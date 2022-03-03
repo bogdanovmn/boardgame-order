@@ -1,29 +1,28 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.profiler;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 @Configuration
+@RequiredArgsConstructor
 public class RequestProfilerConfig extends WebMvcConfigurerAdapter {
+    private final RequestStatisticsInterceptor requestStatisticsInterceptor;
 
-	@Autowired
-	RequestStatisticsInterceptor requestStatisticsInterceptor;
+    @Bean
+    public RequestStatisticsInterceptor requestStatisticsInterceptor() {
+        return new RequestStatisticsInterceptor();
+    }
 
-	@Bean
-	public RequestStatisticsInterceptor requestStatisticsInterceptor() {
-		return new RequestStatisticsInterceptor();
-	}
-
-	@Override
-	public void addInterceptors(InterceptorRegistry registry) {
-		registry.addInterceptor(requestStatisticsInterceptor)
-			.addPathPatterns("/**")
-			.excludePathPatterns("/webjars/**")
-			.excludePathPatterns("/js/**")
-			.excludePathPatterns("/img/**")
-			.excludePathPatterns("/css/**");
-	}
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(requestStatisticsInterceptor)
+            .addPathPatterns("/**")
+            .excludePathPatterns("/webjars/**")
+            .excludePathPatterns("/js/**")
+            .excludePathPatterns("/img/**")
+            .excludePathPatterns("/css/**");
+    }
 }

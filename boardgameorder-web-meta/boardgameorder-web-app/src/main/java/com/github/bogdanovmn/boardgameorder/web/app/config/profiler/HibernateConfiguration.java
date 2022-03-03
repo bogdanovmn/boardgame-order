@@ -8,18 +8,18 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class HibernateConfiguration {
 
-	@Bean
-	HibernateStatisticsInterceptor hibernateStatisticsInterceptor() {
-		return new HibernateStatisticsInterceptor();
-	}
+    @Bean
+    HibernateStatisticsInterceptor hibernateStatisticsInterceptor() {
+        return new HibernateStatisticsInterceptor();
+    }
 
-	@Bean
-	@Autowired
-	public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(HibernateStatisticsInterceptor interceptor) {
-		return hibernateProperties ->
-			hibernateProperties.put(
-				"hibernate.session_factory.interceptor",
-				interceptor
-			);
-	}
+    @Bean
+    @Autowired
+    public HibernatePropertiesCustomizer hibernatePropertiesCustomizer(HibernateStatisticsInterceptor interceptor) {
+        return hibernateProperties ->
+            hibernateProperties.put(
+                "hibernate.session_factory.interceptor",
+                interceptor
+            );
+    }
 }

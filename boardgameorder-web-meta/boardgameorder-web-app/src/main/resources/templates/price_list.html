@@ -1,48 +1,50 @@
 {{#layout}}
 
 {{#actualPriceList.publisherPrices.0}}
-	<div id="order">
-		<div class="title">Корзина</div>
-		<div class="details"></div>
-		<div class="menu">
-			<a href="{{layout.contextPath}}/user/order/items">Подробнее...</a>
-		</div>
+<div id="order">
+	<div class="title">Корзина</div>
+	<div class="details"></div>
+	<div class="menu">
+		<a href="{{layout.contextPath}}/user/order/items">Подробнее...</a>
 	</div>
+</div>
 
-	<div id="price-list">
-		<h1>Все цены на {{actualPriceList.publisherPrices.0.prices.0.price.source.fileModifyDateFormatted}}</h1>
-		{{#actualPriceList.publisherPrices}}
-			<div class="publisher-block">
-				<h2>{{publisher.normalizedName}} <i>({{prices.size}})</i></h2>
-				<table class="price-and-item">
-				{{#prices}}
-					<tr id="item-{{price.item.id}}" class="{{#ordered}}ordered{{/ordered}}" data-fix-price="{{price.item.isLikeFixPriceTitle}}">
-						<td class="count">{{price.count}}<i>шт</i></td>
-						<td class="price">{{price.roundedPrice}}<i>р</i></td>
-						<td class="action">
-							<div
-								class="button button-add-item"
-								data-href="/user/order/items/{{price.item.id}}"
-								data-type="add"
-								data-id="{{price.item.id}}">+</div>
-						</td>
-						<td class="title" >
-							<span>{{{price.item.htmlTitle}}}</span>
-							{{#price.item.url}}
-								<a target="_blank" href="{{price.item.url}}">фото</a>
-							{{/price.item.url}}
-							<a class=google target="_blank" href="{{googleSearchUrl}}">погуглить</a>
-						</td>
-					</tr>
-				{{/prices}}
-				</table>
-			</div>
-		{{/actualPriceList.publisherPrices}}
+<div id="price-list">
+	<h1>Все цены на {{actualPriceList.publisherPrices.0.prices.0.price.source.fileModifyDateFormatted}}</h1>
+	{{#actualPriceList.publisherPrices}}
+	<div class="publisher-block">
+		<h2>{{publisher.normalizedName}} <i>({{prices.size}})</i></h2>
+		<table class="price-and-item">
+			{{#prices}}
+			<tr id="item-{{price.item.id}}" class="{{#ordered}}ordered{{/ordered}}"
+				data-fix-price="{{price.item.isLikeFixPriceTitle}}">
+				<td class="count">{{price.count}}<i>шт</i></td>
+				<td class="price">{{price.roundedPrice}}<i>р</i></td>
+				<td class="action">
+					<div
+						class="button button-add-item"
+						data-href="/user/order/items/{{price.item.id}}"
+						data-type="add"
+						data-id="{{price.item.id}}">+
+					</div>
+				</td>
+				<td class="title">
+					<span>{{{price.item.htmlTitle}}}</span>
+					{{#price.item.url}}
+					<a target="_blank" href="{{price.item.url}}">фото</a>
+					{{/price.item.url}}
+					<a class=google target="_blank" href="{{googleSearchUrl}}">погуглить</a>
+				</td>
+			</tr>
+			{{/prices}}
+		</table>
 	</div>
+	{{/actualPriceList.publisherPrices}}
+</div>
 {{/actualPriceList.publisherPrices.0}}
 
 {{^actualPriceList.publisherPrices.0}}
-	<h1>Пусто</h1>
+<h1>Пусто</h1>
 {{/actualPriceList.publisherPrices.0}}
 
 <script>
@@ -55,7 +57,7 @@
 	order.render();
 
 	$('div.button').click(
-		function() {
+		function () {
 			const button = $(this);
 			const actionUrl = "{{layout.contextPath}}" + button.attr("data-href");
 			const itemId = button.attr("data-id");
@@ -75,11 +77,12 @@
 			}
 		}
 	);
+
 	function addItem(itemId, url, method) {
 		console.log("[action] " + method + " " + url);
 
-		$.ajax({ url: url, method: method})
-			.done(function(resp) {
+		$.ajax({url: url, method: method})
+			.done(function (resp) {
 				console.log('[OK] ' + url);
 				order.addItem(itemId);
 				order.render();
@@ -87,7 +90,7 @@
 			.fail(function (jqXHR, excpetion) {
 				console.log("[ERROR] " + url + "\n" + excpetion)
 			})
-			.always(function() {
+			.always(function () {
 				$("#item-" + itemId).toggleClass("in-action");
 				blockInAction[itemId] = false;
 			})

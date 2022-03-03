@@ -10,27 +10,27 @@ import java.util.LinkedList;
 import java.util.List;
 
 class PriceListArchive {
-	private final String sourceDir;
+    private final String sourceDir;
 
-	PriceListArchive(String sourceDir) {
-		this.sourceDir = sourceDir;
-	}
+    PriceListArchive(String sourceDir) {
+        this.sourceDir = sourceDir;
+    }
 
-	List<PriceListFileOnDisk> files() throws IOException, InvalidFileNameException {
-		List<PriceListFileOnDisk> result = new LinkedList<>();
-		File[] files = new File(this.sourceDir).listFiles();
-		if (files == null) {
-			throw new IOException("Directory not found: " + sourceDir);
-		}
+    List<PriceListFileOnDisk> files() throws IOException, InvalidFileNameException {
+        List<PriceListFileOnDisk> result = new LinkedList<>();
+        File[] files = new File(this.sourceDir).listFiles();
+        if (files == null) {
+            throw new IOException("Directory not found: " + sourceDir);
+        }
 
-		for (File file : files) {
-			result.add(
-				PriceListFileOnDisk.of(file)
-			);
-		}
+        for (File file : files) {
+            result.add(
+                PriceListFileOnDisk.of(file)
+            );
+        }
 
-		result.sort(Comparator.comparing(PriceListFileOnDisk::date));
+        result.sort(Comparator.comparing(PriceListFileOnDisk::date));
 
-		return result;
-	}
+        return result;
+    }
 }

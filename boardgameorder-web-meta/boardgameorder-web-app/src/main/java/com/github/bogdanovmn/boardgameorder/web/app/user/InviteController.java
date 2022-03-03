@@ -2,6 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.user;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractVisualController;
 import com.github.bogdanovmn.boardgameorder.web.app.HeadMenu;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -10,30 +11,27 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 @RequestMapping("/invites")
+@RequiredArgsConstructor
 class InviteController extends AbstractVisualController {
-	private final InviteService inviteService;
+    private final InviteService inviteService;
 
-	InviteController(InviteService inviteService) {
-		this.inviteService = inviteService;
-	}
+    @GetMapping
+    ModelAndView allActive() {
+        return new ModelAndView(
+            "invites_active_list",
+            "invites",
+            inviteService.userInvites(getUser())
+        );
+    }
 
-	@GetMapping
-	ModelAndView allActive() {
-		return new ModelAndView(
-			"invites_active_list",
-			"invites",
-			inviteService.userInvites(getUser())
-		);
-	}
+    @PostMapping
+    String create() {
+        inviteService.create(getUser());
+        return "redirect:/invites";
+    }
 
-	@PostMapping
-	String create() {
-		inviteService.create(getUser());
-		return "redirect:/invites";
-	}
-
-	@Override
-	protected HeadMenu.ITEM currentMenuItem() {
-		return HeadMenu.ITEM.INVITE;
-	}
+    @Override
+    protected HeadMenu.ITEM currentMenuItem() {
+        return HeadMenu.ITEM.INVITE;
+    }
 }

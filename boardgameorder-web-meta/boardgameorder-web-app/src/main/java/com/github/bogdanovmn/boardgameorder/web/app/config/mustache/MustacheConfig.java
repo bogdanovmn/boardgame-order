@@ -13,31 +13,31 @@ import java.util.Date;
 
 @Component
 public class MustacheConfig {
-	private final static String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
-	@Bean
-	public Mustache.Compiler mustacheCompiler(
-		Mustache.TemplateLoader mustacheTemplateLoader,
-		Environment environment
-	) {
+    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
 
-		MustacheEnvironmentCollector collector = new MustacheEnvironmentCollector();
-		collector.setEnvironment(environment);
+    @Bean
+    public Mustache.Compiler mustacheCompiler(
+        Mustache.TemplateLoader mustacheTemplateLoader,
+        Environment environment
+    ) {
 
-		return Mustache.compiler()
-			.withFormatter(obj -> {
-				if (obj instanceof Date) {
-					return new SimpleDateFormat(DATE_TIME_FORMAT).format(obj);
-				}
-				if (obj instanceof LocalDateTime) {
-					return DateTimeFormatter.ofPattern(DATE_TIME_FORMAT).format((LocalDateTime)obj);
-				}
-				else {
-					return obj.toString();
-				}
-			})
-			.defaultValue("")
-			.withLoader(mustacheTemplateLoader)
-			.withCollector(collector);
+        MustacheEnvironmentCollector collector = new MustacheEnvironmentCollector();
+        collector.setEnvironment(environment);
 
-	}
+        return Mustache.compiler()
+            .withFormatter(obj -> {
+                if (obj instanceof Date) {
+                    return new SimpleDateFormat(DATE_TIME_FORMAT).format(obj);
+                }
+                if (obj instanceof LocalDateTime) {
+                    return DateTimeFormatter.ofPattern(DATE_TIME_FORMAT).format((LocalDateTime) obj);
+                } else {
+                    return obj.toString();
+                }
+            })
+            .defaultValue("")
+            .withLoader(mustacheTemplateLoader)
+            .withCollector(collector);
+
+    }
 }

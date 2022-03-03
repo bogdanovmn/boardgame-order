@@ -20,58 +20,55 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/registration")
 class RegistrationController extends AbstractMinVisualController {
-	private final RegistrationService registrationService;
+    private final RegistrationService registrationService;
 
-	@Autowired
-	public RegistrationController(RegistrationService registrationService) {
-		this.registrationService = registrationService;
-	}
+    @Autowired
+    RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
+    }
 
-	@GetMapping("/{inviteCode}")
-	ModelAndView registration(Model model, @PathVariable String inviteCode) {
-		try {
-			Invite invite = registrationService.validInvite(inviteCode);
-			model.addAttribute("invite", invite);
-		}
-		catch (RegistrationInviteException e) {
-			model.addAttribute("inviteError", true);
-			model.addAttribute("customError", e.getMsg());
-		}
+    @GetMapping("/{inviteCode}")
+    ModelAndView registration(Model model, @PathVariable String inviteCode) {
+        try {
+            Invite invite = registrationService.validInvite(inviteCode);
+            model.addAttribute("invite", invite);
+        } catch (RegistrationInviteException e) {
+            model.addAttribute("inviteError", true);
+            model.addAttribute("customError", e.getMsg());
+        }
 
-		return new ModelAndView("registration", model.asMap());
-	}
+        return new ModelAndView("registration", model.asMap());
+    }
 
-	@PostMapping
-	ModelAndView registration(
-		@Valid UserRegistrationForm userForm,
-		BindingResult bindingResult,
-		Model model
-	) {
-		FormErrors formErrors = new FormErrors(bindingResult);
-		Invite invite = null;
-		try {
-			invite = registrationService.validInvite(
-				userForm.getInviteCode()
-			);
-			if (!formErrors.isNotEmpty()) {
-				registrationService.registration(userForm, invite);
-			}
-		}
-		catch (RegistrationException e) {
-			if (e.isCustomError()) {
-				formErrors.addCustom(e.getMsg());
-			}
-			else {
-				formErrors.add(e.getField(), e.getMsg());
-			}
-		}
+    @PostMapping
+    ModelAndView registration(
+        @Valid UserRegistrationForm userForm,
+        BindingResult bindingResult,
+        Model model
+    ) {
+        FormErrors formErrors = new FormErrors(bindingResult);
+        Invite invite = null;
+        try {
+            invite = registrationService.validInvite(
+                userForm.getInviteCode()
+            );
+            if (!formErrors.isNotEmpty()) {
+                registrationService.registration(userForm, invite);
+            }
+        } catch (RegistrationException e) {
+            if (e.isCustomError()) {
+                formErrors.addCustom(e.getMsg());
+            } else {
+                formErrors.add(e.getField(), e.getMsg());
+            }
+        }
 
-		if (formErrors.isNotEmpty()) {
-			model.addAllAttributes(formErrors.getModel());
-			model.addAttribute("invite", invite);
-			return new ModelAndView("registration", model.asMap());
-		}
+        if (formErrors.isNotEmpty()) {
+            model.addAllAttributes(formErrors.getModel());
+            model.addAttribute("invite", invite);
+            return new ModelAndView("registration", model.asMap());
+        }
 
-		return new ModelAndView("redirect:" + HeadMenu.DEFAULT_PAGE);
-	}
+        return new ModelAndView("redirect:" + HeadMenu.DEFAULT_PAGE);
+    }
 }

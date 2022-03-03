@@ -6,6 +6,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface ItemPriceRepository extends JpaRepository<ItemPrice, Integer> {
-	@EntityGraph(attributePaths = {"item", "item.publisher"})
-	List<ItemPrice> findBySourceId(Integer sourceId);
+    @EntityGraph(attributePaths = {"item", "item.publisher"})
+    List<ItemPrice> findBySourceId(Integer sourceId);
 }

@@ -1,34 +1,29 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.profiler;
 
 import org.hibernate.EmptyInterceptor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class HibernateStatisticsInterceptor extends EmptyInterceptor {
+    private final ThreadLocal<Long> queryCount = new ThreadLocal<>();
 
-	private static final Logger log = LoggerFactory.getLogger(HibernateStatisticsInterceptor.class);
+    public void startCounter() {
+        queryCount.set(0L);
+    }
 
-	private ThreadLocal<Long> queryCount = new ThreadLocal<>();
+    public Long getQueryCount() {
+        return queryCount.get();
+    }
 
-	public void startCounter() {
-		queryCount.set(0l);
-	}
+    public void clearCounter() {
+        queryCount.remove();
+    }
 
-	public Long getQueryCount() {
-		return queryCount.get();
-	}
-
-	public void clearCounter() {
-		queryCount.remove();
-	}
-
-	@Override
-	public String onPrepareStatement(String sql) {
-		Long count = queryCount.get();
-		if (count != null) {
-			queryCount.set(count + 1);
-		}
-		//log.info(sql);
-		return super.onPrepareStatement(sql);
-	}
+    @Override
+    public String onPrepareStatement(String sql) {
+        Long count = queryCount.get();
+        if (count != null) {
+            queryCount.set(count + 1);
+        }
+        //log.info(sql);
+        return super.onPrepareStatement(sql);
+    }
 }

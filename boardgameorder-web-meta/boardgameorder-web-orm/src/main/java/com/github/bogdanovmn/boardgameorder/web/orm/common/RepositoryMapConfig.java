@@ -13,16 +13,16 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "com.github.bogdanovmn.common.spring")
 class RepositoryMapConfig {
-	@Autowired
-	private UserRoleRepository userRoleRepository;
-	@Autowired
-	private PublisherRepository publisherRepository;
+    @Autowired
+    private UserRoleRepository userRoleRepository;
+    @Autowired
+    private PublisherRepository publisherRepository;
 
-	@Bean
-	EntityRepositoryMapFactory entityRepositoryMapFactory() {
-		return new EntityRepositoryMapFactory.Builder()
-			.map(UserRole.class,  userRoleRepository)
-			.map(Publisher.class, publisherRepository)
-			.build();
-	}
+    @Bean
+    EntityRepositoryMapFactory entityRepositoryMapFactory() {
+        return new EntityRepositoryMapFactory.Builder()
+            .map(UserRole.class, userRoleRepository)
+            .map(Publisher.class, publisherRepository)
+            .build();
+    }
 }

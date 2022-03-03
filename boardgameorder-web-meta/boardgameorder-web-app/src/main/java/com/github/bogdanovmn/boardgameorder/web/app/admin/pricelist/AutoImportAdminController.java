@@ -9,23 +9,23 @@ import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 class AutoImportAdminController extends AbstractVisualAdminController {
-	private final AutoImportService autoImportService;
+    private final AutoImportService autoImportService;
 
-	AutoImportAdminController(final AutoImportService autoImportService) {
-		this.autoImportService = autoImportService;
-	}
+    AutoImportAdminController(final AutoImportService autoImportService) {
+        this.autoImportService = autoImportService;
+    }
 
-	@Override
-	protected AdminMenu.ITEM currentAdminMenuItem() {
-		return AdminMenu.ITEM.AUTO_IMPORT;
-	}
+    @Override
+    protected AdminMenu.ITEM currentAdminMenuItem() {
+        return AdminMenu.ITEM.AUTO_IMPORT;
+    }
 
-	@GetMapping("/auto-imports")
-	ModelAndView autoImports() {
-		return new ModelAndView(
-			"auto_import_list",
-			"autoImport",
-			autoImportService.getAutoImportListView()
-		);
-	}
+    @GetMapping("/auto-imports")
+    ModelAndView autoImports() {
+        return new ModelAndView(
+            "auto_import_list",
+            "autoImport",
+            autoImportService.getAutoImportListView()
+        );
+    }
 }

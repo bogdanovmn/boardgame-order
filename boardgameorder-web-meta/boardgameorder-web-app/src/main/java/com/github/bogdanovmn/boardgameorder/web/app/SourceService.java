@@ -10,29 +10,29 @@ import java.util.List;
 
 @Service
 public class SourceService {
-	private final SourceRepository sourceRepository;
-	private final ItemPriceRepository itemPriceRepository;
+    private final SourceRepository sourceRepository;
+    private final ItemPriceRepository itemPriceRepository;
 
-	public SourceService(final SourceRepository sourceRepository, final ItemPriceRepository itemPriceRepository) {
-		this.sourceRepository = sourceRepository;
-		this.itemPriceRepository = itemPriceRepository;
-	}
+    public SourceService(final SourceRepository sourceRepository, final ItemPriceRepository itemPriceRepository) {
+        this.sourceRepository = sourceRepository;
+        this.itemPriceRepository = itemPriceRepository;
+    }
 
-	private Source actualSource() {
-		return sourceRepository.findTopByOrderByFileModifyDateDesc();
-	}
+    private Source actualSource() {
+        return sourceRepository.findTopByOrderByFileModifyDateDesc();
+    }
 
-	public List<ItemPrice> actualPrices() {
-		return itemPriceRepository.findBySourceId(
-			actualSource().getId()
-		);
-	}
+    public List<ItemPrice> actualPrices() {
+        return itemPriceRepository.findBySourceId(
+            actualSource().getId()
+        );
+    }
 
-	public List<ItemPrice> prices(Integer sourceId) {
-		return itemPriceRepository.findBySourceId(sourceId);
-	}
+    public List<ItemPrice> prices(Integer sourceId) {
+        return itemPriceRepository.findBySourceId(sourceId);
+    }
 
-	public List<Source> allSources() {
-		return sourceRepository.findAllByOrderByFileModifyDateDesc();
-	}
+    public List<Source> allSources() {
+        return sourceRepository.findAllByOrderByFileModifyDateDesc();
+    }
 }

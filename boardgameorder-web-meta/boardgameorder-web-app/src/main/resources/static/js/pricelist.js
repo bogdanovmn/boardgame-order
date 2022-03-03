@@ -49,8 +49,7 @@ class OrderBlock {
 	render() {
 		if (this.itemsCount === 0) {
 			$("#order").hide();
-		}
-		else {
+		} else {
 			$("#order").show();
 			$("#order div.details").html(`
 				<p>Выбрано:<b>${this.itemsCount}</b>

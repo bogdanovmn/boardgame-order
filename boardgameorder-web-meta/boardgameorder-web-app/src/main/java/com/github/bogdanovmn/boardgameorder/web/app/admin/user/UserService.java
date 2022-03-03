@@ -11,34 +11,34 @@ import java.util.stream.Collectors;
 
 @Service
 class UserService {
-	private final UserRepository userRepository;
-	private final EntityFactory entityFactory;
+    private final UserRepository userRepository;
+    private final EntityFactory entityFactory;
 
-	UserService(UserRepository userRepository, EntityFactory entityFactory) {
-		this.userRepository = userRepository;
-		this.entityFactory = entityFactory;
-	}
+    UserService(UserRepository userRepository, EntityFactory entityFactory) {
+        this.userRepository = userRepository;
+        this.entityFactory = entityFactory;
+    }
 
-	List<UserSummary> usersSummary() {
-		return userRepository.findAll().stream()
-			.map(UserSummary::new)
-			.collect(Collectors.toList());
-	}
+    List<UserSummary> usersSummary() {
+        return userRepository.findAll().stream()
+            .map(UserSummary::new)
+            .collect(Collectors.toList());
+    }
 
-	void toggleRole(Integer userId, UserRole.Type roleType) {
-		userRepository.findById(userId).ifPresent(
-			user -> {
-				Set<UserRole> roles = user.getRoles();
-				UserRole toggleRole = entityFactory.getPersistBaseEntityWithUniqueName(
-					new UserRole(roleType.name())
-				);
+    void toggleRole(Integer userId, UserRole.Type roleType) {
+        userRepository.findById(userId).ifPresent(
+            user -> {
+                Set<UserRole> roles = user.getRoles();
+                UserRole toggleRole = entityFactory.getPersistBaseEntityWithUniqueName(
+                    new UserRole(roleType.name())
+                );
 
-				if (!roles.remove(toggleRole)) {
-					roles.add(toggleRole);
-				}
+                if (!roles.remove(toggleRole)) {
+                    roles.add(toggleRole);
+                }
 
-				userRepository.save(user);
-			}
-		);
-	}
+                userRepository.save(user);
+            }
+        );
+    }
 }

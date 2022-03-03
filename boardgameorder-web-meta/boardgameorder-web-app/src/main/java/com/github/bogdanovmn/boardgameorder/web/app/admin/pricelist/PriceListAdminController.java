@@ -23,60 +23,57 @@ import java.util.HashMap;
 
 @Controller
 class PriceListAdminController extends AbstractVisualAdminController {
-	private final PriceListImportService priceListImportService;
-	private final PriceListChangesService priceListChangesService;
+    private final PriceListImportService priceListImportService;
+    private final PriceListChangesService priceListChangesService;
 
-	@Autowired
-	PriceListAdminController(PriceListImportService priceListImportService, PriceListChangesService priceListChangesService) {
-		this.priceListImportService = priceListImportService;
-		this.priceListChangesService = priceListChangesService;
-	}
+    @Autowired
+    PriceListAdminController(PriceListImportService priceListImportService, PriceListChangesService priceListChangesService) {
+        this.priceListImportService = priceListImportService;
+        this.priceListChangesService = priceListChangesService;
+    }
 
-	@Override
-	protected AdminMenu.ITEM currentAdminMenuItem() {
-		return AdminMenu.ITEM.UPLOAD_PRICE_LIST;
-	}
+    @Override
+    protected AdminMenu.ITEM currentAdminMenuItem() {
+        return AdminMenu.ITEM.UPLOAD_PRICE_LIST;
+    }
 
-	@PostMapping("/price-list")
-	String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
-		try {
-			Source source = priceListImportService.importFile(
-				ByteStreams.toByteArray(file.getInputStream()),
-				ImportType.MANUAL
-			);
-			priceListChangesService.updateAllChanges();
-			redirectAttributes.addFlashAttribute("msg", "OK!");
-			redirectAttributes.addFlashAttribute("source", source);
-		}
-		catch (IOException e) {
-			e.printStackTrace();
-			redirectAttributes.addFlashAttribute(
-				"customError",
-				String.format("Что-то пошло не так при загрузке файла (%s)", e.getMessage())
-			);
-		}
-		catch (UploadDuplicateException e) {
-			redirectAttributes.addFlashAttribute("customError", e.getMessage());
-		}
+    @PostMapping("/price-list")
+    String upload(@RequestParam("file") MultipartFile file, RedirectAttributes redirectAttributes) {
+        try {
+            Source source = priceListImportService.importFile(
+                ByteStreams.toByteArray(file.getInputStream()),
+                ImportType.MANUAL
+            );
+            priceListChangesService.updateAllChanges();
+            redirectAttributes.addFlashAttribute("msg", "OK!");
+            redirectAttributes.addFlashAttribute("source", source);
+        } catch (IOException e) {
+            e.printStackTrace();
+            redirectAttributes.addFlashAttribute(
+                "customError",
+                String.format("Что-то пошло не так при загрузке файла (%s)", e.getMessage())
+            );
+        } catch (UploadDuplicateException e) {
+            redirectAttributes.addFlashAttribute("customError", e.getMessage());
+        }
 
-		return "redirect:/admin/price-list";
-	}
+        return "redirect:/admin/price-list";
+    }
 
-	@GetMapping("/price-list")
-	ModelAndView form(
-		@RequestHeader(name = "referer", required = false) String referer)
-	{
-		return new ModelAndView(
-			"upload_price_list",
-			new HashMap<String, Object>() {{
-				put("referer" , referer);
-			}}
-		);
-	}
+    @GetMapping("/price-list")
+    ModelAndView form(
+        @RequestHeader(name = "referer", required = false) String referer) {
+        return new ModelAndView(
+            "upload_price_list",
+            new HashMap<String, Object>() {{
+                put("referer", referer);
+            }}
+        );
+    }
 
-	@GetMapping("/price-list-changes-update")
-	String changesUpdate() {
-		priceListChangesService.updateAllChanges();
-		return "redirect:/price-list/changes/last";
-	}
+    @GetMapping("/price-list-changes-update")
+    String changesUpdate() {
+        priceListChangesService.updateAllChanges();
+        return "redirect:/price-list/changes/last";
+    }
 }

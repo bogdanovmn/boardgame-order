@@ -6,16 +6,16 @@ import org.springframework.stereotype.Service;
 
 @Service
 class AutoImportService {
-	private final AutoImportRepository autoImportRepository;
+    private final AutoImportRepository autoImportRepository;
 
-	AutoImportService(final AutoImportRepository autoImportRepository) {
-		this.autoImportRepository = autoImportRepository;
-	}
+    AutoImportService(final AutoImportRepository autoImportRepository) {
+        this.autoImportRepository = autoImportRepository;
+    }
 
-	AutoImportListView getAutoImportListView() {
-		return new AutoImportListView(
-			autoImportRepository.findTopByOrderByIdDesc(),
-			autoImportRepository.findAllByStatusIsNotOrderByIdDesc(AutoImportStatus.NO_CHANGES)
-		);
-	}
+    AutoImportListView getAutoImportListView() {
+        return new AutoImportListView(
+            autoImportRepository.findTopByOrderByIdDesc(),
+            autoImportRepository.findAllByStatusIsNotOrderByIdDesc(AutoImportStatus.NO_CHANGES)
+        );
+    }
 }

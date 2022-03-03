@@ -12,26 +12,26 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/price-lists")
 class PlController extends AbstractVisualController {
-	private final PlService priceListService;
+    private final PlService priceListService;
 
-	PlController(PlService priceListService) {
-		this.priceListService = priceListService;
-	}
+    PlController(PlService priceListService) {
+        this.priceListService = priceListService;
+    }
 
-	@GetMapping("/last")
-	ModelAndView allPrices() {
-		return new ModelAndView("price_list", "actualPriceList", priceListService.actualPriceListView(getUser()));
-	}
+    @GetMapping("/last")
+    ModelAndView allPrices() {
+        return new ModelAndView("price_list", "actualPriceList", priceListService.actualPriceListView(getUser()));
+    }
 
-	@GetMapping("/{id}")
-	ModelAndView allPrices(@PathVariable Integer id) {
-		return new ViewTemplate("price_list")
-			.with("actualPriceList", priceListService.priceListView(id))
-			.modelAndView();
-	}
+    @GetMapping("/{id}")
+    ModelAndView allPrices(@PathVariable Integer id) {
+        return new ViewTemplate("price_list")
+            .with("actualPriceList", priceListService.priceListView(id))
+            .modelAndView();
+    }
 
-	@Override
-	protected HeadMenu.ITEM currentMenuItem() {
-		return HeadMenu.ITEM.PRICE_LIST;
-	}
+    @Override
+    protected HeadMenu.ITEM currentMenuItem() {
+        return HeadMenu.ITEM.PRICE_LIST;
+    }
 }

@@ -10,23 +10,23 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 @RequestMapping("/price-lists")
 class PlHistoryController extends AbstractVisualController {
-	private final PlService priceListService;
+    private final PlService priceListService;
 
-	@Override
-	protected HeadMenu.ITEM currentMenuItem() {
-		return HeadMenu.ITEM.PRICE_LIST_HISTORY;
-	}
+    @Override
+    protected HeadMenu.ITEM currentMenuItem() {
+        return HeadMenu.ITEM.PRICE_LIST_HISTORY;
+    }
 
-	PlHistoryController(PlService priceListService) {
-		this.priceListService = priceListService;
-	}
+    PlHistoryController(PlService priceListService) {
+        this.priceListService = priceListService;
+    }
 
-	@GetMapping
-	ModelAndView list() {
-		return new ModelAndView(
-			"price_lists_history",
-			"history",
-			priceListService.history()
-		);
-	}
+    @GetMapping
+    ModelAndView list() {
+        return new ModelAndView(
+            "price_lists_history",
+            "history",
+            priceListService.history()
+        );
+    }
 }

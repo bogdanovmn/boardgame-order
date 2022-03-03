@@ -4,29 +4,30 @@
 
 {{#invites.active.0}}
 
-	<table class="invites">
-		<tr>
-			<th>Код</th>
-			<th>Годен до</th>
-			<th>Ссылка на регистрацию по инвайту</th>
-		</tr>
-		{{#invites.active}}
-			<tr>
-				<td>{{code}}</td>
-				<td>{{expireDate}}</td>
-				<td>
-					<button class="button button-copy-invite" onclick="copyText('http://bmn85.ru/bgorder/registration/{{code}}');">
-						Копировать в буффер обмена
-					</button>
-				</td>
-			</tr>
-		{{/invites.active}}
-	</table>
+<table class="invites">
+	<tr>
+		<th>Код</th>
+		<th>Годен до</th>
+		<th>Ссылка на регистрацию по инвайту</th>
+	</tr>
+	{{#invites.active}}
+	<tr>
+		<td>{{code}}</td>
+		<td>{{expireDate}}</td>
+		<td>
+			<button class="button button-copy-invite"
+					onclick="copyText('http://bmn85.ru/bgorder/registration/{{code}}');">
+				Копировать в буффер обмена
+			</button>
+		</td>
+	</tr>
+	{{/invites.active}}
+</table>
 
 {{/invites.active.0}}
 
 {{^invites.active.0}}
-	<h2>Пусто</h2>
+<h2>Пусто</h2>
 {{/invites.active.0}}
 
 <form method="post" class="create-invite">

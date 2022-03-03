@@ -1,64 +1,64 @@
 {{#layout}}
 
 {{#priceChanges}}
-	<h1>Изменения в прайсе от {{source.fileModifyDateFormatted}}</h1>
-	<div class="sub-menu">
-		{{#filter.menu}}
-			<span class="{{selected}}">
+<h1>Изменения в прайсе от {{source.fileModifyDateFormatted}}</h1>
+<div class="sub-menu">
+	{{#filter.menu}}
+	<span class="{{selected}}">
 				<a href='{{layout.contextPath}}{{filter.resourcePath}}?{{filterParams}}'>{{title}}</a>
 			</span>
-		{{/filter.menu}}
-	</div>
-	{{#items}}
-		<div class="publisher-block">
-			<h2>{{publisher.normalizedName}} <i>({{changes.size}})</i></h2>
-			<table class="price-and-item">
-				{{#changes}}
-				<tr class="{{type}}">
-					{{#priceCurrent}}
-						<td class="change">
-						{{#countChange}}
-							<span class="change">
+	{{/filter.menu}}
+</div>
+{{#items}}
+<div class="publisher-block">
+	<h2>{{publisher.normalizedName}} <i>({{changes.size}})</i></h2>
+	<table class="price-and-item">
+		{{#changes}}
+		<tr class="{{type}}">
+			{{#priceCurrent}}
+			<td class="change">
+				{{#countChange}}
+				<span class="change">
 								<i class="{{#countChangeSign}}plus{{/countChangeSign}}{{^countChangeSign}}minus{{/countChangeSign}}">
 									{{countChangeSign}}{{countChange}}
 								</i>
 							</span>
-						{{/countChange}}
-						</td>
-						<td class="count">
-							{{countCurrent}}<i>шт</i>
-						</td>
-						<td class="change">
-							{{#priceChange}}
-							<span class="change">
+				{{/countChange}}
+			</td>
+			<td class="count">
+				{{countCurrent}}<i>шт</i>
+			</td>
+			<td class="change">
+				{{#priceChange}}
+				<span class="change">
 								<i class="{{#priceChangeSign}}minus{{/priceChangeSign}}{{^priceChangeSign}}plus{{/priceChangeSign}}">
 									{{priceChangeSign}}{{priceChangeRounded}}
 								</i>
 							</span>
-							{{/priceChange}}
-						</td>
-						<td class="price">
-							{{priceCurrentRounded}}<i>р</i>
-						</td>
-					{{/priceCurrent}}
-					{{^priceCurrent}}
-						<td colspan="4" class="delete-note">удалено</td>
-					{{/priceCurrent}}
-					<td class="title" >
-						{{{item.htmlTitle}}}
-						{{#item.url}}
-							<a target="_blank" href="{{item.url}}">фото</a>
-						{{/item.url}}
-					</td>
-				</tr>
-				{{/changes}}
-			</table>
-		</div>
-	{{/items}}
+				{{/priceChange}}
+			</td>
+			<td class="price">
+				{{priceCurrentRounded}}<i>р</i>
+			</td>
+			{{/priceCurrent}}
+			{{^priceCurrent}}
+			<td colspan="4" class="delete-note">удалено</td>
+			{{/priceCurrent}}
+			<td class="title">
+				{{{item.htmlTitle}}}
+				{{#item.url}}
+				<a target="_blank" href="{{item.url}}">фото</a>
+				{{/item.url}}
+			</td>
+		</tr>
+		{{/changes}}
+	</table>
+</div>
+{{/items}}
 {{/priceChanges}}
 
 {{^priceChanges}}
-	<h1>Пусто</h1>
+<h1>Пусто</h1>
 {{/priceChanges}}
 
 {{/layout}}

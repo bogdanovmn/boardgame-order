@@ -2,27 +2,31 @@ package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.app.AbstractController;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/user/order/items/{id}")
 class UserOrderItemController extends AbstractController {
-	private final UserOrderService userOrderService;
+    private final UserOrderService userOrderService;
 
-	UserOrderItemController(final UserOrderService userOrderService) {
-		this.userOrderService = userOrderService;
-	}
+    UserOrderItemController(final UserOrderService userOrderService) {
+        this.userOrderService = userOrderService;
+    }
 
-	@PutMapping
-	ResponseEntity addItem(@PathVariable Integer id) {
-		userOrderService.addItem(getUser(), id);
-		return ResponseEntity.ok().build();
+    @PutMapping
+    ResponseEntity addItem(@PathVariable Integer id) {
+        userOrderService.addItem(getUser(), id);
+        return ResponseEntity.ok().build();
 
-	}
+    }
 
-	@DeleteMapping
-	ResponseEntity deleteItem(@PathVariable Integer id) {
-		userOrderService.deleteItem(getUser(), id);
-		return ResponseEntity.ok().build();
-	}
+    @DeleteMapping
+    ResponseEntity deleteItem(@PathVariable Integer id) {
+        userOrderService.deleteItem(getUser(), id);
+        return ResponseEntity.ok().build();
+    }
 }

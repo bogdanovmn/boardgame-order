@@ -15,49 +15,49 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-	private final ProjectUserDetailsService userDetailsService;
+    private final ProjectUserDetailsService userDetailsService;
 
-	@Autowired
-	public WebSecurityConfig(ProjectUserDetailsService userDetailsService) {
-		this.userDetailsService = userDetailsService;
-	}
+    @Autowired
+    public WebSecurityConfig(ProjectUserDetailsService userDetailsService) {
+        this.userDetailsService = userDetailsService;
+    }
 
-	@Bean
-	@Override
-	public AuthenticationManager authenticationManagerBean() throws Exception {
-		return super.authenticationManagerBean();
-	}
+    @Bean
+    @Override
+    public AuthenticationManager authenticationManagerBean() throws Exception {
+        return super.authenticationManagerBean();
+    }
 
-	@Autowired
-	public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-		auth
-			.userDetailsService(userDetailsService)
-			.passwordEncoder(new Md5PasswordEncoder());
-	}
+    @Autowired
+    public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        auth
+            .userDetailsService(userDetailsService)
+            .passwordEncoder(new Md5PasswordEncoder());
+    }
 
-	@Override
-	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests()
-				.antMatchers("/registration/**").anonymous()
-				.antMatchers("/webjars/**").permitAll()
-				.antMatchers("/css/**").permitAll()
-				.antMatchers("/admin/**").hasAuthority(UserRole.Type.Admin.name())
-				.antMatchers("/invites/**").hasAuthority(UserRole.Type.Invite.name())
-				.anyRequest().authenticated()
+    @Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .antMatchers("/registration/**").anonymous()
+            .antMatchers("/webjars/**").permitAll()
+            .antMatchers("/css/**").permitAll()
+            .antMatchers("/admin/**").hasAuthority(UserRole.Type.Admin.name())
+            .antMatchers("/invites/**").hasAuthority(UserRole.Type.Invite.name())
+            .anyRequest().authenticated()
 
-		.and().formLogin()
-			.loginPage("/login")
-			.defaultSuccessUrl(HeadMenu.DEFAULT_PAGE, true)
-			.permitAll()
+            .and().formLogin()
+            .loginPage("/login")
+            .defaultSuccessUrl(HeadMenu.DEFAULT_PAGE, true)
+            .permitAll()
 
-		.and().logout()
-			.logoutRequestMatcher(
-				new AntPathRequestMatcher("/logout")
-			)
-			.logoutSuccessUrl("/login")
-			.permitAll()
+            .and().logout()
+            .logoutRequestMatcher(
+                new AntPathRequestMatcher("/logout")
+            )
+            .logoutSuccessUrl("/login")
+            .permitAll()
 
-		.and().csrf()
-			.disable();
-	}
+            .and().csrf()
+            .disable();
+    }
 }

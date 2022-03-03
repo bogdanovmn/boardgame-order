@@ -1,4 +1,4 @@
-class Order{
+class Order {
 	constructor(itemsCount, total, totalWithFixPrice) {
 		this.itemsCount = itemsCount;
 		this.total = total;
@@ -22,7 +22,7 @@ class Order{
 		}
 		this.total -= item.getPrice();
 		this.itemsCount--;
-		item.render(-1, -1*item.getPrice())
+		item.render(-1, -1 * item.getPrice())
 	};
 
 	render() {
@@ -34,7 +34,7 @@ class Order{
 
 	getText() {
 		let text = "";
-		$("table.price-and-item tr").each(function(i) {
+		$("table.price-and-item tr").each(function (i) {
 			const count = parseInt($(this).find("td.count span").text());
 			if (count !== 0) {
 				text += `${i + 1}) `;

@@ -11,69 +11,72 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.util.HashMap;
 
-import static com.github.bogdanovmn.boardgameorder.web.app.pricelist.PlChangesFilterToggle.*;
+import static com.github.bogdanovmn.boardgameorder.web.app.pricelist.PlChangesFilterToggle.COUNT;
+import static com.github.bogdanovmn.boardgameorder.web.app.pricelist.PlChangesFilterToggle.DELETE;
+import static com.github.bogdanovmn.boardgameorder.web.app.pricelist.PlChangesFilterToggle.NEW;
+import static com.github.bogdanovmn.boardgameorder.web.app.pricelist.PlChangesFilterToggle.PRICE;
 
 @Controller
 @RequestMapping("/price-lists")
 class PlChangesController extends AbstractVisualController {
-	private final PlService priceListService;
+    private final PlService priceListService;
 
-	@Override
-	protected HeadMenu.ITEM currentMenuItem() {
-		return HeadMenu.ITEM.PRICE_LIST_CHANGES;
-	}
+    @Override
+    protected HeadMenu.ITEM currentMenuItem() {
+        return HeadMenu.ITEM.PRICE_LIST_CHANGES;
+    }
 
-	PlChangesController(PlService priceListService) {
-		this.priceListService = priceListService;
-	}
+    PlChangesController(PlService priceListService) {
+        this.priceListService = priceListService;
+    }
 
-	@GetMapping("/last/changes")
-	ModelAndView last(
-		@RequestParam(required = false, defaultValue = "true",  name = "new") Boolean showNew,
-		@RequestParam(required = false, defaultValue = "false", name = "count") Boolean showCountChange,
-		@RequestParam(required = false, defaultValue = "false", name = "price") Boolean showPriceChange,
-		@RequestParam(required = false, defaultValue = "false", name = "delete") Boolean showDeleted
-	) {
-		return new ModelAndView(
-			"price_list_changes_by_publisher",
-			"priceChanges",
-			priceListService.priceListLastChangesView(
-				new PlChangesFilter(
-					"/price-lists/last/changes",
-					new HashMap<PlChangesFilterToggle, Boolean>() {{
-						put(COUNT, showCountChange);
-						put(PRICE, showPriceChange);
-						put(DELETE, showDeleted);
-						put(NEW, showNew);
-					}}
-				)
-			)
-		);
-	}
+    @GetMapping("/last/changes")
+    ModelAndView last(
+        @RequestParam(required = false, defaultValue = "true", name = "new") Boolean showNew,
+        @RequestParam(required = false, defaultValue = "false", name = "count") Boolean showCountChange,
+        @RequestParam(required = false, defaultValue = "false", name = "price") Boolean showPriceChange,
+        @RequestParam(required = false, defaultValue = "false", name = "delete") Boolean showDeleted
+    ) {
+        return new ModelAndView(
+            "price_list_changes_by_publisher",
+            "priceChanges",
+            priceListService.priceListLastChangesView(
+                new PlChangesFilter(
+                    "/price-lists/last/changes",
+                    new HashMap<PlChangesFilterToggle, Boolean>() {{
+                        put(COUNT, showCountChange);
+                        put(PRICE, showPriceChange);
+                        put(DELETE, showDeleted);
+                        put(NEW, showNew);
+                    }}
+                )
+            )
+        );
+    }
 
-	@GetMapping("/{id}/changes")
-	ModelAndView changes(
-		@PathVariable Integer id,
-		@RequestParam(required = false, defaultValue = "true",  name = "new") Boolean showNew,
-		@RequestParam(required = false, defaultValue = "false", name = "count") Boolean showCountChange,
-		@RequestParam(required = false, defaultValue = "false", name = "price") Boolean showPriceChange,
-		@RequestParam(required = false, defaultValue = "true",  name = "delete") Boolean showDeleted
-	) {
-		return new ModelAndView(
-			"price_list_changes_by_publisher",
-			"priceChanges",
-			priceListService.priceListChangesView(
-				id,
-				new PlChangesFilter(
-					String.format("/price-lists/%d/changes/", id),
-					new HashMap<PlChangesFilterToggle, Boolean>() {{
-						put(COUNT, showCountChange);
-						put(PRICE, showPriceChange);
-						put(DELETE, showDeleted);
-						put(NEW, showNew);
-					}}
-				)
-			)
-		);
-	}
+    @GetMapping("/{id}/changes")
+    ModelAndView changes(
+        @PathVariable Integer id,
+        @RequestParam(required = false, defaultValue = "true", name = "new") Boolean showNew,
+        @RequestParam(required = false, defaultValue = "false", name = "count") Boolean showCountChange,
+        @RequestParam(required = false, defaultValue = "false", name = "price") Boolean showPriceChange,
+        @RequestParam(required = false, defaultValue = "true", name = "delete") Boolean showDeleted
+    ) {
+        return new ModelAndView(
+            "price_list_changes_by_publisher",
+            "priceChanges",
+            priceListService.priceListChangesView(
+                id,
+                new PlChangesFilter(
+                    String.format("/price-lists/%d/changes/", id),
+                    new HashMap<PlChangesFilterToggle, Boolean>() {{
+                        put(COUNT, showCountChange);
+                        put(PRICE, showPriceChange);
+                        put(DELETE, showDeleted);
+                        put(NEW, showNew);
+                    }}
+                )
+            )
+        );
+    }
 }

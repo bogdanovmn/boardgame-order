@@ -7,11 +7,11 @@ import org.springframework.data.jpa.repository.Modifying;
 import java.util.List;
 
 public interface ItemPriceChangeRepository extends JpaRepository<ItemPriceChange, Integer> {
-	@EntityGraph(attributePaths = {"item", "item.publisher"})
-	List<ItemPriceChange> findAllBySourceId(Integer sourceId);
+    @EntityGraph(attributePaths = {"item", "item.publisher"})
+    List<ItemPriceChange> findAllBySourceId(Integer sourceId);
 
-	ItemPriceChange findFirstByOrderBySourceIdDesc();
+    ItemPriceChange findFirstByOrderBySourceIdDesc();
 
-	@Modifying
-	void deleteAllBySource(Source source);
+    @Modifying
+    void deleteAllBySource(Source source);
 }

@@ -30,7 +30,7 @@
 			<artifactId>common-spring</artifactId>
 		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
