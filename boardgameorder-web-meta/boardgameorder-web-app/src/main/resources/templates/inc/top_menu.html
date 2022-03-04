@@ -1,6 +1,8 @@
 <div id=top_menu>
 	<div class=links>
-		.::{{#menu}}
+		.::
+        {{#autoImportProblem}} <b>[!]</b> {{/autoImportProblem}}
+        {{#menu}}
 		{{#isSelected}}
 		<b>{{title}}</b>
 		{{/isSelected}}

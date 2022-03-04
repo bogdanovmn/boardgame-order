@@ -5,11 +5,12 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Optional;
 
 public interface AutoImportRepository extends JpaRepository<AutoImport, Integer> {
     AutoImport findTopByStatusOrderByIdDesc(AutoImportStatus status);
 
-    AutoImport findTopByOrderByIdDesc();
+    Optional<AutoImport> findTopByOrderByIdDesc();
 
     @Query(
         nativeQuery = true,

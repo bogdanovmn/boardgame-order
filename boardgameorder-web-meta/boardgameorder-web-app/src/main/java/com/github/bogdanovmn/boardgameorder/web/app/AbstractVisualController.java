@@ -1,6 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app;
 
 import com.github.bogdanovmn.boardgameorder.web.app.config.mustache.Layout;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.AutoImportRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.AutoImportStatus;
 import com.samskivert.mustache.Mustache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +14,8 @@ import java.util.Map;
 public abstract class AbstractVisualController extends AbstractController {
     @Autowired
     private Mustache.Compiler compiler;
+    @Autowired
+    private AutoImportRepository autoImportRepository;
 
     @Value("${server.servlet.context-path:}")
     private String contextPath;
@@ -26,6 +30,12 @@ public abstract class AbstractVisualController extends AbstractController {
         model.addAttribute("menu", new HeadMenu(currentMenuItem(), getUser()).getItems());
         model.addAttribute("adminMenu", new AdminMenu(currentAdminMenuItem()).getItems());
         model.addAttribute("userName", getUser().getName());
+        model.addAttribute(
+            "autoImportProblem",
+            autoImportRepository.findTopByOrderByIdDesc()
+                .map(lastImport -> lastImport.getStatus() == AutoImportStatus.ERROR)
+                .orElse(false)
+        );
     }
 
     protected abstract HeadMenu.ITEM currentMenuItem();
