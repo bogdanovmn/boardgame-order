@@ -3,28 +3,28 @@
 {{> inc/admin_menu }}
 
 {{#autoImport.history.0}}
-<h1>История авто-импорта</h1>
-<p>Последнее обновление - <b>{{autoImport.lastImport.importDate}}</b></p>
-
-{{#autoImport.history}}
-<div class="auto-import-block auto-import-block-{{status}}">
-	<span class="head">{{importDate}} <b>{{status}}</b></span>
-	<br>
-	Файл изменен: {{fileModifyDate}}
-	{{#source}}
-	<a href="{{layout.contextPath}}/price-lists/{{source.id}}/changes">Список изменений</a>
-	{{/source}}
-	<br>
-	{{#errorMsg}}
-	Ошибка: <span class="msg">{{errorMsg}}</span>
-	{{/errorMsg}}
-</div>
-{{/autoImport.history}}
-
+    <h1>История авто-импорта</h1>
+    <p>Последнее обновление - <b>{{autoImport.lastImport.importDate}}</b></p>
+    {{#autoImport.history}}
+        <div class="auto-import-block auto-import-block-{{status}}">
+            <span class="head">{{lastImportDate}} <b>{{status}}</b></span>
+            <br>
+            Файл изменен: {{fileModifyDate}}
+            {{#sourceId}}
+                <a href="{{layout.contextPath}}/price-lists/{{sourceId}}/changes">Список изменений</a>
+            {{/sourceId}}
+            <br>
+            {{#errorMsg}}
+                Ошибка: <span class="msg">{{errorMsg}}</span>
+                <br>
+                Попыток: {{count}}
+            {{/errorMsg}}
+        </div>
+    {{/autoImport.history}}
 {{/autoImport.history.0}}
 
 {{^autoImport.history.0}}
-<h1>Пусто</h1>
+    <h1>Пусто</h1>
 {{/autoImport.history.0}}
 
 {{/layout}}

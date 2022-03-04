@@ -1,17 +1,18 @@
 package com.github.bogdanovmn.boardgameorder.web.app.config.profiler;
 
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.AsyncHandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Slf4j
+@RequiredArgsConstructor
 public class RequestStatisticsInterceptor implements AsyncHandlerInterceptor {
     private final ThreadLocal<Long> time = new ThreadLocal<>();
-    @Autowired
-    private HibernateStatisticsInterceptor statisticsInterceptor;
+
+    private final HibernateStatisticsInterceptor statisticsInterceptor;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
