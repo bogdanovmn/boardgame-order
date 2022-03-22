@@ -12,7 +12,7 @@ class PriceListColumnMap {
         Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE
     );
     private static final Pattern PRICE_PATTERN = Pattern.compile(
-        "(цена|база|базовая цена|базовый опт)",
+        "^\\s*(цена|база|базовая цена|базовый опт)\\s*$",
         Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE
     );
     private static final Pattern BARCODE_PATTERN = Pattern.compile("штрих", Pattern.CASE_INSENSITIVE | Pattern.UNICODE_CASE);

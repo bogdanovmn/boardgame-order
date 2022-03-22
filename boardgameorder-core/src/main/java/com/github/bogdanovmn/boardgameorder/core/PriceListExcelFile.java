@@ -19,6 +19,7 @@ import java.util.List;
 
 @Slf4j
 public class PriceListExcelFile implements Closeable {
+    private static final String DEFAULT_GROUP_NAME = "-- Noname --";
     private final Workbook excelBook;
     private final PriceListColumnMap columnMap = new PriceListColumnMap();
     private int itemsRowBegin;
@@ -108,10 +109,8 @@ public class PriceListExcelFile implements Closeable {
 
             if (row.cell(1).isNumber()) {
                 if (currentGroup == null) {
-                    LOG.debug(row.toString());
-                    throw new IllegalStateException(
-                        String.format("Row like price but without group: %s", row)
-                    );
+                    LOG.warn("Row like price but without group: {}", row);
+                    currentGroup = DEFAULT_GROUP_NAME;
                 }
                 result.add(
                     new ExcelPriceItem(
