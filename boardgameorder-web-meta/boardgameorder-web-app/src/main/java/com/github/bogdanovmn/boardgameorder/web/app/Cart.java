@@ -1,7 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItem;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.CartItem;
+import lombok.RequiredArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,19 +10,15 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class UserOrder {
+@RequiredArgsConstructor
+public class Cart {
     private final Map<Integer, ItemPrice> itemPrices;
     private final Map<Integer, Integer> orderedItems;
 
-    private UserOrder(final Map<Integer, ItemPrice> itemPrices, final Map<Integer, Integer> orderedItems) {
-        this.itemPrices = itemPrices;
-        this.orderedItems = orderedItems;
-    }
-
-    public static UserOrder fromAllPrices(final List<ItemPrice> itemPrices, final List<UserOrderItem> userOrderItems) {
+    public static Cart fromAllPrices(final List<ItemPrice> itemPrices, final List<CartItem> userOrderItems) {
         Map<Integer, Integer> orderedItems = userOrderItems.stream()
             .collect(
-                Collectors.toMap(x -> x.getItem().getId(), UserOrderItem::getCount)
+                Collectors.toMap(x -> x.getItem().getId(), CartItem::getCount)
             );
 
         Map<Integer, ItemPrice> prices = itemPrices.stream()
@@ -36,7 +33,7 @@ public class UserOrder {
             }
         }
 
-        return new UserOrder(prices, orderedItems);
+        return new Cart(prices, orderedItems);
     }
 
     public Integer getItemsCount() {

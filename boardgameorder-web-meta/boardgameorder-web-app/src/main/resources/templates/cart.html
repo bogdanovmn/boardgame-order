@@ -1,22 +1,24 @@
 {{#layout}}
 
-{{#order.items.0}}
+{{#cart.items.0}}
 <h1>Ваш текущий заказ</h1>
 <table class="price-and-item">
-	{{#order.items}}
-	<tr id="item-{{item.id}}" data-item-price="{{itemPrice}}" data-fix-price="{{item.isLikeFixPriceTitle}}">
+	{{#cart.items}}
+	<tr id="item-{{item.id}}"
+		data-item-price="{{itemPrice}}"
+		data-fix-price="{{item.isLikeFixPriceTitle}}">
 		<td class="count"><span>{{count}}</span><i>шт</i></td>
 		<td class="price"><span>{{total}}</span><i>р</i></td>
 		<td class="action">
 			<div
 				class="button button-add-item"
-				data-href="/user/order/items/{{item.id}}"
+				data-href="/cart/items/{{item.id}}"
 				data-action="add"
 				data-id="{{item.id}}">+
 			</div>
 			<div
 				class="button button-del-item"
-				data-href="/user/order/items/{{item.id}}"
+				data-href="/cart/items/{{item.id}}"
 				data-action="del"
 				data-id="{{item.id}}">&ndash;
 			</div>
@@ -28,27 +30,55 @@
 			{{/item.url}}
 		</td>
 	</tr>
-	{{/order.items}}
+	{{/cart.items}}
 </table>
 
 <div id="orderSummary">
 	<div class="data"></div>
-	<div class="button button-copy" onclick="copyOrderText()">
-		Копировать текст заказа в буфер обмена
+	<div class="actions">
+		<div class="button button-copy" onclick="copyOrderText()">
+			Копировать текст заказа в буфер обмена
+		</div>
+		<br/>
+		<div class="button button-create-order" onclick="createOrder()">
+			Заказ уже отправлен
+		</div>
 	</div>
 </div>
-{{/order.items.0}}
+{{/cart.items.0}}
 
 
-{{^order.items.0}}
+{{^cart.items.0}}
 <h1>Корзина пуста, выбрать настолки можно <a href="{{layout.contextPath}}/price-lists/last">тут</a></h1>
-{{/order.items.0}}
+{{/cart.items.0}}
+
+{{#orders.0}}
+	<div class="orders">
+	<h1>Последние заказы</h1>
+	{{#orders}}
+		<div class="order">
+			<div class="info {{status}}">
+				{{created}} <i>/</i> {{status}} <i>/</i> <b>~</b>{{estimatedCost}}<i>р</i>
+			</div>
+			<table class="items">
+				{{#items}}
+					<tr>
+						<td>{{price}}<i>р</i></td>
+						<td>{{count}}<i>шт</i></td>
+						<td>{{name}}</td>
+					</tr>
+				{{/items}}
+			</table>
+		</div>
+	{{/orders}}
+	</div>
+{{/orders.0}}
 
 <script>
 	const order = new Order(
-		parseInt("{{order.itemsCount}}") || 0,
-		parseInt("{{order.total}}") || 0,
-		parseInt("{{order.totalWithFixPrice}}") || 0
+		parseInt("{{cart.itemsCount}}") || 0,
+		parseInt("{{cart.total}}") || 0,
+		parseInt("{{cart.totalWithFixPrice}}") || 0
 	);
 	order.render();
 
@@ -116,6 +146,19 @@
 		document.execCommand("copy");
 		temp.remove();
 		alert("Скопировано, теперь идите вконтактик =)")
+	}
+
+	function createOrder() {
+		console.log("[action] create order");
+		const url = "{{layout.contextPath}}/orders";
+		$.ajax({url: url, method: "POST"})
+			.done(function (resp) {
+				console.log('[OK] ' + url);
+				location.reload();
+			})
+			.fail(function (jqXHR, excpetion) {
+				console.log("[ERROR] " + url + "\n" + excpetion)
+			})
 	}
 </script>
 

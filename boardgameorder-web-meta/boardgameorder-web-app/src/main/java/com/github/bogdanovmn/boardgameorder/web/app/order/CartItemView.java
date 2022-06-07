@@ -2,15 +2,12 @@ package com.github.bogdanovmn.boardgameorder.web.app.order;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.Item;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
+import lombok.RequiredArgsConstructor;
 
-class OrderItemView {
+@RequiredArgsConstructor
+class CartItemView {
     private final ItemPrice price;
     private final Integer count;
-
-    OrderItemView(final ItemPrice price, final Integer count) {
-        this.price = price;
-        this.count = count;
-    }
 
     Integer getCount() {
         return count;

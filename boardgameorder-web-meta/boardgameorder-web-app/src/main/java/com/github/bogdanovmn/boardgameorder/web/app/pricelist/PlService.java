@@ -6,31 +6,31 @@ import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPriceChange;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPriceChangeRepository;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.Source;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.User;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItem;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItemRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.CartItem;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.CartItemRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
 class PlService {
-    private final UserOrderItemRepository userOrderItemRepository;
+    private final CartItemRepository cartItemRepository;
     private final ItemPriceChangeRepository itemPriceChangeRepository;
     private final SourceService sourceService;
 
     PlService(
-        final UserOrderItemRepository userOrderItemRepository,
+        final CartItemRepository cartItemRepository,
         final ItemPriceChangeRepository itemPriceChangeRepository,
         final SourceService sourceService
     ) {
-        this.userOrderItemRepository = userOrderItemRepository;
+        this.cartItemRepository = cartItemRepository;
         this.itemPriceChangeRepository = itemPriceChangeRepository;
         this.sourceService = sourceService;
     }
 
     PlView actualPriceListView(User user) {
         List<ItemPrice> itemPrices = sourceService.actualPrices();
-        List<UserOrderItem> userOrderItems = userOrderItemRepository.getAllByUser(user);
+        List<CartItem> userOrderItems = cartItemRepository.getAllByUser(user);
 
         return new PlView(itemPrices, userOrderItems);
     }

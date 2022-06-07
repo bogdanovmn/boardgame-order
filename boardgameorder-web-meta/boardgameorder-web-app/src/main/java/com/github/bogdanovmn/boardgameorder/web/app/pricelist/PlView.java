@@ -1,8 +1,8 @@
 package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
-import com.github.bogdanovmn.boardgameorder.web.app.UserOrder;
+import com.github.bogdanovmn.boardgameorder.web.app.Cart;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItem;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.CartItem;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -11,11 +11,11 @@ import java.util.stream.Collectors;
 
 class PlView {
     private final List<ItemPrice> itemPrices;
-    private final List<UserOrderItem> userOrderItems;
+    private final List<CartItem> userOrderItems;
 
-    PlView(final List<ItemPrice> itemPrices, final List<UserOrderItem> userOrderItems) {
+    PlView(final List<ItemPrice> itemPrices, final List<CartItem> cartItems) {
         this.itemPrices = itemPrices;
-        this.userOrderItems = userOrderItems;
+        this.userOrderItems = cartItems;
     }
 
     PlView(List<ItemPrice> itemPrices) {
@@ -41,7 +41,7 @@ class PlView {
             .collect(Collectors.toList());
     }
 
-    UserOrder getUserOrder() {
-        return UserOrder.fromAllPrices(itemPrices, userOrderItems);
+    Cart getUserOrder() {
+        return Cart.fromAllPrices(itemPrices, userOrderItems);
     }
 }

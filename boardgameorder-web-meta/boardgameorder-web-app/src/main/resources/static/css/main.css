@@ -109,6 +109,13 @@ div.main {
 	padding: 15px 20px;
 }
 
+#orderSummary div.actions {
+	float: right;
+	width: 55%;
+	text-align: right;
+	padding: 15px 5px;
+}
+
 #price-list {
 	float: right;
 	width: 88%;
@@ -265,12 +272,21 @@ table.price-and-item td.change span i.minus {
 }
 
 .button-copy {
-	float: right;
-	display: block;
+	/*float: right;*/
+	display: inline-block;
 	border-color: #778d78;
 	background: #a2bca3;
 	font-size: 100%;
 	padding: 15px 20px;
+}
+
+.button-create-order {
+	/*float: right;*/
+	display: inline-block;
+	border-color: #8d8377;
+	background: #fcddc4;
+	font-size: 80%;
+	padding: 5px 10px;
 }
 
 .button-admin-action {
@@ -413,3 +429,10 @@ table.invites td.code {
 div.login td.action {
 	text-align: center;
 }
+
+div.orders { display: inline-block; }
+div.order { border: 1px solid #8d8377; border-radius: 9px; background-color: #e1e8de; margin: 15px; padding: 15px 30px; }
+div.order i { color: #778d78; }
+div.order table.items { margin-left: 30px; }
+div.order table.items td { padding: 2px 7px 2px 0; }
+div.order div.info { text-align: left; margin-bottom: 10px; }

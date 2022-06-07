@@ -11,7 +11,7 @@ import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPriceRepository;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemRepository;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.PublisherRepository;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.SourceRepository;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItemRepository;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.CartItemRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -29,7 +29,7 @@ class RebaseService {
     private final ItemPriceChangeRepository itemPriceChangeRepository;
     private final SourceRepository sourceRepository;
     private final ItemRepository itemRepository;
-    private final UserOrderItemRepository userOrderItemRepository;
+    private final CartItemRepository cartItemRepository;
     private final PublisherRepository publisherRepository;
 
     @Transactional(rollbackFor = Exception.class)
@@ -59,6 +59,6 @@ class RebaseService {
         sourceRepository.deleteAll();
         publisherRepository.deleteAll();
         itemRepository.deleteAll();
-        userOrderItemRepository.deleteAll();
+        cartItemRepository.deleteAll();
     }
 }

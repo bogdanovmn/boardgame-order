@@ -21,13 +21,14 @@ import java.util.Objects;
 
 @Entity
 @Table(
+    name = "user_order_item", // TODO remane to cart_item
     uniqueConstraints = {
         @UniqueConstraint(
             columnNames = {"user_id", "item_id"}
         )
     }
 )
-public class UserOrderItem extends BaseEntity {
+public class CartItem extends BaseEntity {
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private User user;
@@ -50,7 +51,7 @@ public class UserOrderItem extends BaseEntity {
         if (o == null || getClass() != o.getClass()) {
             return false;
         }
-        UserOrderItem that = (UserOrderItem) o;
+        CartItem that = (CartItem) o;
         return Objects.equals(user, that.user)
             && Objects.equals(item, that.item)
             && Objects.equals(count, that.count)
@@ -63,7 +64,7 @@ public class UserOrderItem extends BaseEntity {
         return Objects.hash(user, item, count, updated);
     }
 
-    public UserOrderItem incCount(final int increment) {
+    public CartItem incCount(final int increment) {
         count += increment;
         return this;
     }

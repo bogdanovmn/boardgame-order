@@ -2,7 +2,7 @@ package com.github.bogdanovmn.boardgameorder.web.app.pricelist;
 
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.ItemPrice;
 import com.github.bogdanovmn.boardgameorder.web.orm.entity.Publisher;
-import com.github.bogdanovmn.boardgameorder.web.orm.entity.UserOrderItem;
+import com.github.bogdanovmn.boardgameorder.web.orm.entity.CartItem;
 
 import java.util.Comparator;
 import java.util.List;
@@ -12,12 +12,12 @@ import java.util.stream.Collectors;
 class PlPublisherView {
     private final Publisher publisher;
     private final List<ItemPrice> prices;
-    private final List<UserOrderItem> userOrderItems;
+    private final List<CartItem> cartItems;
 
-    PlPublisherView(final Publisher publisher, final List<ItemPrice> prices, final List<UserOrderItem> userOrderItems) {
+    PlPublisherView(final Publisher publisher, final List<ItemPrice> prices, final List<CartItem> cartItems) {
         this.publisher = publisher;
         this.prices = prices;
-        this.userOrderItems = userOrderItems;
+        this.cartItems = cartItems;
     }
 
     Publisher getPublisher() {
@@ -25,7 +25,7 @@ class PlPublisherView {
     }
 
     List<PlItemView> getPrices() {
-        Set<Integer> ordered = userOrderItems.stream().map(x -> x.getItem().getId()).collect(Collectors.toSet());
+        Set<Integer> ordered = cartItems.stream().map(x -> x.getItem().getId()).collect(Collectors.toSet());
         return prices.stream()
             .sorted(
                 Comparator.comparing(
