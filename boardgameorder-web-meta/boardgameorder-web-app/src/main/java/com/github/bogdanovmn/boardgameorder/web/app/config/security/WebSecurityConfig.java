@@ -41,6 +41,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
             .antMatchers("/registration/**").anonymous()
             .antMatchers("/webjars/**").permitAll()
             .antMatchers("/css/**").permitAll()
+            .antMatchers("/actuator/prometheus").permitAll()
             .antMatchers("/admin/**").hasAuthority(UserRole.Type.Admin.name())
             .antMatchers("/invites/**").hasAuthority(UserRole.Type.Invite.name())
             .anyRequest().authenticated()
