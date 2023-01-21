@@ -9,7 +9,7 @@ import java.util.stream.Collectors;
 
 public class PriceListContent {
     private static final Pattern BOARD_GAME = Pattern.compile(
-        "^.*(наст.*игр|игр.*наст|протекторы|дополнение|доп.*игр|логич.*игра).*$",
+        "^.*(lego|настолки|игр[аы]\\P{L}|наст.*игр|игр.*наст|протекторы|дополнение|доп.*игр|логич.*игра).*$",
         Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE
     );
     private static final Pattern ZVEZDA_TANK_MODELS = Pattern.compile("^.*танк.*[тt]-\\d.*$", Pattern.UNICODE_CASE | Pattern.CASE_INSENSITIVE);
